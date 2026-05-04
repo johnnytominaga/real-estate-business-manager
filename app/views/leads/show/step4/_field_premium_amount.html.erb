@@ -1,0 +1,5 @@
+<% if !lead_property.premium_amount.blank? %>
+  <%= link_to edit_deposit_info_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id, attribute: 'premium_amount'), remote: true do %><strong>Premium amount: </strong><%= number_to_currency(lead_property.premium_amount, unit: "€", precision: 0) %><% end %>
+<% else %>
+  <%= link_to edit_deposit_info_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id, attribute: 'premium_amount'), remote: true do %><strong>Premium amount: </strong>Click to add<% end %>
+<% end %>

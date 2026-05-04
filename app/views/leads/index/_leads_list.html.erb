@@ -1,0 +1,27 @@
+<% if !@arrLeads.blank? %>
+  <% @arrLeads.each_with_index do |lead, index| %>
+    <tr class="wow fadeInUp" data-wow-delay="0.<%= index %>s">
+      <th scope="row"><%= link_to lead.id, lead_path(lead), target: '_blank' %></th>
+      <td><b><%= link_to lead.name, lead_path(lead), target: '_blank' %></b></td>
+      <td><%= lead.check_in_date.to_time.strftime("%d/%m/%Y") %></td>
+      <td><%= lead.contract_type %></td>
+      <td><%= lead.created_at.to_time.strftime("%d/%m/%Y") %></td>
+      <td><%= lead.updated_at.to_time.strftime("%d/%m/%Y") %></td>
+      <td class="checked text-center"><% if lead.deposit_paid == true %><i class="fas fa-check-circle"></i><% end %></td>
+      <td class="checked text-center"><% if lead.contract_signed == true %><i class="fas fa-check-circle"></i><% end %></td>
+      <td class="checked text-center"><% if lead.commission_paid == true %><i class="fas fa-check-circle"></i><% end %></td>
+      <td>
+        <% if lead.user_id? %>
+          <% if User.find(lead.user_id).avatar.attached? %>
+            <%= image_tag User.find(lead.user_id).show_avatar('100x100'), class: "img-circle avatar-small" %>
+          <% end %>
+          <%= User.find(lead.user_id).first_name %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+<% else %>
+  <tr>
+    <td>Sorry, no leads available.</td>
+  </tr>
+<% end %>

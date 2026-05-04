@@ -1,0 +1,30 @@
+<div class="col-md-8">
+  <div class="row">
+    <div class="col-md-12">
+      <% if !@lead.contract_type.blank? %>
+        <% if @lead.contract_type == "Rent" %>
+          <%= render partial: 'leads/show/step2/search/search_form_rent', locals: { properties: @arrProperties, q: @q }%>
+        <% elsif @lead.contract_type == "Sales" %>
+          <%= render partial: 'leads/show/step2/search/search_form_sales', locals: { properties: @arrProperties, q: @q }%>
+        <% elsif @lead.contract_type == "Commercial" %>
+          <%= render partial: 'leads/show/step2/search/search_form_commercial', locals: { properties: @arrProperties, q: @q }%>
+        <% end %>
+      <% end %>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12" id="list_all_properties">
+      <%= render partial: 'leads/show/step2/list_all_properties', locals: { properties: @arrProperties } %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center" id='properties_pagination'>
+      <%= render partial: 'leads/show/step2/pagination', locals: { properties: @arrProperties } %>
+
+    </div>
+  </div>
+</div>
+<div class="col-md-4" id="list_suggested_properties">
+  <%= render partial: 'leads/show/step2/list_suggested_properties' %>
+</div>

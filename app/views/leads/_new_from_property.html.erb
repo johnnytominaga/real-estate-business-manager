@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <strong>Interested? Fill out the form below</strong>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+</div>
+<div class="modal-body">
+  <div class="row text-center" style="padding: 30px;">
+    <%= render "leads/contact_from_property" %>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="row text-center">
+  </div>
+</div>
+<script>
+
+
+  var dateToday = new Date();
+
+  $('#property_availability_date,#lead_move_in_date_property').datepicker({
+    defaultDate: "+1d",
+    numberOfYears: 3,
+    changeMonth: true,
+    changeYear: true,
+    dateFormat: 'dd-M-yy',
+    minDate: dateToday
+  });
+
+  $('#btnContactProperty').click(function() {
+    $('#contact-from-property-modal').modal('hide');
+  });
+</script>

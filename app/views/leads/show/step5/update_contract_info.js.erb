@@ -1,0 +1,6 @@
+var propertyId = <%= property %>;
+var attribute = "<%== j attribute %>";
+$('#field_' + attribute + '_' + propertyId).html("<%= j (render 'leads/show/step5/field_'+attribute, lead_property: @lead_property) %>");
+$('#payment_sorting_calculator_' + propertyId).html("<%= j (render 'leads/show/step5/payment_sorting_calculator', lead_property: @lead_property) %>");
+$("#spinner").hide();
+<%= render "shared/message_js" %>

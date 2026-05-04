@@ -1,0 +1,25 @@
+<div class="col-md-6" id="general_info">
+  <%= render partial: 'leads/show/step1/tables_general_info' %>
+</div>
+<div class="col-md-6" id="property_characteristics">
+  <%= render partial: 'leads/show/step1/tables_property_characteristics' %>
+</div>
+
+<script>
+  jQuery(document).ready(function( $ ) {
+
+    $("[data-link*='edit_field_']").one("click", this, function(){
+
+      var val = $(this).attr("data-link");
+      var skipChar = ("edit_field_").length;
+      var myAttribute = val.substr(skipChar);
+      var leadId = "<%= @lead.id.to_i %>"
+
+      $(this).removeClass("editable");
+      $(this).attr("data-link", "disabled");
+      $(this).load("/leads/edit_field?attribute=" + myAttribute + "&lead_id=" + leadId);
+    });
+
+  });
+
+</script>

@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-6 deposit-input" id="field_deposit_amount_<%= p.id %>">
+    <%= render 'leads/show/step4/field_deposit_amount', lead_property: p.suggested_property(@lead) %>
+  </div>
+  <div class="col-md-6 deposit-input" id="field_contract_amount_<%= p.id %>">
+    <%= render 'leads/show/step4/field_contract_amount', lead_property: p.suggested_property(@lead) %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 deposit-input" id="field_deposit_for_bills_<%= p.id %>">
+    <%= render 'leads/show/step4/field_deposit_for_bills', lead_property: p.suggested_property(@lead) %>
+  </div>
+  <% if @lead.contract_type == "Commercial" %>
+    <div class="col-md-6 deposit-input" id="field_premium_amount_<%= p.id %>">
+      <%= render 'leads/show/step4/field_premium_amount', lead_property: p.suggested_property(@lead) %>
+    </div>
+  <% end %>
+</div>
+<div class="row">
+  <div class="col-md-6 deposit-input" id="field_contract_start_date_<%= p.id %>">
+    <%= render 'leads/show/step4/field_contract_start_date', lead_property: p.suggested_property(@lead) %>
+  </div>
+  <div class="col-md-6 deposit-input" id="field_contract_end_date_<%= p.id %>">
+    <%= render 'leads/show/step4/field_contract_end_date', lead_property: p.suggested_property(@lead) %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 deposit-input" id="field_contract_signature_date_<%= p.id %>">
+    <%= render 'leads/show/step4/field_contract_signature_date', lead_property: p.suggested_property(@lead) %>
+  </div>
+</div>

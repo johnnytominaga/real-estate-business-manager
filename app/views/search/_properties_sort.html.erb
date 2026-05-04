@@ -1,0 +1,36 @@
+<div class="col-md-12">
+  Sort by: <%= sort_link @search, :updated_at, "Update date", {default_order: :desc}, { :remote => true, :method => :get } %> |
+           <%= sort_link @search, :availability_date, "Availability date", {default_order: :asc}, { :remote => true, :method => :get } %> |
+          <%= sort_link @search, :location_name, "Location", {default_order: :asc}, { :remote => true, :method => :get } %> |
+          <%= sort_link @search, :price, "Price", {default_order: :asc}, { :remote => true, :method => :get } %> |
+          <%= sort_link @search, :bedrooms, "Bedrooms", {default_order: :asc}, { :remote => true, :method => :get } %> |
+          <%= sort_link @search, :id, "ID", {default_order: :asc}, { :remote => true, :method => :get } %>
+  <div id="more-sorting-button" style="cursor:pointer;">Sort by feature <i class="fas fa-plus-circle"></i></div>
+  <div id="more-sorting-options" style="display:none;">
+    <%= sort_link @search, :ac, "Air-conditioner", {default_order: :desc}, { :remote => true, :method => :get } %> |
+    <%= sort_link @search, :roof, "Roof area", {default_order: :desc}, { :remote => true, :method => :get } %> |
+    <%= sort_link @search, :yard, "Yard", {default_order: :desc}, { :remote => true, :method => :get } %> |
+    <%= sort_link @search, :seafront, "Seafront", {default_order: :desc}, { :remote => true, :method => :get } %> |
+    <%= sort_link @search, :seaview, "Sea view", {default_order: :desc}, { :remote => true, :method => :get } %> |
+    <%= sort_link @search, :swimming_pool, "Swimming pool", {default_order: :desc}, { :remote => true, :method => :get } %> |
+    <%= sort_link @search, :jacuzzi, "Jacuzzi", {default_order: :desc}, { :remote => true, :method => :get } %> |
+    <%= sort_link @search, :unfurnished, "Unfurnished", {default_order: :desc}, { :remote => true, :method => :get } %> |
+    <%= sort_link @search, :pet_friendly, "Pet friendly", {default_order: :asc}, { :remote => true, :method => :get } %>
+  </div>
+</div>
+<script>
+$(document).ready(function(){
+
+  $('#more-sorting-button').click( function(){
+
+    $('#more-sorting-options').slideToggle(200, function () {
+      //execute this after slideToggle is done
+      //change text of header based on visibility of content div
+      $('#more-sorting-button').html(function () {
+          //change text based on condition
+          return $('#more-sorting-options').is(":visible") ? "Hide <i class='fas fa-minus-circle'></i>" : "Sort by feature <i class='fas fa-plus-circle'></i>";
+      });
+    });
+  });
+});
+</script>

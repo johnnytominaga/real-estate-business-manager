@@ -1,0 +1,214 @@
+<% if !@properties.blank? %>
+  <% @properties.each_with_index do |property, index| %>
+    <% if !property.suggested_property(@lead).blank? %>
+      <div class="panel panel-default wow fadeIn" data-wow-delay="0.<%= index %>s" id="agent-property-listing">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-2">
+              <%= link_to property, target: "_blank" do %>
+                <div class="row">
+                  <div class="col-md-12">
+                    <%= image_tag property.cover_photo("400X400", request.host), style: 'width:100%;' %>
+                    <span class="status"><b><%= property.contract_type %></b></span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <p style="margin: 5px 0;">ID: <%= property.id %></p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <div class="col-md-6">
+              <%= link_to property, target: "_blank" do %>
+
+                <div class="property-title" >
+                  <h4 style="margin: 0 0 0 0;">
+                    <%= property.property_title %>
+                  </h4><br/>
+                </div>
+                <div class="property-price">
+                  <span>
+                    <b>
+                      <%= property.property_price  %>
+                    </b>
+                  </span>
+                </div>
+                <% if !property.availability_date.blank? && property.availability_date != "0" %>
+                  <p style="margin:10px 0 10px 0;">Available from: <strong <% if property.availability_date.between?(15.days.ago, 30.days.from_now) %>style="color: #01dc94;"<% end %>><%= property.availability_date.to_time.strftime("%d/%m/%Y") %></strong></p>
+                <% end %>
+
+              <% end %>
+              <% if !property.assigned_to.blank? %>
+                <p>
+                  Listing rights:
+                  <% if !User.find(property.assigned_to).nickname.blank? %>
+                    <%= link_to user_path(User.find(property.assigned_to).nickname) do %>
+                      <%= image_tag User.find(property.assigned_to).show_avatar('100x100'), class: "img-circle avatar-small" %>
+                      <strong>
+                        <%= User.find(property.assigned_to).first_name %> <%= User.find(property.assigned_to).last_name %>
+                      </strong>
+                    <% end %>
+
+                  <% else %>
+                    <%= link_to user_path(User.find(2).nickname) do %>
+                      <%= image_tag User.find(property.assigned_to).show_avatar('100x100'), class: "img-circle avatar-small" %>
+                      <strong>
+                        <%= User.find(property.assigned_to).first_name %> <%= User.find(property.assigned_to).last_name %>
+                      </strong>
+                    <% end %>
+                  <% end %>
+                </p>
+              <% end %>
+            </div>
+            <div class="col-md-4 agent-property-listing">
+              <ul>
+                <% if browser.platform.ios? || browser.platform.android? %>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <%= link_to owner_path(property.property_owner), class: "btn btn-normal" do %>
+                        <i class="fa fa-phone fa-w-16 fa-flip-horizontal"></i> Call owner now
+                      <% end %>
+                    </div>
+                    <div class="col-md-6" style="display:flex;">
+                      <textarea id="share_bar_client" class="share_bar" rows="1" style="width:30%;"><%= property.share_without_owner %></textarea>
+                      <button class="btn btn-normal clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#share_bar_client" style="width:70%;">
+                          <i class="fab fa-facebook-square"></i> Copy to share
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <%= link_to "whatsapp://send?text=#{property.share_without_owner_encoded}", class: "btn btn-normal" do %>
+                        <i class="fab fa-whatsapp"></i> Share on WhatsApp
+                      <% end %>
+                    </div>
+                    <div class="col-md-6">
+                      <%= link_to "fb-messenger://share/?link=#{property_url(property.id)}", class: "btn btn-normal" do %>
+                        <i class="fab fa-facebook-square"></i> Share on Messenger
+                      <% end %>
+                    </div>
+                  </div>
+                <% else %>
+                  <li style="display: flex;">
+                    <textarea id="share_bar_client_<%= index %>" class="share_bar" rows="1" style="width: 20%;"><%= property.share_without_owner %></textarea>
+                    <button class="btn btn-normal clipboard-btn centralized" style="width: 80%;" data-clipboard-action="copy" data-clipboard-target="#share_bar_client_<%= index %>">
+                        <i class="fab fa-facebook-square" style="padding-right: 4px;"></i> Share with client
+                    </button>
+                  </li>
+                <% end %>
+                <li><%= link_to owner_details_property_path(owner_id: property.owner_id, id: property.id), class: "btn btn-normal", "data-toggle": "modal", "data-target": "#owner-modal-step3", id: "owner-details-button-step3", remote: true, method: :post do %><i class="far fa-address-card"></i> Check owner details<% end %></li>
+              </ul>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-2">
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 style="margin: 10px 0 ;">Visit plan</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div id="property_address_<%= property.id %>">
+                    <p style="margin: 0 0 10px 0;">
+                      <strong>Property address: </strong>
+                      <% if !property.address.blank? && property.address != "0" %>
+                        <%= link_to add_property_address_lead_path(property_id: property.id), id: "edit_address", title: "Edit address", remote: true do %><%= property.address%><% end %>
+                        <%= link_to 'http://maps.google.com/maps?q=' + property.address + '+malta', target: '_blank' do %> <i class="fas fa-map-marked-alt" id="address_icon" title="Open on Google Maps"></i><% end %>
+                      <% else %>
+                        <%= link_to add_property_address_lead_path(property_id: property.id), remote: true do %>Add address, if you plan to visit it<% end %>
+                      <% end %>
+                    </p>
+                  </div>
+                  <div id="meeting_point_<%= property.id %>">
+                    <p style="margin: 0 0 10px 0;">
+                      <strong>Meeting point: </strong>
+                      <% if !property.suggested_property(@lead).meeting_point.blank? && property.suggested_property(@lead).meeting_point != "0" %>
+                        <%= link_to add_meeting_point_lead_path(property_id: property.id, lead_property_id: property.suggested_property(@lead)), id: "edit_meeting_point", title: "Edit meeting point", remote: true do %><%= property.suggested_property(@lead).meeting_point %><% end %>
+                        <%= link_to 'http://maps.google.com/maps?q=' + property.suggested_property(@lead).meeting_point + '+malta', target: '_blank' do %> <i class="fas fa-map-marked-alt" id="meeting_point_icon" title="Open on Google Maps"></i><% end %>
+                      <% else %>
+                        <%= link_to add_meeting_point_lead_path(property_id: property.id, lead_property_id: property.suggested_property(@lead)), remote: true do %>Add a meeting point, if you're not meeting at the property<% end %>
+                      <% end %>
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6" id="visit_date_<%= property.id %>">
+                  <%= render 'leads/show/step3/visit_date', lead_property: property.suggested_property(@lead) %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-2">
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 style="margin: 10px 0 ;">Proposal received</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12" id="proposal_amount_<%= property.id %>">
+                  <%= render 'leads/show/step3/proposal_amount', lead_property: property.suggested_property(@lead) %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row-flex-space-between">
+            <div class="col-md-1" id="bookmark_<%= property.id %>">
+              <%= link_to add_to_bookmarks_path(property_id: property.id, user_id: current_user.id), remote: true do %>
+                <% if Bookmark.exists?(user_id: current_user.id, property_id: property.id) %>
+                  <i class="fas fa-bookmark fa-2x"></i>
+                <% else %>
+                  <i class="far fa-bookmark fa-2x"></i>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="col-md-10 flex-right">
+
+              <% if property.suggested_property(@lead).status == "Reproved" %>
+                <%= link_to update_lead_property_lead_path(lead_property_id: property.suggested_property(@lead), status: "Approved for visit"), method: :patch,  remote: true do %><span class="edit-button green approved-icon" title="Unmark as reproved"></span><% end %>
+              <% else %>
+                <%= link_to update_lead_property_lead_path(lead_property_id: property.suggested_property(@lead), status: "Reproved"), method: :patch,  remote: true do %><span class="edit-button delete reproved-icon" title="Mark as reproved"></span><% end %>
+              <% end %>
+              <% if property.suggested_property(@lead).visited_by_lead == true %>
+                <%= link_to update_lead_property_lead_path(lead_property_id: property.suggested_property(@lead), visited_by_lead: false, status: "Approved for visit"), method: :patch, remote: true do %><span class="edit-button done done-icon" title="Unmark as visited"></span><% end %>
+              <% else %>
+                <%= link_to update_lead_property_lead_path(lead_property_id: property.suggested_property(@lead), visited_by_lead: true, status: "Visited"), method: :patch,  remote: true do %><span class="edit-button green-purple eye-icon" title="Mark as visited"></span><% end %>
+              <% end %>
+              <% if property.suggested_property(@lead).status == "Proposal approved" %>
+                <%= link_to update_lead_property_lead_path(lead_property_id: property.suggested_property(@lead), status: "Visited"), method: :patch, remote: true do %><span class="edit-button winner done-icon" title="Unmark proposal approved"></span><% end %>
+              <% else %>
+                <%= link_to update_lead_property_lead_path(lead_property_id: property.suggested_property(@lead), status: "Proposal approved"), method: :patch,  remote: true do %><span class="edit-button winner trophy-icon" title="Mark as proposal approved"></span><% end %>
+              <% end %>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% else %>
+  <div class="text-center">
+    <h4>No properties have been selected. Go to Property Hunt to pick the main properties for this lead.</h4>
+  </div>
+<% end %>
+
+
+<div class="modal fade bd-example-modal-lg" id="owner-modal-step3" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content" id="owner_details_step3">
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+      //Initialize tooltips
+      $('.edit-button[title], #address_icon, #meeting_point_icon, #edit_address, #edit_meeting_point').tooltip();
+  });
+
+</script>

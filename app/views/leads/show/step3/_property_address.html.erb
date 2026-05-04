@@ -1,0 +1,8 @@
+<p style="margin: 0 0 10px 0;">
+  <strong>Property address: </strong>
+  <% if !property.address.blank? && property.address != "0" %>
+    <%= property.address%>
+  <% else %>
+    <%= link_to add_property_address_lead_path(property_id: property.id) do %>Add address, if you plan to visit it<% end %>
+  <% end %>
+</p>

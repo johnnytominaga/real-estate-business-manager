@@ -1,0 +1,227 @@
+<%= form_with model: @property, url: editors_editor_update_properties_path(id: params[:id], original: params[:original]) do |f| %>
+
+  <%= f.hidden_field :contract_type, value: @property.contract_type %>
+  <% if @property.payment_format.blank? && @property.payment_format == 0 %>
+    <%= f.hidden_field :payment_format, value: "OneTime" %>
+  <% end %>
+    <div class="row" style="padding: 30px;">
+      <div class="row">
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :availability_date %>
+            <%= f.text_field :availability_date, value: (@property.availability_date.to_time.strftime("%d-%m-%Y") unless @property.availability_date.blank?), class: "form-control", readonly: true, id: "other_property_availability_date" %>
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :price do %>Price (€)<% end %>
+            <%= f.number_field :price, in: 100..10000000, step: 1, placeholder: "Enter price", class: "form-control"  %>
+
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :address %>
+            <%= f.text_field :address, placeholder: "Enter property's address", class: "form-control"  %>
+          </div>
+        </div>
+      </div>
+
+        <div class="row">
+          <div class="col-md-4 input">
+            <div class="form-group">
+              <%= f.label :style %>
+              <%= f.select :style, options_for_select(Property.styles.map { |key, value| [key.humanize, key] }),
+                            id: "property_style", prompt: "Select...", class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-md-4 input">
+            <div class="form-group">
+              <%= f.label :condition %>
+              <%= f.select :condition, options_for_select(Property.conditions.map { |key, value| [key.humanize, key] }),
+                            id: "property_condition", prompt: "Select...", class: "form-control" %>
+            </div>
+          </div>
+
+          <div class="col-md-4 input">
+            <div class="form-group">
+              <%= f.label :bathrooms %>
+              <%= f.number_field :bathrooms, in: 1..1000, step: 1, placeholder: "Enter the number of bathrooms", class: "form-control"  %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 input">
+            <div class="form-group">
+              <%= f.label :floor do %>Floor ("0" for groundfloor)<% end %>
+              <%= f.number_field :floor, in: 0..1000, step: 1, placeholder: "Enter floor number", class: "form-control"  %>
+            </div>
+          </div>
+          <div class="col-md-4 input">
+            <div class="form-group">
+              <%= f.label :sqm do %>Total Area (sqm)<% end %>
+              <%= f.number_field :sqm, in: 1..10000000, step: 1, placeholder: "Enter the area in sqm", class: "form-control"  %>
+            </div>
+          </div>
+          <div class="col-md-4 input">
+            <div class="form-group">
+              <%= f.label :balconies %>
+              <%= f.number_field :balconies, in: 1..1000, step: 1, placeholder: "Enter the number of balconies", class: "form-control"  %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 input">
+            <div class="form-group">
+              <%= f.label :kitchens do %>
+                <%= f.check_box :kitchens %> Kitchen
+              <% end %>
+            </div>
+          </div>
+          <div class="col-md-2 input">
+            <div class="form-group">
+              <div class="checkbox-inline">
+                <%= f.label :lift do %>
+                  <%= f.check_box :lift %> Lift
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 input">
+            <div class="form-group">
+              <div class="checkbox-inline">
+                <%= f.label :ac do %>
+                  <%= f.check_box :ac %> Air-Conditioner
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 input">
+            <div class="form-group">
+              <div class="checkbox-inline">
+                <%= f.label :roof do %>
+                  <%= f.check_box :roof %> Use of roof
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 input">
+            <div class="form-group">
+              <div class="checkbox-inline">
+                <%= f.label :yard do %>
+                  <%= f.check_box :yard %> Yard
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 input">
+            <div class="form-group">
+              <div class="checkbox-inline">
+                <%= f.label :seaview do %>
+                  <%= f.check_box :seaview %> Sea view
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 input">
+            <div class="form-group">
+              <div class="checkbox-inline">
+                <%= f.label :seafront do %>
+                  <%= f.check_box :seafront %> Seafront
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 input">
+            <div class="form-group">
+              <div class="checkbox-inline">
+                <%= f.label :swimming_pool do %>
+                  <%= f.check_box :swimming_pool %> Swimming pool
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 input">
+            <div class="form-group">
+              <div class="checkbox-inline">
+                <%= f.label :jacuzzi do %>
+                  <%= f.check_box :jacuzzi %> Jacuzzi
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 input">
+            <div class="form-group">
+              <div class="checkbox-inline">
+                <%= f.label :unfurnished do %>
+                  <%= f.check_box :unfurnished %> Unfurnished
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="row">
+        <div class="col-md-12 input">
+          <div class="form-group">
+            <%= f.label :obs %><br/>
+            <%= f.text_area :obs, rows: 3 %>
+          </div>
+        </div>
+      </div>
+      <div class="row fadeIn">
+        <div class="col-md-4 input">
+          <div class="row">
+            <div class="checkbox-inline">
+              <%= f.label :sold, id: "mark_sold_label" do %>
+                Mark as sold
+              <% end %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="checkbox-inline" style="display:flex;">
+                <label class="switch">
+                  <%= f.check_box :sold, id: "mark_sold_check" %>
+                    <span class="switch slider round"></span>
+                </label>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="row text-center">
+      <div class="col-md-6">
+        <button name="cancel_other_property" type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+      </div>
+      <div class="col-md-6">
+        <div class="actions">
+          <%= button_tag(:name => "update_other_property", :class => "btn btn-normal btn-block", :id => "btnSubmit") do %>
+            <i class="far fa-save"></i> Save
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<% end %>
+<script>
+
+    var dateToday = new Date();
+
+    $('#other_property_availability_date').datepicker({
+      defaultDate: "+1d",
+      numberOfYears: 3,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'dd-M-yy',
+      minDate: dateToday
+    });
+
+    $("#btnSubmit").click(function(){
+      $("#spinner").fadeIn('slow');
+    });
+
+</script>

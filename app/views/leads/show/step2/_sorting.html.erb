@@ -1,0 +1,19 @@
+<tr class="wow fadeIn">
+  <th scope="col"></th>
+  <th scope="col"></th>
+  <th scope="col"><%= sort_link(@search, :id, "ID", {default_order: :desc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :location, "Location", {default_order: :asc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :bedrooms, "Bedrooms", {default_order: :asc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :property_type, "Property type", {default_order: :asc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :price, "Price", {default_order: :desc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :availability_date, "Availability date", {default_order: :asc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :updated_at, "Updated date", {default_order: :desc}, { :remote => true, :method => :get }) %></th>
+</tr>
+
+<script>
+  $(function () {
+    $('a.sort_link').on("click", function () {
+      $("#spinner").fadeIn('slow');
+    });
+  });
+</script>

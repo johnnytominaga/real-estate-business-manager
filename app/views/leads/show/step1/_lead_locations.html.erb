@@ -1,0 +1,19 @@
+    <div class="col-md-12" id="locations_list_step1">
+      <% Area.all.order(:id).each do |a| %>
+        <h5><%= a.area %></h5>
+        <% Location.where("area_id = ?", a.id).order(:id).each_with_index do |l, index| %>
+          <% if @lead_locations.include? l.id %>
+            <%= link_to delete_lead_location_lead_path(lead_location_id: l.id, lead_id: @lead.id), class: 'location_label active', method: :delete, remote: true do %>
+              <%= l.name %>
+            <% end %>
+          <% else %>
+            <%= form_with model: @lead, url: create_lead_location_lead_path(id: @lead), html: {style:"display:inline-block;"}, remote: true do |f| %>
+              <%= f.fields_for :lead_locations, Location.find(l.id).lead_locations.build do |s| %>
+                <%= s.hidden_field :location_id, value: l.id %>
+              <% end %>
+                <%= button_tag(:name => "save", class: "location_label") do %><%=l.name%><% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>

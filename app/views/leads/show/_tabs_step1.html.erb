@@ -1,0 +1,36 @@
+<div class="row step-title">
+  <div class="col-md-8 wow fadeInUp">
+    <h3 id="step1-title"><%= @phase.name %></h3>
+  </div>
+  <div class="col-md-4 text-center wow zoomInDown" data-wow-delay="0.5s" id="done_button_step1">
+    <%= render partial: 'leads/show/step1/lead_done_button'%>
+  </div>
+</div>
+<div class="row" id="lead_description">
+  <%= render partial: 'leads/show/step1/lead_description'%>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <div class='row' id="tabs_step1_tables">
+      <%= render partial: 'leads/show/step1/tables' %>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="wow zoomInDown">Locations</h4>
+          </div>
+        </div>
+        <div class="row" id="lead_locations">
+          <%= render partial: 'leads/show/step1/lead_locations' %>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="created_date">
+      <%= render partial: 'leads/show/step1/created_date'%>
+    </div>
+  </div>
+  <div class="col-md-4" id="status_updates_step1">
+    <%= render partial: 'leads/show/step1/status_updates' %>
+  </div>
+</div>

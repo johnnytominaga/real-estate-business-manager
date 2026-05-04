@@ -1,0 +1,33 @@
+<% if message.user == current_user %>
+
+<% else %>
+
+<% end %>
+    <% if message.user == current_user %>
+      <div class="panel message-sender-container text-left">
+        <div class="panel-body message-sender">
+
+          <%= image_tag message.user.show_avatar("300x300"), class: "img-circle avatar-small" %>
+          <%= message.content %>
+          <!-- <strong>< %= message.user.fullname %></strong> -->
+          <br/>
+          <div class="row-space-2">
+            <span class="pull-right"><%= message.message_time %></span>
+          </div>
+    <% else %>
+      <div class="panel message-recipient-container text-right">
+        <div class="panel-body message-recipient">
+
+          <%= message.content %>
+          <%= link_to user_path(@other.nickname) do %>
+            <%= image_tag message.user.show_avatar("300x300"), class: "img-circle avatar-small" %>
+          <% end %>
+          <!-- <strong>< %= message.user.fullname %></strong> -->
+          <br/>
+          <div class="row-space-2">
+            <span class="pull-left"><%= message.message_time %></span>
+          </div>
+    <% end %>
+
+  </div>
+</div>

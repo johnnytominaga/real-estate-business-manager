@@ -1,0 +1,5 @@
+<% if !lead_property.deposit_for_bills.blank? %>
+  <%= link_to edit_deposit_info_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id, attribute: 'deposit_for_bills'), remote: true do %><strong>Deposit for bills: </strong><%= number_to_currency(lead_property.deposit_for_bills, unit: "€", precision: 0) %><% end %>
+<% else %>
+  <%= link_to edit_deposit_info_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id, attribute: 'deposit_for_bills'), remote: true do %><strong>Deposit for bills: </strong>Click to add<% end %>
+<% end %>

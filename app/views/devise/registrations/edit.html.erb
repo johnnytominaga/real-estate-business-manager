@@ -1,0 +1,91 @@
+<section id="internal-hero">
+  <div class="hero-container" style="background-image: url(<%= asset_path "hero-bg.jpg" %>); background-position: center;">
+  </div>
+</section>
+
+<main class="main">
+  <section id="devise-edit-profile" class="header wow fadeInUp">
+    <div class="container">
+      <div class="row">
+        <div class="section-header" style="padding:60px 0 0 0;">
+          <h3>Edit your profile</h3>
+        </div>
+      </div>
+      <%= form_for(resource, as: resource_name, url: user_registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render 'shared/devisemes' %>
+        <div class="row">
+          <div class="col-md-3">
+            <%= render 'users/registrations/edit_profile_menu' %>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-4 input">
+                <div class="form-group">
+                  <%= f.text_field :nickname, autofocus: true, placeholder: "Nickname", class: "form-control" %>
+                </div>
+              </div>
+
+              <div class="col-md-4 input">
+                <div class="form-group">
+                  <%= f.text_field :first_name, autofocus: true, placeholder: "First name", class: "form-control" %>
+                </div>
+              </div>
+
+              <div class="col-md-4 input">
+                <div class="form-group">
+                  <%= f.text_field :last_name, autofocus: true, placeholder: "Last name", class: "form-control" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 input">
+                <div class="form-group">
+                  <%= f.email_field :email, autofocus: true, placeholder: "Email", class: "form-control" %>
+                </div>
+                <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                  <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+                <% end %>
+              </div>
+              <div class="col-md-6 input">
+                <div class="form-group">
+                  <%= f.phone_field :phone_number, autocomplete: "off", id: "phone_number", placeholder: "Phone number", class: "form-control" %>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-md-offset-3 input">
+              <div class="form-group">
+                <%= f.password_field :current_password, autocomplete: "off", id: "current_password", placeholder: "Current password", class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <%= image_tag current_user.show_avatar('300x300'), class: "img-circle avatar-medium" %>
+                <%= f.label :avatar do %>
+                    <i class="fas fa-camera"></i>
+                    Change profile picture
+                    <%= f.file_field :avatar,
+                                      accept: 'image/jpeg,
+                                              image/png',
+                                      style: 'width: 100%'
+                    %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="form-group">
+              <div class="actions" style="padding: 20px 15px 0 15px;">
+                <%= f.submit "Save", class: "btn btn-normal btn-block" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</main>

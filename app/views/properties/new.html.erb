@@ -1,0 +1,18 @@
+<section id="internal-hero">
+  <div class="hero-container" style="background-image: url(<%= randomized_internal_header_image %>); background-position: top;">
+  </div>
+</section>
+
+<main class="main">
+  <section id="new-property" class="header wow fadeInUp" style="padding: 60px 0 60px 0">
+    <div class="container">
+      <div class="row">
+        <div class="section-header">
+          <h3>New listing</h3>
+          <p>Select the type of contract and fill out the form</p>
+        </div>
+      </div>
+      <%= render partial: 'properties/new/property_form_selector' %>
+    </div>
+  </section>
+</main>

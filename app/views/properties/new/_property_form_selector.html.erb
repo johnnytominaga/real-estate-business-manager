@@ -1,0 +1,149 @@
+<div class="row text-center">
+  <div id="property_form_selector">
+    <div class="btn-group btn-group-md">
+      <button type="button" class="btn btn-secondary" id="selector_rent">For rent</button>
+      <button type="button" class="btn btn-secondary" id="selector_sales">For sale</button>
+      <button type="button" class="btn btn-secondary" id="selector_commercial_lease">Commercial lease</button>
+      <button type="button" class="btn btn-secondary" id="selector_commercial_sale">Commercial for sale</button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div id="new_property_form" style="padding: 20px 0 0 0;"></div>
+</div>
+
+
+<script>
+
+  jQuery(document).ready(function() {
+
+    function location_selector(){
+
+      $('#property_location_select').parent().hide()
+      var property_locations = $('#property_location_select').html()
+
+      $('#property_area_select').on("change", function(){
+
+        var selected_property_area = $('#property_area_select').find(":selected").text();
+        var escaped_area = selected_property_area.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1')
+        var options = $(property_locations).filter("optgroup[label=" + escaped_area + "]").html()
+        // var options = $("optgroup[label=" + escaped_area + "]").html()
+        // console.log(escaped_area)
+
+        if ($(options).length){
+          $('#property_location_select').html(options)
+          return $('#property_location_select').parent().show()
+
+        } else {
+          $('#property_location_select').empty()
+           return $('#property_location_select').parent().hide()
+
+          }
+
+      });
+
+    }
+
+    function date_selector() {
+      var dateToday = new Date();
+
+      $('#property_availability_date').datepicker({
+        defaultDate: "+1d",
+        numberOfYears: 3,
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'dd-M-yy',
+        minDate: dateToday
+      });
+    }
+
+    function flat_no() {
+      $('#flat_no_check').click(function(){
+        $('#flat_no_field').toggle(this.checked);
+      });
+    }
+
+    function phone_number_format(){
+      var max_chars = 12;
+        $('#property_owner_phone_number').keydown( function(e){
+            if ($(this).val().length >= max_chars) {
+                $(this).val($(this).val().substr(0, max_chars));
+            }
+        });
+
+        $('#property_owner_phone_number').keyup( function(e){
+            if ($(this).val().length >= max_chars) {
+                $(this).val($(this).val().substr(0, max_chars));
+            }
+        });
+    }
+
+
+    (function($) {
+      $.fn.inputFilter = function (inputFilter) {
+        return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+          if (inputFilter(this.value)) {
+            this.oldValue = this.value;
+            this.oldSelectionStart = this.selectionStart;
+            this.oldSelectionEnd = this.selectionEnd;
+          } else if (this.hasOwnProperty("oldValue")) {
+            this.value = this.oldValue;
+            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+          }
+        });
+      };
+    }(jQuery));
+
+
+    $("#property_form_selector").on("click", "#selector_rent", function(){
+        $("#selector_rent").removeClass("btn btn-secondary").addClass("btn btn-primary");
+        $("#selector_sales").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#selector_commercial_lease").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#selector_commercial_sale").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#new_property_form").html("<%= j render partial: 'properties/new/form_new_property_rent' %>");
+        location_selector()
+        date_selector()
+        flat_no()
+        phone_number_format()
+    });
+
+    $("#property_form_selector").on("click", "#selector_sales", function(){
+        $("#selector_rent").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#selector_sales").removeClass("btn btn-secondary").addClass("btn btn-primary");
+        $("#selector_commercial_lease").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#selector_commercial_sale").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#new_property_form").html("<%= j render partial: 'properties/new/form_new_property_sales' %>");
+        location_selector()
+        date_selector()
+        flat_no()
+        phone_number_format()
+    });
+
+    $("#property_form_selector").on("click", "#selector_commercial_lease", function(){
+        $("#selector_rent").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#selector_sales").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#selector_commercial_lease").removeClass("btn btn-secondary").addClass("btn btn-primary");
+        $("#selector_commercial_sale").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#new_property_form").html("<%= j render partial: 'properties/new/form_new_property_commercial' %>");
+        location_selector()
+        date_selector()
+        flat_no()
+        phone_number_format()
+    });
+
+    $("#property_form_selector").on("click", "#selector_commercial_sale", function(){
+        $("#selector_rent").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#selector_sales").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#selector_commercial_lease").removeClass("btn btn-primary").addClass("btn btn-secondary");
+        $("#selector_commercial_sale").removeClass("btn btn-secondary").addClass("btn btn-primary");
+        $("#new_property_form").html("<%= j render partial: 'properties/new/form_new_property_commercial_sale' %>");
+        location_selector()
+        date_selector()
+        flat_no()
+        phone_number_format()
+    });
+
+
+  });
+
+</script>

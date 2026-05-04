@@ -1,0 +1,7 @@
+<%= link_to add_to_bookmarks_path(property_id: params[:property_id], user_id: params[:user_id]), remote: true do %>
+  <% if Bookmark.exists?(user_id: params[:user_id], property_id: params[:property_id]) %>
+    <i class="fas fa-bookmark fa-2x"></i>
+  <% else %>
+    <i class="far fa-bookmark fa-2x"></i>
+  <% end %>
+<% end %>

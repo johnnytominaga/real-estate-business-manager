@@ -1,0 +1,11 @@
+<% unless flash.empty? %>
+  <% flash.each do |f| %>
+    <% type = f[0].gsub('alert', 'error').gsub('notice', 'info') %>
+    <% if type == 'error' %>
+      toastr['<%= type %>']('<%= f[1] %>', 'Ooops...');
+    <% else %>
+      toastr['<%= type %>']('<%= f[1] %>', 'YAY!');
+    <% end %>
+  <% end %>
+<% end %>
+$("#spinner").hide();

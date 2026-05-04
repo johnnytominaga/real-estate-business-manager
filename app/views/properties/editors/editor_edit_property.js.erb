@@ -1,0 +1,3 @@
+<%= render "shared/message_js" %>
+$('#editor_modal_edit_property').html("<%= j render partial: 'properties/editors/editor_form_edit_property', locals: {property: params[:id], original: params[:original]} %>");
+$("#spinner").hide();

@@ -1,0 +1,112 @@
+<%= stylesheet_link_tag 'leads/leads_internal', media: 'all', 'data-turbolinks-track' => true %>
+<%= stylesheet_link_tag 'leads/done_button', media: 'all', 'data-turbolinks-track' => true %>
+
+<section id="leads-internal-hero">
+  <div class="hero-container" style="background-image: url('<%= asset_path 'leads-bg.jpg' %>'); background-position: top center; background-repeat: no-repeat; background-size: cover;">
+    <div class="container info">
+      <div class="row" id="lead_title">
+        <%= render partial: 'leads/show/lead_title' %>
+      </div>
+
+      <div class="row" id="lead_boxes">
+        <%= render partial: 'leads/show/lead_boxes' %>
+      </div>
+    </div>
+    <div class="container steps">
+      <div class="steps" id="lead_steps">
+        <%= render partial: 'leads/show/lead_steps' %>
+      </div>
+
+    </div>
+  </div>
+</section>
+<main>
+  <section id="lead_page" style="padding: 60px 0 60px 0;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tab-content">
+            <% if @lead.information_collected == true && @lead.property_found == true && @lead.negotiation_completed == true && @lead.deposit_paid == true %>
+              <div class="tab-pane fade in" role="tabpanel" id="step1">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step2">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step3">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step4">
+              </div>
+              <div class="tab-pane fade in active" role="tabpanel" id="step5">
+                <%= render partial: 'leads/show/tabs_step5' %>
+              </div>
+
+            <% elsif @lead.information_collected == true && @lead.property_found == true && @lead.negotiation_completed == true %>
+              <div class="tab-pane fade in" role="tabpanel" id="step1">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step2">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step3">
+              </div>
+              <div class="tab-pane fade in active" role="tabpanel" id="step4">
+                <%= render partial: 'leads/show/tabs_step4' %>
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step5">
+              </div>
+
+
+            <% elsif @lead.information_collected == true && @lead.property_found == true %>
+              <div class="tab-pane fade in" role="tabpanel" id="step1">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step2">
+              </div>
+              <div class="tab-pane fade in active" role="tabpanel" id="step3">
+                <%= render partial: 'leads/show/tabs_step3' %>
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step4">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step5">
+              </div>
+
+            <% elsif @lead.information_collected == true %>
+              <div class="tab-pane fade in" role="tabpanel" id="step1">
+              </div>
+              <div class="tab-pane fade in active" role="tabpanel" id="step2">
+                <%= render partial: 'leads/show/tabs_step2' %>
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step3">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step4">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step5">
+              </div>
+
+
+            <% else %>
+              <div class="tab-pane fade in active" role="tabpanel" id="step1">
+                <%= render partial: 'leads/show/tabs_step1' %>
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step2">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step3">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step4">
+              </div>
+              <div class="tab-pane fade in" role="tabpanel" id="step5">
+              </div>
+
+            <% end %>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<%= javascript_include_tag 'fullcalendar/jquery.easing' %>
+
+<script>
+  $(document).ready(function () {
+      //Initialize tooltips
+      $('.nav-tabs > li a[title]').tooltip();
+  });
+
+</script>

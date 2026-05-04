@@ -1,0 +1,18 @@
+$("#spinner").hide();
+<%= render "shared/message_js" %>
+
+<% if !@property_ranked.blank? %>
+  <% if @property_ranked.contract_type == "Rent" %>
+    $("#update_fields").html("<%= j (render 'properties/editors/editor_content_rent') %>");
+  <% elsif @property_ranked.contract_type == "Sales" %>
+    $("#update_fields").html("<%= j (render 'properties/editors/editor_content_sales') %>");
+  <% elsif @property_ranked.contract_type == "Commercial lease" %>
+    $("#update_fields").html("<%= j (render 'properties/editors/editor_content_commercial') %>");
+  <% elsif @property_ranked.contract_type == "Commercial sale" %>
+    $("#update_fields").html("<%= j (render 'properties/editors/editor_content_commercial_sale') %>");
+  <% end %>
+<% else %>
+  $("#update_fields").text("Something went wrong. Please, contact your manager.");
+<% end %>
+$("#update_title").html("<%= j render 'properties/editors/editor_content_title' %>")
+$("#share_property").html("<%= j render 'properties/editors/bottom_navbar/editor_content_share' %>")

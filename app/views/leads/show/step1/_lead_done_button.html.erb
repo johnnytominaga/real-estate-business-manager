@@ -1,0 +1,22 @@
+<%= form_with model: @lead, url: phase_completed_lead_path, method: :patch, html: {id: 'information_collected_form'}, remote: true do |f| %>
+    <div class="done-button" title="Information collection completed">
+      <%= f.label :information_collected do %>
+        <% if @lead.information_collected == true %>
+          <%= f.check_box :information_collected, id: "information_collected", value: params[:information_collected],  class: 'checkbox is-checked check', style:'-webkit-appearance: none;' %>
+        <% else %>
+          <%= f.check_box :information_collected, id: "information_collected", value: params[:information_collected],  class: 'checkbox check', style:'-webkit-appearance: none;' %>
+        <% end %>
+        Done!
+      <% end %>
+    </div>
+<% end %>
+
+<script>
+  $('#information_collected').click(function(){
+    $('.checkbox').toggleClass('is-checked');
+    var elem = $('#information_collected_form')[0]
+    Rails.fire(elem, 'submit');
+    // $('#information_collected').trigger('submit.rails')
+  });
+  $('.done-button[title]').tooltip();
+</script>

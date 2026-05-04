@@ -1,0 +1,31 @@
+<th scope="row" class="wow fadeIn"><i class="fas fa-bolt"></i> Electrics</th>
+<td>
+  <%= form_with model: @property, url: editors_editor_update_properties_path(id: @property) do |f| %>
+    <div class="col-md-2">
+      <div class="form-group">
+        <div class="checkbox-inline">
+            <%= f.check_box :electrics %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10 wow fadeIn" data-wow-delay="0.1s" style="padding: 0px; display: inline-flex;">
+      <%= f.submit 'Cancel', name: 'editor_cancel_update', class: 'btn btn-secondary btn-block editor wow fadeIn', id: "btnCancel", style: 'margin: 0 5px;', "data-wow-delay" => "0.3s" %>
+      <div class="actions">
+        <%= button_tag(:name => "editor_update_property", :class => "btn btn-form editor wow fadeIn", :id => "btnSubmit", "data-wow-delay" => "0.4s" ) do %>
+          Save
+        <% end %>
+      </div>
+
+    </div>
+  <% end %>
+</td>
+<td></td>
+
+<script>
+  $('#btnSubmit, #btnCancel').click(function() {
+    $("#spinner").fadeIn('slow');
+    $("#spinner").click(function(){
+      $("#spinner").hide();
+    })
+  });
+</script>

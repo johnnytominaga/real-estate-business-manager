@@ -1,0 +1,2 @@
+var propertyId = <%= @property.id %>
+$("#property_address_" + propertyId ).html("<%= j (render 'leads/show/step3/add_property_address_form') %>");

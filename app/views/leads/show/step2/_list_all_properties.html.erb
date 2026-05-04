@@ -1,0 +1,66 @@
+<h4 class="wow zoomInDown">Properties that might be suitable for <%= @lead.name %></h4>
+<% if !@arrProperties.blank? %>
+  <div class="table-responsive" style="overflow-y:hidden;">
+    <table class="table table-striped borderless fadeIn">
+      <thead>
+        <%= render "leads/show/step2/sorting" %>
+      </thead>
+      <tbody>
+        <% @arrProperties.each_with_index do |property, index| %>
+        <tr class="wow fadeInUp" data-wow-delay="0.<%= index %>s" data-link="edit_field_name">
+          <% if @lead_properties.include? property.id %>
+            <td class="text-center">
+              <%= link_to delete_lead_property_lead_path(lead_property_id: LeadProperty.where('property_id = ?', property.id).ids, q: @q), method: :delete, remote: true do %>
+                <i class="fas fa-star" title="Remove from Selected properties"></i>
+              <% end %>
+            </td>
+          <% else %>
+            <td class="text-center">
+              <%= form_with model: @lead, url: create_lead_property_lead_path(id: @lead, q: @q), html: {style:"display:inline-block;"}, remote: true do |f| %>
+                <%= f.fields_for :lead_properties, Property.find(property.id).lead_properties.build do |p| %>
+                  <%= p.hidden_field :property_id, value: property.id %>
+                  <%= p.hidden_field :status, value: "Suggested by agent" %>
+                <% end %>
+                  <%= button_tag(:name => "save", class: 'select_property') do %><i class="far fa-star" title="Add to Selected properties"></i><% end %>
+              <% end %>
+            </td>
+          <% end %>
+          <td><%= image_tag property.cover_photo("300X300", request.host), class: "img-circle avatar-small"%></td>
+          <th scope="row"><%= property.id %></th>
+          <td><% if !property.location.blank? %><%= property.location.name %><% end %></td>
+          <td><% if !property.bedrooms.blank? %><%= property.bedrooms %><% end %></td>
+          <td><% if !property.property_type.blank? %><%= property.property_type %><% end %></td>
+          <td><% if !property.price.blank? %><%= property.property_price %><% end %></td>
+          <td><% if !property.availability_date.blank? %><%= property.availability_date.to_time.strftime("%d/%m/%Y") %><% end %></td>
+          <td><% if !property.updated_at.blank? %><%= property.updated_at.to_time.strftime("%d/%m/%Y") %><% end %></td>
+          <td><%= link_to owner_details_property_path(id: property.id, owner_id: property.owner_id), id: "owner_details_button_#{property.id}", 'data-toggle': "modal", 'data-target': "#owner_details_modal", method: :post, remote: true do %><i class="fas fa-address-book" title="Owner details"></i><% end %></td>
+          <td><%= link_to property_path(property.id), target: "_blank" do %><i class="fas fa-external-link-alt" title="Open property page"></i><% end %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  Sorry, it seems like no property meets the criteria the client is looking for.
+<% end %>
+
+
+<div class="modal fade bd-example-modal-lg" id="owner_details_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content" id="owner_details">
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function () {
+      //Initialize tooltips
+      $('.fa-star[title], .fa-address-book[title], .fa-external-link-alt[title]').tooltip();
+  });
+
+  $('#owner_details_modal').on('shown.bs.modal', function () {
+    $('#owner_details_button_*').trigger('focus')
+  })
+
+</script>

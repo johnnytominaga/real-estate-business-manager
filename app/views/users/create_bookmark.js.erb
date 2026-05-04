@@ -1,0 +1,3 @@
+var propertyId = <%= params[:property_id] %>
+$("#bookmark_" + propertyId).html("<%= j render 'users/bookmark_icon' %>");
+$("#spinner").hide();

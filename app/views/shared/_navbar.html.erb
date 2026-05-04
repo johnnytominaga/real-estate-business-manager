@@ -1,0 +1,146 @@
+<!--==========================
+  Header
+============================-->
+<header id="header">
+  <div class="container-fluid">
+
+    <div id="logo" class="pull-left">
+      <!-- <h1><a href="#intro">Real Estate CRM</a></h1> -->
+      <%= link_to root_path do %>
+        <% if @request_url.include?('rocklandmalta.com') || @request_url.include?('jr-dev-07') %>
+          <%= image_tag "rockland-logo.png", alt: "Rockland", title: "Rockland logo"%>
+        <% else %>
+          <%= image_tag "logo.png", alt: "Real Estate CRM", title: "Real Estate CRM Logo"%>
+        <% end %>
+      <% end %>
+    </div>
+
+    <nav id="nav-menu-container">
+      <ul class="nav-menu">
+        <% if (!user_signed_in?) %>
+          <li <% if current_page?(root_path) %> class="menu-active"<% end %>><%= link_to "Home", root_path %></li>
+          <li <% if current_page?(properties_path) %> class="menu-active"<% end %>><%= link_to "Properties", properties_path %></li>
+          <!-- <li><a href="">Submit a property</a></li> -->
+          <li <% if current_page?(careers_path) %> class="menu-active"<% end %>><%= link_to careers_path do %>Careers<% end %></li>
+          <li <% if current_page?(contact_path) %> class="menu-active"<% end %>><%= link_to contact_path do %>Contact<% end %></li>
+          <li <% if current_page?(new_user_session_path) %> class="menu-active"<% end %>><%= link_to "Login", new_user_session_path %></li>
+
+        <% elsif user_signed_in? && (current_user.role_id == "agent") %>
+          <li <% if current_page?(root_path) %> class="menu-active"<% end %>><%= link_to root_path do %>Home<% end %></li>
+          <li <% if current_page?(properties_path) %> class="menu-active"<% end %>><%= link_to "Properties", properties_path %></li>
+          <li <% if current_page?(new_property_path) %> class="menu-active"<% end %>><%= link_to "Add property", new_property_path %></li>
+          <li>
+            <%= link_to my_leads_path do %>
+              <i class="fas fa-users"></i>
+            <% end %>
+          </li>
+          <li class="text-center">
+            <%= link_to notifications_path do %>
+              <i class="fas fa-bell"></i>
+              <span class="notifications-counter" id="navbar_num_of_unread"><%= current_user.unread if current_user.unread > 0 %></span>
+            <% end %>
+          </li>
+          <li class="menu-has-children">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <span class="menu-tag">Welcome back, <%= current_user.first_name %> <%= image_tag current_user.show_avatar('100x100'), class: "img-circle avatar-small" %></span>
+            </a>
+            <ul>
+              <li <% if current_page?(my_profile_path) %> class="menu-active"<% end %>><%= link_to "My profile", my_profile_path %></li>
+              <li <% if current_page?(edit_profile_path) %> class="menu-active"<% end %>><%= link_to "Edit profile", edit_profile_path %></li>
+              <li <% if current_page?(change_password_path) %> class="menu-active"<% end %>><%= link_to "Change password", change_password_path %></li>
+              <li <% if current_page?(conversations_path) %> class="menu-active"<% end %>><%= link_to "Messages", conversations_path %></li>
+              <li <% if current_page?(my_leads_path) %> class="menu-active"<% end %>><%= link_to "My leads", my_leads_path %></li>
+              <li <% if current_page?(my_bookmarks_path) %> class="menu-active"<% end %>><%= link_to "My bookmarks", my_bookmarks_path %></li>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
+            </ul>
+          </li>
+          <script>
+            $('.nav-menu').superfish({
+               animation: {opacity:'show'},
+               speed: 400
+            });
+          </script>
+        <% elsif user_signed_in? && current_user.role_id == "editor" %>
+          <li <% if current_page?(root_path) %> class="menu-active"<% end %>><%= link_to root_path do %>Home<% end %></li>
+          <li <% if current_page?(properties_path) %> class="menu-active"<% end %>><%= link_to "Properties", properties_path %></li>
+          <li <% if current_page?(new_property_path) %> class="menu-active"<% end %>><%= link_to "List property from another owner", new_property_path %></li>
+          <li <% if current_page?(my_updates_path) %> class="menu-active"<% end %>><%= link_to "My updates", my_updates_path %></li>
+          <li class="text-center">
+            <%= link_to notifications_path do %>
+              <i class="fas fa-bell"></i>
+              <span class="notifications-counter" id="navbar_num_of_unread"><%= current_user.unread if current_user.unread > 0 %></span>
+            <% end %>
+          </li>
+          <li class="menu-has-children">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <span class="menu-tag">Welcome back, <%= current_user.first_name %> <%= image_tag current_user.show_avatar('100x100'), class: "img-circle avatar-small" %></span>
+            </a>
+            <ul>
+              <li <% if current_page?(my_profile_path) %> class="menu-active"<% end %>><%= link_to "My Profile", my_profile_path %></li>
+              <li <% if current_page?(edit_profile_path) %> class="menu-active"<% end %>><%= link_to "Edit Profile", edit_profile_path %></li>
+              <li <% if current_page?(change_password_path) %> class="menu-active"<% end %>><%= link_to "Change password", change_password_path %></li>
+              <li <% if current_page?(conversations_path) %> class="menu-active"<% end %>><%= link_to "Messages", conversations_path %></li>
+              <li <% if current_page?(my_bookmarks_path) %> class="menu-active"<% end %>><%= link_to "My bookmarks", my_bookmarks_path %></li>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
+            </ul>
+          </li>
+          <script>
+            $('.nav-menu').superfish({
+               animation: {opacity:'show'},
+               speed: 400
+            });
+          </script>
+          <% elsif user_signed_in? && (current_user.role_id == "manager" || current_user.role_id == "admin") %>
+            <li <% if current_page?(root_path) %> class="menu-active"<% end %>><%= link_to root_path do %>Home<% end %></li>
+            <li <% if current_page?(properties_path) %> class="menu-active"<% end %>><%= link_to "Properties", properties_path %></li>
+            <li <% if current_page?(new_property_path) %> class="menu-active"<% end %>><%= link_to "Add property", new_property_path %></li>
+            <li <% if current_page?(leads_path) %> class="menu-active"<% end %>><%= link_to "Leads", leads_path %></li>
+            <li>
+              <%= link_to my_leads_path do %>
+                <i class="fas fa-users"></i>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to my_bookmarks_path do %>
+                <i class="fas fa-bookmark"></i>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to notifications_path do %>
+                <i class="fas fa-bell"></i>
+                <span class="notifications-counter" id="navbar_num_of_unread"><%= current_user.unread if current_user.unread > 0 %></span>
+              <% end %>
+            </li>
+
+            <li class="menu-has-children">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="menu-tag">Welcome back, <%= current_user.first_name %> <%= image_tag current_user.show_avatar('100x100'), class: "img-circle avatar-small" %></span>
+              </a>
+              <ul>
+                <li <% if current_page?(my_profile_path) %> class="menu-active"<% end %>><%= link_to "My Profile", my_profile_path %></li>
+                <li <% if current_page?(edit_profile_path) %> class="menu-active"<% end %>><%= link_to "Edit Profile", edit_profile_path %></li>
+                <li <% if current_page?(change_password_path) %> class="menu-active"<% end %>><%= link_to "Change password", change_password_path %></li>
+                <li <% if current_page?(conversations_path) %> class="menu-active"<% end %>><%= link_to "Messages", conversations_path %></li>
+                <li <% if current_page?(my_leads_path) %> class="menu-active"<% end %>><%= link_to "My leads", my_leads_path %></li>
+                <li <% if current_page?(my_bookmarks_path) %> class="menu-active"<% end %>><%= link_to "My bookmarks", my_bookmarks_path %></li>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to "Admin dashboard", rails_admin_path %></li>
+                <% if current_user.role_id == "admin" %><li <% if current_page?(resque_server_path) %> class="menu-active"<% end %>><%= link_to "Jobs queue", resque_server_path %></li><% end %>
+                <li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
+              </ul>
+            </li>
+            <script>
+              $('.nav-menu').superfish({
+                 animation: {opacity:'show'},
+                 speed: 400
+              });
+            </script>
+
+        <% end %>
+
+      </ul>
+    </nav><!-- #nav-menu-container -->
+  </div>
+</header><!-- #header -->

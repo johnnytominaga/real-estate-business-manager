@@ -1,0 +1,6 @@
+$('#list_all_properties').html("<%= j (render 'leads/show/step2/list_all_properties', properties: @arrProperties, q: @q ) %>");
+$('#list_suggested_properties').html("<%= j (render 'leads/show/step2/list_suggested_properties') %>");
+$('#properties_pagination').html("<%= j (render 'leads/show/step2/pagination') %>");
+
+$("#spinner").hide();
+<%= render "shared/message_js" %>

@@ -1,0 +1,28 @@
+<% unless flash.empty? %>
+	<script type="text/javascript">
+
+		toastr.options = {
+			"closeButton": true,
+		  "newestOnTop": false,
+		  "progressBar": true,
+		  "positionClass": "toast-bottom-left",
+		  "preventDuplicates": true,
+		  "showDuration": "300",
+		  "hideDuration": "1000",
+		  "timeOut": "5000",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+			};
+
+		<% flash.each do |f| %>
+      <% type = f[0].gsub('alert', 'error').gsub('notice', 'info') %>
+			<% if type == 'error' %>
+	      toastr['<%= type %>']('<%= f[1] %>', 'Ooops...');
+	    <% else %>
+	      toastr['<%= type %>']('<%= f[1] %>', 'YAY!');
+	    <% end %>		<% end %>
+	</script>
+<% end %>

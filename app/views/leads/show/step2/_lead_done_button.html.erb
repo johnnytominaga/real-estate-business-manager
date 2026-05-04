@@ -1,0 +1,22 @@
+<%= form_with model: @lead, url: phase_completed_lead_path, method: :patch, html: {id: 'property_found_form'}, remote: true do |f| %>
+    <div class="done-button" title="Property hunt completed">
+      <%= f.label :property_found do %>
+        <% if @lead.property_found == true %>
+          <%= f.check_box :property_found, id: "property_found", value: params[:property_found],  class: 'checkbox is-checked check', style:'-webkit-appearance: none;' %>
+        <% else %>
+          <%= f.check_box :property_found, id: "property_found", value: params[:property_found],  class: 'checkbox check', style:'-webkit-appearance: none;' %>
+        <% end %>
+        Done!
+      <% end %>
+    </div>
+<% end %>
+
+<script>
+  $('#property_found').click(function(){
+    $('.checkbox').toggleClass('is-checked');
+    var elem = $('#property_found_form')[0]
+    Rails.fire(elem, 'submit');
+    // $('#information_collected').trigger('submit.rails')
+  });
+  $('.done-button[title]').tooltip();
+</script>

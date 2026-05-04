@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <div class="row modal-header-editor">
+    <div class="row">
+      <div class="col-md-6">
+        <strong>Edit property ID: <%= @property.id %></strong>
+      </div>
+      <div class="col-md-6">
+        <%= link_to "Go to property page »", property_path(@property.id), target: "_blank;", class:"other_property_link" %>
+        <button type="button" class="close"  data-dismiss="modal" aria-label="Close" id="btnClose">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <h4></h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <% if @property.contract_type == "Rent" %>
+        <%= render partial: 'properties/edit/editor_form_rent', locals: {id: params[:id], original: params[:original]}%>
+      <% elsif @property.contract_type == "Sales" %>
+        <%= render partial: 'properties/edit/editor_form_sales', locals: { id: params[:id], original: params[:original]}%>
+      <% elsif @property.contract_type == "Commercial lease" %>
+        <%= render partial: 'properties/edit/editor_form_commercial', locals: {id: params[:id], original: params[:original]}%>
+      <% elsif @property.contract_type == "Commercial sale" %>
+        <%= render partial: 'properties/edit/editor_form_commercial_sale', locals: {id: params[:id], original: params[:original]}%>
+
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+var leadId = "<%== j lead_id %>";
+$('#create_lead_property_' + leadId).html("<%= j (render 'properties/show/lead_property_button', lead_property: @lead_property, property: property_id, lead: lead_id) %>");
+$("#spinner").hide();
+<%= render "shared/message_js" %>

@@ -1,0 +1,262 @@
+<div class="col-md-7 wow fadeIn">
+  <table class="table table-hover">
+    <tbody>
+      <tr data-link="edit_field_price" class="edit">
+          <% if !@property_ranked.price.blank? && @property_ranked.price != 0 %>
+            <th scope="row">Price</th>
+            <td><%= @property_ranked.property_price %></td>
+            <td>Edit</td>
+          <% else %>
+          <th scope="row" class="empty">Price</th>
+          <td class="empty">Add price</td>
+          <td class="empty">Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_address" class="edit">
+          <% if !@property_ranked.address.blank? && @property_ranked.address != "0" %>
+            <th scope="row">Address</th>
+            <td><%= @property_ranked.address %></td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row" class="empty">Address</th>
+            <td class="empty">Add address</td>
+            <td class="empty">Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_style" class="edit">
+          <% if !@property_ranked.style.blank? && @property_ranked.style != 0 %>
+            <th scope="row">Style</th>
+            <td><%= @property_ranked.style %></td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row" class="empty">Style</th>
+            <td class="empty">Add style</td>
+            <td class="empty">Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_bedrooms" class="edit">
+          <% if !@property_ranked.bedrooms.blank? && @property_ranked.bedrooms != 0 %>
+            <th scope="row">Bedrooms</th>
+            <td><%= @property_ranked.bedrooms %></td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row" class="empty">Bedrooms</th>
+            <td class="empty">Add bedrooms</td>
+            <td class="empty">Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_bathrooms" class="edit">
+          <% if !@property_ranked.bathrooms.blank? && @property_ranked.bathrooms != 0 %>
+            <th scope="row">Bathrooms</th>
+            <td><%= @property_ranked.bathrooms %></td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row" class="empty">Bathrooms</th>
+            <td class="empty">Add bathrooms</td>
+            <td class="empty">Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_condition" class="edit">
+          <% if !@property_ranked.condition.blank? && @property_ranked.condition != 0 %>
+            <th scope="row">Condition</th>
+            <td><%= @property_ranked.condition %></td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row" class="empty">Condition</th>
+            <td class="empty">Add condition</td>
+            <td class="empty">Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_floor" class="edit">
+          <% if !@property_ranked.floor.blank? && @property_ranked.floor = 0 %>
+            <th scope="row">Floor</th>
+            <td><%= @property_ranked.floor %></td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row" class="empty">Floor</th>
+            <td class="empty">Add floor</td>
+            <td class="empty">Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_sqm" class="edit">
+          <% if !@property_ranked.sqm.blank? && @property_ranked.sqm != 0 %>
+            <th scope="row">Area in sqm</th>
+            <td><%= @property_ranked.sqm %></td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row" class="empty">Area in sqm</th>
+            <td class="empty">Add area</td>
+            <td class="empty">Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_balconies" class="edit">
+          <% if !@property_ranked.balconies.blank? && @property_ranked.balconies != 0 %>
+            <th scope="row">Balconies</th>
+            <td><%= @property_ranked.balconies %></td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row" class="empty">Balconies</th>
+            <td class="empty">Add balconies</td>
+            <td class="empty">Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_obs" class="edit">
+          <% if !@property_ranked.obs.blank? && @property_ranked.obs != "0" %>
+            <th scope="row">Comments</th>
+            <td><%= @property_ranked.obs %></td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row">Comments</th>
+            <td>Add comments</td>
+            <td>Add</td>
+          <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="col-md-5 wow fadeIn" style= "padding: 0 0 0 10px" data-wow-delay="0.5s">
+  <table class="table table-hover">
+    <tbody>
+      <tr data-link="edit_field_kitchens" class="edit">
+          <% if !@property_ranked.kitchens.blank? && @property_ranked.kitchens != 0 %>
+            <th scope="row"><i class="fas fa-utensils"></i> Kitchen</th>
+            <td>Yes</td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row"><i class="fas fa-utensils"></i> Kitchen</th>
+            <td>No</td>
+            <td>Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_lift" class="edit">
+          <% if !@property_ranked.lift.blank? && @property_ranked.lift != "0" %>
+            <th scope="row"><i class="far fa-caret-square-up"></i> Lift</th>
+            <td>Yes</td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row"><i class="far fa-caret-square-up"></i> Lift</th>
+            <td>No</td>
+            <td>Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_ac" class="edit">
+          <% if !@property_ranked.ac.blank? && @property_ranked.ac != "0" %>
+            <th scope="row"><i class="far fa-snowflake"></i> Air-conditioner</th>
+            <td>Yes</td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row"><i class="far fa-snowflake"></i> Air-conditioner</th>
+            <td>No</td>
+            <td>Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_roof" class="edit">
+          <% if !@property_ranked.roof.blank? && @property_ranked.roof != "0" %>
+            <th scope="row"><i class="fas fa-chess-rook"></i> Roof</th>
+            <td>Yes</td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row"><i class="fas fa-chess-rook"></i> Roof</th>
+            <td>No</td>
+            <td>Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_yard" class="edit">
+          <% if !@property_ranked.yard.blank? && @property_ranked.yard != "0" %>
+            <th scope="row"><i class="fab fa-pagelines"></i> Yard</th>
+            <td>Yes</td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row"><i class="fab fa-pagelines"></i> Yard</th>
+            <td>No</td>
+            <td>Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_seafront" class="edit">
+          <% if !@property_ranked.seafront.blank? && @property_ranked.seafront != "0" %>
+            <th scope="row"><i class="fas fa-umbrella-beach"></i> Seafront</th>
+            <td>Yes</td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row"><i class="fas fa-umbrella-beach"></i> Seafront</th>
+            <td>No</td>
+            <td>Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_seaview" class="edit">
+          <% if !@property_ranked.seaview.blank? && @property_ranked.seaview != "0" %>
+            <th scope="row"><i class="fas fa-ship"></i> Sea view</th>
+            <td>Yes</td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row"><i class="fas fa-ship"></i> Sea view</th>
+            <td>No</td>
+            <td>Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_swimming_pool" class="edit">
+          <% if !@property_ranked.swimming_pool.blank? && @property_ranked.swimming_pool != "0" %>
+            <th scope="row"><i class="fas fa-swimmer"></i> Swimming pool</th>
+            <td>Yes</td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row"><i class="fas fa-swimmer"></i> Swimming pool</th>
+            <td>No</td>
+            <td>Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_jacuzzi" class="edit">
+          <% if !@property_ranked.jacuzzi.blank? || @property_ranked.jacuzzi != "0" %>
+            <th scope="row"><i class="fas fa-glass-martini-alt"></i> Jacuzzi</th>
+            <td>Yes</td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row"><i class="fas fa-glass-martini-alt"></i> Jacuzzi</th>
+            <td>No</td>
+            <td>Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_unfurnished" class="edit">
+          <% if !@property_ranked.unfurnished.blank? || @property_ranked.unfurnished != "0" %>
+            <th scope="row"><i class="fas fa-dolly-flatbed"></i> Unfurnished</th>
+            <td>Yes</td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row"><i class="fas fa-dolly-flatbed"></i> Unfurnished</th>
+            <td>No</td>
+            <td>Add</td>
+          <% end %>
+      </tr>
+      <tr data-link="edit_field_sold" class="edit">
+          <% if !@property_ranked.sold.blank? && @property_ranked.sold != "0" %>
+            <th scope="row"><i class="far fa-handshake"></i> Sold</th>
+            <td>Yes</td>
+            <td>Edit</td>
+          <% else %>
+            <th scope="row"><i class="far fa-handshake"></i> Sold</th>
+            <td>Mark as sold</td>
+          <% end %>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<script>
+  jQuery(document).ready(function( $ ) {
+
+      $("[data-link*='edit_field_']").one("click", this, function(){
+
+        var val = $(this).attr("data-link");
+        var skipChar = ("edit_field_").length;
+        var myAttribute = val.substr(skipChar);
+        var contractType = "<%= @property_ranked.contract_type.to_s.downcase %>";
+        var propertyId = "<%= @property_ranked.id.to_i %>"
+
+        $(this).removeClass("edit");
+        $(this).attr("data-link", "disabled");
+        $(this).load("/properties/edit_field?attribute=" + myAttribute + "&contract_type=" + contractType + "&id=" + propertyId);
+      });
+  });
+
+</script>

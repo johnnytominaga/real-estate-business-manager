@@ -1,0 +1,8 @@
+$('#property_listing').append("<%= j render partial: 'search/properties_list', locals: {properties: @arrProperties} %>");
+<% if @properties.next_page %>
+  $('#next_page').attr('href', "<%= users_loadmore_path(page: @arrProperties.next_page, q: @q, source: 'users', nickname: params[:nickname] ) %>");
+<% else %>
+  $('#load-more').remove();
+<% end %>
+$("#spinner").hide();
+<%= render "shared/message_js" %>

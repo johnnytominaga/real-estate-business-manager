@@ -1,0 +1,27 @@
+<% if !@arrAvailableProperties.blank? %>
+  <% @arrAvailableProperties.each_with_index do |property, index| %>
+    <div class="col-md-4 col-sm-4 wow fadeIn" data-wow-delay="0.<%= index %>s" style="padding-right: 0;">
+      <div class="card" style="width: 100%;">
+        <%= link_to property, target: "_blank" do %>
+
+          <%= image_tag property.cover_photo("400X400", request.host), class: "card-img-top img-circle", style: "width: 100%;" %>
+          <span class="status"><b><%= property.contract_type %></b></span>
+          <div class="card-body">
+            <p class="card-text">
+              <%= property.property_type %> in <% if !property.location.nil? %><%= property.location.name %><% end %><br/>
+              <b>
+                <% if !property.price.blank? && property.price != 0 %>
+                  <% @price = property.price %><%= number_to_currency(@price, unit: "€", precision: 0)%><% if property.contract_type == "Rent" %>/month<% elsif property.contract_type == "Commercial" %>/day<% end %>
+                <% end %>
+              </b>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="text-center">
+    <h4>Sorry, no results match that criteria</h4>
+  </div>
+<% end %>

@@ -1,0 +1,79 @@
+/*! jQuery UI - v1.12.1 - 2018-12-06
+* http://jqueryui.com
+* Includes: draggable.css, selectable.css, core.css, slider.css, theme.css
+* To view and modify this theme, visit http://jqueryui.com/themeroller/?scope=&folderName=custom-theme&bgImgOpacityHeader=&bgImgOpacityContent=&bgImgOpacityDefault=&bgImgOpacityHover=&bgImgOpacityActive=&bgImgOpacityHighlight=&bgImgOpacityError=&cornerRadiusShadow=8px&offsetLeftShadow=0px&offsetTopShadow=0px&thicknessShadow=5px&opacityShadow=30&bgImgOpacityShadow=0&bgTextureShadow=flat&bgColorShadow=%23666666&opacityOverlay=30&bgImgOpacityOverlay=0&bgTextureOverlay=flat&bgColorOverlay=%23aaaaaa&iconColorError=%23cc0000&fcError=%235f3f3f&borderColorError=%23f1a899&bgTextureError=flat&bgColorError=%23fddfdf&iconColorHighlight=%23ffffff&fcHighlight=%23ffffff&borderColorHighlight=%23444646&bgTextureHighlight=flat&bgColorHighlight=%23444646&iconColorActive=%23ffffff&fcActive=%23ffffff&borderColorActive=%23444646&bgTextureActive=flat&bgColorActive=%23444646&iconColorHover=%23555555&fcHover=%232b2b2b&borderColorHover=%23dddddd&bgTextureHover=flat&bgColorHover=%23dddddd&iconColorDefault=%23777777&fcDefault=%23454545&borderColorDefault=%23dddddd&bgTextureDefault=flat&bgColorDefault=%23dddddd&iconColorContent=%23444444&fcContent=%23333333&borderColorContent=%23ffffff&bgTextureContent=flat&bgColorContent=%23ffffff&iconColorHeader=%23444444&fcHeader=%23333333&borderColorHeader=%23444646&bgTextureHeader=flat&bgColorHeader=%23444646&cornerRadius=10px&fwDefault=normal&fsDefault=1em&ffDefault=Quicksand
+* Copyright jQuery Foundation and other contributors; Licensed MIT */
+
+.ui-slider.ui-corner-all {
+	height: 0.6em;
+}
+
+.ui-slider-handle.ui-corner-all {
+	top: -.4em;
+	border-radius: 50%;
+}
+.ui-slider {
+	position: relative;
+	text-align: left;
+}
+.ui-slider .ui-slider-handle {
+	position: absolute;
+	z-index: 2;
+	width: 1.2em;
+	height: 1.2em;
+	cursor: default;
+	-ms-touch-action: none;
+	touch-action: none;
+}
+.ui-slider .ui-slider-range {
+	position: absolute;
+	z-index: 1;
+	font-size: .7em;
+	display: block;
+	border: 0;
+	background-position: 0 0;
+}
+
+/* support: IE8 - See #6727 */
+.ui-slider.ui-state-disabled .ui-slider-handle,
+.ui-slider.ui-state-disabled .ui-slider-range {
+	filter: inherit;
+}
+
+.ui-slider-horizontal {
+	height: .8em;
+}
+.ui-slider-horizontal .ui-slider-handle {
+	top: -.3em;
+	margin-left: -.6em;
+}
+.ui-slider-horizontal .ui-slider-range {
+	top: 0;
+	height: 100%;
+}
+.ui-slider-horizontal .ui-slider-range-min {
+	left: 0;
+}
+.ui-slider-horizontal .ui-slider-range-max {
+	right: 0;
+}
+
+.ui-slider-vertical {
+	width: .8em;
+	height: 100px;
+}
+.ui-slider-vertical .ui-slider-handle {
+	left: -.3em;
+	margin-left: 0;
+	margin-bottom: -.6em;
+}
+.ui-slider-vertical .ui-slider-range {
+	left: 0;
+	width: 100%;
+}
+.ui-slider-vertical .ui-slider-range-min {
+	bottom: 0;
+}
+.ui-slider-vertical .ui-slider-range-max {
+	top: 0;
+}

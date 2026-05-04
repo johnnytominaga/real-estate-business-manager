@@ -1,0 +1,6 @@
+$('#property_listing').append("<%= j render partial: 'search/properties_list', locals: {properties: @arrProperties} %>");
+<% if @properties.next_page %>
+  $('#next_page').attr('href', "<%= loadmore_properties_path(page: @properties.next_page) %>");
+<% else %>
+  $('#load-more').remove();
+<% end %>

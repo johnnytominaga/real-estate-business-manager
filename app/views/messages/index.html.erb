@@ -1,0 +1,54 @@
+<section id="internal-hero">
+  <div class="hero-container" style="background-image: url(<%= randomized_internal_header_image %>); background-position: top;">
+  </div>
+</section>
+<main>
+  <section class="header wow fadeInUp" style="padding: 60px 0 60px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 text-center">
+        <%= image_tag @other.show_avatar("300x300"), class: "img-circle avatar-small" %>
+        <strong><%= @other.fullname %></strong>
+        <% if !@other.nickname.blank? %>
+          <%= link_to "View Profile", user_path(@other.nickname), class: "btn btn-default" %>
+        <% else %>
+        <%= link_to "View Profile", user_path(@other.id), class: "btn btn-default" %>
+        <% end %>
+      </div>
+      <div class="col-md-9">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-12">
+                Conversation with <%= @other.fullname %>
+                <input id="conversation_id" type="hidden" value="<%= @conversation.id %>">
+
+              </div>
+            </div>
+          </div>
+          <br/>
+          <div class="panel-body">
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <%= form_for [@conversation, @conversation.messages.new], remote:true do |f| %>
+                    <div class="form-group">
+                      <%= f.text_field :content, placeholder: "Type a message...", class: "form-control" %>
+                    </div>
+                    <%= f.hidden_field :user_id, value: current_user.id %>
+                    <div>
+                      <%= f.submit "Send message", class: "btn btn-normal" %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div id="chat">
+          <%= render @messages %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>

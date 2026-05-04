@@ -1,0 +1,43 @@
+<h1>Name: <%= @lead.name %></h1><br/>
+<h4>(this client had already contacted us)</h4>
+
+<p>Email: <%= @lead.email %></p>
+<p>Phone number: <%= @lead.phone %></p>
+<p>The client is interested in:</p>
+<ul>
+  <li>Contract type: <%= @lead_contract_type %></li>
+  <% if !@lead_unique_areas.blank? %>
+    <li>
+      <%= pluralize(@lead_unique_areas.count, "Area") %>:<br/>
+        <% @lead_unique_areas.each do |a| %>
+          <%= Area.find(a).area %><br/>
+        <% end %>
+    </li>
+  <% end %>
+  <% if !@lead_unique_locations.blank? %>
+    <li>
+      <%= pluralize(@lead_unique_locations.count, "Location") %>:<br/>
+        <% @lead_unique_locations.each do |l| %>
+          <%= Location.find(l).name %><br/>
+        <% end %>
+    </li>
+  <% end %>
+  <% if !@lead.bedrooms.blank? && @lead.bedrooms != 0 %><li>With: More than <%= @lead.bedrooms %> Bedrooms</li><% end %>
+  <li>From: <%= @lead_check_in_date %></li>
+  <li>For: <%= @lead.budget %></li>
+</ul>
+<% if !@lead.description.blank? %>
+  <p>Additional information sent by the client:</p>
+  <p><%= @lead.description %></p>
+<% end %>
+
+<p><%= @property_link %></p>
+<p><%= @lead_link %></p>
+<% if !@lead_unique_properties.blank? %>
+  <ul>
+    <li>Other properties the client may also be interested in:</li>
+    <% @lead_unique_properties.each do |p| %>
+      <li><%= link_to p, Rails.application.routes.url_helpers.property_url(p) %></li>
+    <% end %>
+  </ul>
+<% end %>

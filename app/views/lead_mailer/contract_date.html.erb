@@ -1,0 +1,23 @@
+<h3>Contract info:</h3>
+<% if !@lead_property.contract_amount.blank? %>
+  <p>Contract amount: €<%= @lead_property.contract_amount %></p>
+<% end %>
+<% if !@lead_property.deposit_amount.blank? %>
+  <p>Deposit: €<%= @lead_property.deposit_amount %></p>
+<% end %>
+<% if !@lead_property.deposit_for_bills.blank? %>
+  <p>Deposit for bills: €<%= @lead_property.deposit_for_bills %></p>
+<% end %>
+<br/>
+<br/>
+<h3>Owner's details:</h3>
+<% if !@owner.name.blank? %>
+  <p>Owner: <%= @owner.name %></p>
+<% end %>
+<p>Phone number: <%= @owner.phone_number %></p>
+<p>Property: <%= @property_link %></p>
+<br/>
+<br/>
+<h3>Client's details:</h3>
+<p>Name: <%= @lead_link %></p>
+<p>Phone number: <%= @lead.phone %></p>

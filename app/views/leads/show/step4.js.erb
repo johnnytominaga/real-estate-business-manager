@@ -1,0 +1,13 @@
+$('#step4').html("<%= j (render 'leads/show/tabs_step4') %>");
+$('#step1').removeClass("active");
+$('#step2').removeClass("active");
+$('#step3').removeClass("active");
+$('#step4').addClass("active");
+$('#step5').removeClass("active");
+$('#steps_bar_step1').removeClass("active");
+$('#steps_bar_step2').removeClass("active");
+$('#steps_bar_step3').removeClass("active");
+$('#steps_bar_step4').addClass("active");
+$('#steps_bar_step5').removeClass("active");
+$("#spinner").hide();
+<%= render "shared/message_js" %>

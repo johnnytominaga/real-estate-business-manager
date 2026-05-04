@@ -1,0 +1,7 @@
+<% if @properties.next_page %>
+  <div class="col-md-2 col-md-offset-5 wow fadeIn" data-wow-delay="0.1s">
+    <div id="load-more">
+      <%= link_to "Load more", loadmore_properties_path(page: @properties.next_page, q: @q ), id: "next_page", class: "btn btn-normal", style: "margin: 10px;", remote: true %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,7 @@
+<p>First name: <%= @candidate.first_name %></p>
+<p>Last name: <%= @candidate.last_name %></p>
+<p>Position: <%= @candidate.position %></p>
+<p>Email: <%= @candidate.email %></p>
+<p>Phone number: <%= @candidate_phone %></p>
+<br/><br/>
+<p>CV: <%= link_to "Click here to download", url_for(@candidate.curriculum) %></p>

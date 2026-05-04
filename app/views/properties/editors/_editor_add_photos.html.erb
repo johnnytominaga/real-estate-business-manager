@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h4>Add photos</h4>
+      </div>
+    </div>
+  <%= form_with model: @property, url: editors_editor_update_properties_path(id: @property) do |f| %>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="upload-photos text-center" style="margin: 0px;">
+              <%= f.label :property_photos do %>
+                <span class="btn btn-form btn-small upload">
+                  <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                  Upload photos
+                  <%= f.file_field :property_photos, value: nil, multiple: true %>
+                </span>
+                <p id="selected_photos" stype="display:none;"></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 text-right wow fadeIn">
+          <%= f.submit 'Cancel', name: 'cancel_photos', class: 'btn btn-secondary btn-block editor wow fadeIn', :id => "btnCancel", style: "display:inline;", "data-wow-delay" => "0.1s" %>
+        </div>
+        <div class="col-md-6 text-left wow fadeIn">
+          <%= button_tag(:name => "update_photos", :class => "btn btn-form editor wow fadeIn", :id => "btnSubmit", "data-wow-delay" => "0.2s" ) do %>
+          Save
+          <% end %>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
+
+<script>
+//UPLOAD FILES
+$(function() {
+
+  $(document).on('change', ':file', function() {
+    var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+    if(numFiles > 0) {
+      $(this).parents('span').siblings('#selected_photos').css("display", "block").text(numFiles + " files selected");
+    }
+  });
+});
+
+</script>
+
+<script>
+  $('#btnSubmit, #btnCancel').click(function() {
+    var numFiles = 0
+    $('#selected_photos').text(numFiles + " files selected").css("display", "none");
+    $("#spinner").fadeIn('slow');
+
+  });
+</script>

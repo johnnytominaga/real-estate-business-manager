@@ -1,0 +1,51 @@
+<%= stylesheet_link_tag 'leads/leads', media: 'all', 'data-turbolinks-track' => true %>
+<%= stylesheet_link_tag 'leads/fullcalendar', media: 'all', 'data-turbolinks-track' => true %>
+
+<section id="leads-hero">
+  <div class="hero-container" style="background-image: url('<%= asset_path 'leads-bg.jpg' %>'); background-position: top center; background-repeat: no-repeat; background-size: cover;  display: block; overflow: auto;">
+    <div class="container" id="calendar_section">
+      <%= render partial: "leads/my_leads/calendar" %>
+    </div>
+  </div>
+</section>
+<main>
+  <section class="header wow fadeInUp" style="padding: 60px 0 60px 0;">
+    <div class="container">
+      <div class="row">
+        <div class="section-header">
+          <h3>My leads</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container" id="leads-body">
+    <div class="row">
+      <div class="col-md-3 col-md-offset-9 text-right">
+          <%= link_to new_from_agent_leads_path, id: 'add_lead', 'data-toggle':"modal", 'data-target': ".bd-example-modal-lg", remote: true do %>Add lead <i class="fas fa-plus-circle"></i><% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" id="leads_table">
+        <%= render partial: "leads/my_leads/table" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-center" id="leads_loadmore" style="margin: 0 0 100px 0;">
+        <%= render partial: "leads/my_leads/loadmore" %>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="modal fade bd-example-modal-lg" id="new_lead" tabindex="-1" role="dialog" aria-labelledby="NewLeadModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content" id="new_lead_from_agent">
+    </div>
+  </div>
+</div>
+<script>
+   $('#new_lead').on('shown.bs.modal', function () {
+     $('#add_lead').trigger('click')
+   });
+</script>

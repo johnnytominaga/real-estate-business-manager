@@ -1,0 +1,69 @@
+<section id="property_suggestions">
+  <div class="container">
+    <% if (user_signed_in? && (!@properties_from_owner.blank? && @properties_from_owner != "0")) %>
+      <div class="row" class="wow fadeInUp" data-wow-delay="0.2s">
+        <div class="col-md-12">
+          <h3>Properties from the same owner</h3>
+          <% @properties_from_owner.each_with_index do |property, index| %>
+            <div class="col-md-3 wow fadeInUp" data-wow-delay="0.<%= index %>s">
+              <div class="panel panel-default">
+                <%= link_to property do %>
+                  <div class="panel-heading preview">
+                    <%= image_tag property.cover_photo("300X300", request.host) %>
+                  </div>
+                  <div class="panel-body">
+                    <%= property.property_type %> in <%= property.location.name %><br/>
+                    <span>
+                      <b>
+                        <% if !property.price.blank? %>
+                          <% @price = property.price %><%= number_to_currency(@price, unit: "€", precision: 0)%>
+                        <% end %>
+                        <% if property.contract_type == "Rent" %> per month
+                        <% elsif property.contract_type == "Commercial" %> per day
+                        <% end %>
+                      </b>
+                    </span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    <% end %>
+    <% if !@property_suggestions.blank? || !@property_suggestions == 0 %>
+      <div class="row" class="wow fadeInUp">
+        <div class="col-md-12">
+          <h3>Other properties you may also be interested in</h3>
+          <% @property_suggestions.each_with_index do |property, index| %>
+            <div class="col-md-3 wow fadeInUp" data-wow-delay="0.<%= index %>s">
+              <div class="panel panel-default">
+                <%= link_to property do %>
+                  <div class="panel-heading preview">
+                    <%= image_tag property.cover_photo("300X300", request.host) %>
+                  </div>
+                  <div class="panel-body">
+                    <%= property.property_type %> in <%= property.location.name %><br/>
+                    <span>
+                      <b>
+                        <% if !property.price.blank? %>
+                          <% @price = property.price %><%= number_to_currency(@price, unit: "€", precision: 0)%>
+                        <% end %>
+                        <% if property.contract_type == "Rent" %> per month
+                        <% elsif property.contract_type == "Commercial" %> per day
+                        <% end %>
+                      </b>
+                    </span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</section>

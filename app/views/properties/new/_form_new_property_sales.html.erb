@@ -1,0 +1,307 @@
+<%= form_for @property do |f| %>
+  <%= f.hidden_field :listed_by, value: current_user.id %>
+  <%= f.hidden_field :contract_type, value: "Sales" %>
+  <%= f.hidden_field :payment_format, value: "OneTime" %>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h4>New property for sale</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 input">
+      <div class="form-group wow fadeIn" data-wow-delay="0.1s">
+        <%= f.label :area_id do %>Area *<% end %>
+        <%= f.collection_select :area_id, Area.order(:id), :id, :area, {prompt: "Select Area..."}, {id: "property_area_select"} %>
+      </div>
+    </div>
+    <div class="col-md-2 input">
+      <div class="form-group wow fadeIn" data-wow-delay="0.2s">
+        <%= f.label :availability_date do %>Availability date *<% end %>
+        <%= f.text_field :availability_date, placeholder: "Select a date", class: "form-control", readonly: true %>
+      </div>
+    </div>
+    <div class="col-md-2 input">
+      <div class="form-group wow fadeIn" data-wow-delay="0.3s">
+        <%= f.label :owner_phone_country_code do %>Country code *<% end %>
+        <%= f.country_select :owner_phone_country_code, { include_blank: 'Select a country', priority_countries: ["MT", "IT", "GB"], priority_countries_divider: "~~~~~~"}, {class: "form-control countries"} %>
+      </div>
+    </div>
+    <div class="col-md-2 input">
+      <div class="form-group wow fadeIn" data-wow-delay="0.4s">
+        <%= f.label :owner_phone_number do %>Owner's phone number *<% end %>
+          <%= f.autocomplete_field :owner_phone_number, autocomplete_owner_phone_number_owners_path,
+                        'data-auto-focus' => false,
+                        'data-noMatchesLabel' => "No existing owners have been found",
+                        :update_elements => { :name => '#owner_name'},
+                        :placeholder => 'Type to find or create...'
+                        %>
+      </div>
+    </div>
+    <div class="col-md-3 input">
+      <div class="form-group wow fadeIn" data-wow-delay="0.4s">
+        <%= f.label :owner_name do %>Update owner's name<% end %>
+        <% if defined?(@property_owner.phone_number) %>
+          <%= f.text_field :owner_name, class: "form-control", placeholder: "Enter the owner's name", id: "owner_name", value: @property_owner.name, readonly: true  %>
+        <% else %>
+          <%= f.text_field :owner_name, class: "form-control", placeholder: "Enter the owner's name", id: "owner_name"  %>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3 input">
+      <div class="form-group wow fadeIn">
+        <%= f.label :location_id do %>Location *<% end %>
+        <%= f.grouped_collection_select :location_id, Area.order(:id), :locations, :area, :id, :name, {prompt: "Select Location..."}, {id: "property_location_select"} %>
+      </div>
+    </div>
+  </div>
+    <hr/>
+      <div class="row wow fadeIn">
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :property_type %>
+            <%= f.select :property_type, options_for_select(Property.property_types.map { |key, value| [key.humanize, key] }, \
+                                :disabled => ["Land", "Bar", "Cafeteria", "Corner shop",
+                                "Dive centre", "Office", "Office room", "Warehouse", "Clinic",
+                                "Restaurant", "Catering", "Salon", "Showroom", "Shop"]),
+                                {prompt: "Select Type of Property..."}, class: "form-control" %>
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :bedrooms %>
+            <%= f.number_field :bedrooms, in: 1..10, step: 1, placeholder: "Enter the number of bedrooms", class: "form-control"  %>
+
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :bathrooms %>
+            <%= f.number_field :bathrooms, in: 1..10, step: 1, placeholder: "Enter the number of bathrooms", class: "form-control"  %>
+          </div>
+        </div>
+      </div>
+      <div class="row wow fadeIn">
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :style %>
+            <%= f.select :style, options_for_select(Property.styles.map { |key, value| [key.humanize, key] }),
+                          id: "property_style", prompt: "Select...", class: "form-control" %>
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :address %>
+            <%= f.text_field :address, placeholder: "Enter property's address", class: "form-control"  %>
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :price do %>Total Price (€)<% end %>
+            <%= f.number_field :price, in: 100..100000000, step: 1, placeholder: "Enter price", class: "form-control"  %>
+          </div>
+        </div>
+      </div>
+      <div class="row wow fadeIn">
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :condition %>
+            <%= f.select :condition, [["Brand new", "Brand new"], ["New", "New"], ["Good", "Good"], ["Used", "Used"], ["Renovated", "Renovated"], ["Needs renovation", "Needs renovation"], ["Shell", "Shell"]],
+                          prompt: "Select...", class: "form-control" %>
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :balconies %>
+            <%= f.number_field :balconies, in: 1..1000, step: 1, placeholder: "Enter the number of balconies", class: "form-control"  %>
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :floor do %>Floor ("0" for groundfloor or blank if you don't know)<% end %>
+            <%= f.number_field :floor, in: 0..100, step: 1, placeholder: "Enter floor number", class: "form-control"  %>
+          </div>
+        </div>
+      </div>
+      <div class="row wow fadeIn">
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :sqm do %>Total Area (sqm)<% end %>
+            <%= f.number_field :sqm, in: 1..100000, step: 1, placeholder: "Enter the area in sqm", class: "form-control"  %>
+          </div>
+        </div>
+      </div>
+      <div class="row fadeIn">
+        <div class="col-md-2 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :ac do %>
+                <%= f.check_box :ac %> Air-Conditioner
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :roof do %>
+                <%= f.check_box :roof %> Use of roof
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :yard do %>
+                <%= f.check_box :yard %> Yard
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :seafront do %>
+                <%= f.check_box :seafront %> Sea front
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :seaview do %>
+                <%= f.check_box :seaview %> Sea view
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :swimming_pool do %>
+                <%= f.check_box :swimming_pool %> Swimming pool
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row wow fadeIn">
+        <div class="col-md-2 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :jacuzzi do %>
+                <%= f.check_box :jacuzzi %> Jacuzzi
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :unfurnished do %>
+                <%= f.check_box :unfurnished %> Unfurnished
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :kitchens do %>
+                <%= f.check_box :kitchens %> Kitchen
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :lift do %>
+                <%= f.check_box :lift %> Lift
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row wow fadeIn">
+        <div class="col-md-4 input">
+          <div class="row">
+            <div class="checkbox-inline">
+              <%= f.label :flat_no, id: "flat_no_label" do %>
+                The owner has more than one property like this
+              <% end %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="checkbox-inline" style="display:flex;">
+              <label class="switch">
+                <input type="checkbox" id="flat_no_check">
+                <span class="switch slider round"></span>
+              </label>
+              <div class="form-group" style="width:100%;">
+            <%= f.text_field :flat_no, placeholder: "Enter flat, property or room number", value: nil, class: "form-control wow fadeIn", id: "flat_no_field", style: "display:none; margin: 0 0 0 20px; width:90%;"%>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% if current_user.role_id == "admin" || current_user.role_id == "manager" %>
+          <div class="col-md-4 input">
+            <%= f.label :assigned_to do %>Listing rights<% end %>
+            <%= f.select :assigned_to, options_for_select(User.where('role_id = ? OR role_id = ?', 1,3).where('is_active = ?', true).where('id != ? OR id != ?',1,2).order('first_name ASC').map { |key, value| [key.fullname.humanize, key.id] }),
+                          {include_blank: "Select..."}, {id: "assigned_to", class: "form-control"} %>
+          </div>
+        <% end %>
+
+      </div>
+      <div class="row wow fadeIn">
+        <div class="col-md-12 input">
+          <div class="form-group">
+            <%= f.label :obs %><br/>
+            <%= f.text_area :obs, rows: 3 %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+          <div class="form-group">
+            <div class="upload-photos text-center">
+              <%= f.label :property_photos do %>
+                <span class="btn btn-form btn-medium upload">
+                  <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                  Upload photos
+                  <%= f.file_field :property_photos, multiple: true, direct_upload: true,
+                          accept: 'image/jpeg,
+                                  image/png,
+                                  image/gif'
+                                  %>
+                </span>
+                <p id="selected_photos" stype="display:none;"></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="actions" style="padding: 10px 15px 0 15px;">
+          <%= f.submit "Save", name: "save_new", class: "btn btn-normal btn-block", id: "btnSubmit" %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<script>
+  $('#btnSubmit').click(function() {
+    $("#spinner").fadeIn('slow');
+  });
+
+  $("#property_owner_phone_number").inputFilter(function(value) {
+    return /^\d*$/.test(value);
+  });
+
+</script>

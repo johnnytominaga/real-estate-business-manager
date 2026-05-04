@@ -1,0 +1,37 @@
+<div class="form-group wow fadeIn" data-wow-delay="0.2s" style="margin-bottom:0px;">
+  <%= form_with model: @property, url: editors_update_editor_all_properties_path(id: @property.id) do |f| %>
+    <div class="col-md-6">
+      <%= f.text_field :availability_date, value: (@property.availability_date.to_time.strftime("%d-%m-%Y") unless (@property.availability_date.blank? && @property.availability_date == "0")), placeholder: "Availability date", class: "form-control editor wow fadeIn", readonly: true %>
+    </div>
+    <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s" style="padding: 0px; display: inline-flex;">
+      <%= f.submit 'Cancel', name: 'cancel', class: 'btn btn-secondary btn-block editor wow fadeIn', id: "btnCancel", style: 'margin: 0 5px;', "data-wow-delay" => "0.3s" %>
+      <div class="actions">
+        <%= button_tag(name: 'update_all', :class => "btn btn-form editor wow fadeIn", :id => "btnSubmit", style: "width: 7rem; padding: 0 5px;", "data-wow-delay" => "0.4s" ) do %>
+          Update all
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<script>
+  jQuery(document).ready(function( $ ) {
+
+    var dateToday = new Date();
+
+    $('#property_availability_date').datepicker({
+      defaultDate: "+1d",
+      numberOfYears: 3,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'dd-M-yy',
+      minDate: dateToday
+
+
+    });
+
+    $('#btnSubmit, #btnCancel').click(function() {
+      $("#spinner").fadeIn('slow');
+    });
+
+  });
+</script>

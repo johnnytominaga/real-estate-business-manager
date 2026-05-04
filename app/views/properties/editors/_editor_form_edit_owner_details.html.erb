@@ -1,0 +1,89 @@
+<div class="modal-header">
+  <div class="row modal-header-editor">
+    <strong>Owner details</strong>
+    <button type="button" class="close"  data-dismiss="modal" aria-label="Close" id="btnClose">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+<div class="modal-body">
+  <%= form_with model: @property_owner, url: editor_update_owner_path(id: @property_owner.id) do |f| %>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>General information</h4>
+    </div>
+  </div>
+  <div class="row wow fadeInUp">
+    <div class="col-md-6 input">
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, placeholder: "Owner's name", class: "form-control" %>
+      </div>
+    </div>
+    <div class="col-md-3 input">
+      <div class="form-group">
+        <%= f.label :phone_country_code do %>Country code *<% end %>
+        <%= f.country_select :phone_country_code, { priority_countries: ["MT", "IT", "GB"], priority_countries_divider: "~~~~~~"}, {class: "form-control countries"} %>
+      </div>
+    </div>
+    <div class="col-md-3 input">
+      <div class="form-group">
+        <%= f.label :phone_number %>
+        <%= f.text_field :phone_number, placeholder: "Owner's phone number", readonly: true, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class="row wow fadeInUp">
+    <div class="col-md-12 input">
+      <div class="form-group">
+        <%= f.label :additional_info %><br/>
+        <%= f.text_area :additional_info, rows: 3 %>
+      </div>
+    </div>
+  </div>
+  <div class="row wow fadeInUp">
+    <div class="col-md-6">
+      <div class="actions" style="padding: 20px 15px 0 15px;">
+        <button type="button" class="btn btn-secondary btn-block"  data-dismiss="modal" aria-label="Close" id="btnClose">
+          Cancel
+        </button>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="actions" style="padding: 20px 15px 0 15px;">
+        <%= f.submit "Save", name: "editor_update", class: "btn btn-normal btn-block" %>
+      </div>
+    </div>
+  </div>
+
+
+  <% end %>
+</div>
+
+
+<script>
+//UPLOAD FILES
+$(function() {
+
+  $(document).on('change', ':file', function() {
+    var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+    console.log(numFiles)
+    console.log(label)
+    if(numFiles > 0) {
+      $(this).parents('span').siblings('#selected_photos').css("display", "block").text(numFiles + " files selected");
+    }
+  });
+});
+
+</script>
+
+<script>
+  $('#btnSubmit, #btnCancel').click(function() {
+    $('#editor_add_photos').modal('hide');
+    var numFiles = 0
+    $('#selected_photos').text(numFiles + " files selected").css("display", "none");
+  });
+</script>

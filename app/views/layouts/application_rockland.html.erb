@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% if !(defined?(@property)).nil? %>
+      <% if !@property_title.blank? %>
+        <% @og_title = "Rockland » " + @property_title %>
+      <% else %>
+        <% @og_title = "Rockland Real Estate: Sell, Buy and Rent Properties" %>
+      <% end %>
+      <% if @property.property_photos.length > 0 %>
+        <% @og_img = url_for(@property.property_photos[0].variant(resize: '300x200'))%>
+      <% else %>
+        <% @og_img = image_url('default-rockland-featured-image.jpg') %>
+      <% end %>
+      <% @og_description = @property_title %>
+    <% else %>
+      <% @og_title = "Rockland Real Estate: Sell, Buy and Rent Properties" %>
+      <% @og_img = image_path('default-rockland-featured-image.jpg') %>
+      <% @og_description = "At Rockland, our mission is to build bridges between investment owners and investors and connect them through the best and smoothest experience possible. Tell us what you're looking for. We'll do all we can to help you." %>
+    <% end %>
+
+    <title><%= @og_title %></title>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= action_cable_meta_tag %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+
+    <meta property="og:title" content="<%= @og_title %>" />
+    <meta property="og:site_name" content="Rockland Real Estate">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta property="og:image" itemprop="image" content="<%= @og_img %>" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content="<%= @og_title %>" />
+    <meta property="og:description" content="<%= @og_description %>" />
+    <meta property="fb:app_id" content="1646032805497963" />
+    <meta property="og:updated_time" content="<%= DateTime.now().iso8601() %>" />
+
+    <meta name="description" content="<%= @og_description %>">
+    <meta name="keywords" content="rent, sell, buy, sale, lease, property, real estate, malta, house, apartment, flat, penthouse, properties, maisonette, Bahar ic-Caghaq, Floriana, Gzira, Hamrun, High Ridge, Ibragg, Kappara, Madliena, Msida, Pembroke, Pieta, San Gwann, Santa Venera, Sliema, St Julians, Swatar, Swieqi, Ta Xbiex, Valletta, Attard, Balzan, Bidnija, Birguma, Birkirkara, Dingli, Gharghur, Iklin, Lija, Mdina, Mosta, Mriehel, Mtarfa, Naxxar, Qormi, Rabat, San Pawl Tat-Targa, Siggiewi, Zebbug, Bahrija, Bugibba, Burmarrad, Manikata, Mellieha, Mgarr, Qawra, Salina, St Pauls Bay, Wardija, Xemxija, Birzebbuga, Cospicua, Fgura, Ghaxaq, Gudja, Isla, Kalkara, Kirkop, Luqa, Marsa, Marsascala, Marsaxlokk, Mqabba, Paola, Qrendi, Safi, Tarxien, Vittoriosa, Xghajra, Zabbar, Zejtun, Zurrieq">
+    <%= stylesheet_link_tag    'application_rockland', media: 'all' %>
+
+    <%= javascript_include_tag 'application' %>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="<%= image_path('favicon-rockland/favicon.ico') %>">
+    <link rel="apple-touch-icon" sizes="57x57" href="<%= image_path('favicon-rockland/apple-icon-57x57.png') %>">
+    <link rel="apple-touch-icon" sizes="60x60" href="<%= image_path('favicon-rockland/apple-icon-60x60.png') %>">
+    <link rel="apple-touch-icon" sizes="72x72" href="<%= image_path('favicon-rockland/apple-icon-72x72.png') %>">
+    <link rel="apple-touch-icon" sizes="76x76" href="<%= image_path('favicon-rockland/apple-icon-76x76.png') %>">
+    <link rel="apple-touch-icon" sizes="114x114" href="<%= image_path('favicon-rockland/apple-icon-114x114.png') %>">
+    <link rel="apple-touch-icon" sizes="120x120" href="<%= image_path('favicon-rockland/apple-icon-120x120.png') %>">
+    <link rel="apple-touch-icon" sizes="144x144" href="<%= image_path('favicon-rockland/apple-icon-144x144.png') %>">
+    <link rel="apple-touch-icon" sizes="152x152" href="<%= image_path('favicon-rockland/apple-icon-152x152.png') %>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<%= image_path('favicon-rockland/apple-icon-180x180.png') %>">
+    <link rel="icon" type="image/png" sizes="192x192"  href="<%= image_path('favicon-rockland/android-icon-192x192.png') %>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= image_path('favicon-rockland/favicon-32x32.png') %>">
+    <link rel="icon" type="image/png" sizes="96x96" href="<%= image_path('favicon-rockland/favicon-96x96.png') %>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= image_path('favicon-rockland/favicon-16x16.png') %>">
+    <link rel="manifest" href="<%= image_path('favicon-rockland/manifest.json') %>">
+    <meta name="msapplication-TileColor" content="#292f38">
+    <meta name="msapplication-TileImage" content="<%= image_path('favicon-rockland/ms-icon-144x144.png') %>">
+    <link href="<%= image_path('favicon-rockland/favicon.png') %>" rel="icon">
+    <link href="<%= image_path('logo-rockland.png') %>" rel="Rockland">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Abhaya+Libre|Roboto|Playfair+Display|Playball" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K5WXCZ3');</script>
+    <!-- End Google Tag Manager -->
+
+  </head>
+
+  <body>
+    <%= render "shared/navbar" %>
+    <%= render "shared/message" %>
+    <div id="spinner">
+      <% if browser.platform.ios? || browser.platform.android? %>
+        <%= image_tag 'spinner_small.gif' %>
+      <% else %>
+        <%= image_tag 'spinner-rockland.gif' %>
+      <% end %>
+    </div>
+    <% if current_user %>
+      <input type="hidden" id="user_id" value="<%= current_user.id %>">
+    <% end %>
+
+    <%= yield %>
+    <%= render "shared/footer" %>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K5WXCZ3"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+  </body>
+</html>

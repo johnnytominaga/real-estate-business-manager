@@ -1,0 +1,21 @@
+Contract info:
+<% if !@lead_property.contract_amount.blank? %>
+  Contract amount: €<%= @lead_property.contract_amount %>
+<% end %>
+<% if !@lead_property.deposit_amount.blank? %>
+  Deposit: €<%= @lead_property.deposit_amount %>
+<% end %>
+<% if !@lead_property.deposit_for_bills.blank? %>
+  Deposit for bills: €<%= @lead_property.deposit_for_bills %>
+<% end %>
+
+Owner's details:
+<% if !@owner.name.blank? %>
+  Owner: <%= @owner.name %>
+<% end %>
+Phone number: <%= @owner.phone_number %>
+Property: <%= @property_link %>
+
+Client's details:
+Name: <%= @lead_link %>
+Phone number: <%= @lead.phone %>

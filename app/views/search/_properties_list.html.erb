@@ -1,0 +1,72 @@
+<% if !@arrProperties.blank? %>
+  <% @arrProperties.each_with_index do |property, index| %>
+    <div class="col-md-3 wow fadeIn" data-wow-delay="0.<%= index.to_i %>s">
+      <div class="panel panel-default">
+        <%= link_to property, target: "_blank" do %>
+          <div class="panel-heading preview">
+            <%= image_tag property.cover_photo("300X300", request.host) %>
+            <span class="status"><b><%= property.contract_type %></b></span>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="property-area">ID: <%= property.id %> | <%= property.area.area %><br/></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="property-title">
+                  <%= property.property_title %>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9">
+                <div class="property-price">
+                  <span>
+                    <b>
+                      <% if !property.price.blank? && property.price != 0 %>
+                        <% @price = property.price %><%= number_to_currency(@price, unit: "€", precision: 0)%><% if property.contract_type == "Rent" %>/month<% elsif property.contract_type == "Commercial" %>/day<% end %>
+                      <% end %>
+                    </b>
+                  </span>
+                </div>
+                <% if !property.availability_date.blank? && property.availability_date != "0" %>
+                  <div class="property-availability">
+                    Available from:
+                    <% if (!user_signed_in?) %>
+                      <% if property.availability_date < Date.today() - 30.days %>
+                        <% @date = property.availability_date.to_time + 1.year %>
+                        <%= @date.strftime("%B %Y") %>
+                      <% else %>
+                        <%= property.availability_date.to_time.strftime("%B %Y") %>
+                      <% end %>
+                    <% else %>
+                      <%= property.availability_date.to_time.strftime("%d/%m/%Y") %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <% if user_signed_in? %>
+                <div class="col-md-3 text-right" id="bookmark_<%= property.id %>">
+                  <%= link_to add_to_bookmarks_path(property_id: property.id, user_id: current_user.id), remote: true do %>
+                    <% if Bookmark.exists?(user_id: current_user.id, property_id: property.id) %>
+                      <i class="fas fa-bookmark fa-2x"></i>
+                    <% else %>
+                      <i class="far fa-bookmark fa-2x"></i>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="text-center">
+    <h4>Sorry, no results match that criteria</h4>
+  </div>
+<% end %>

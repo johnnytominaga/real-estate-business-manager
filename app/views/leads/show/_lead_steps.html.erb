@@ -1,0 +1,100 @@
+<div class="steps-inner">
+  <div class="connecting-line"></div>
+  <ul class="nav nav-tabs" role="tablist">
+    <% if @lead.information_collected == true %>
+      <li role="presentation" class="<% if @active == 1 %>active<% end %> done wow fadeInLeft" id="steps_bar_step1">
+    <% else %>
+      <li role="presentation" class="<% if @active == 1 %>active<% end %> wow fadeInLeft" id="steps_bar_step1">
+    <% end %>
+      <%= link_to step1_lead_path, 'data-lead-tab': 'tab', 'aria-controls': 'step1', 'role': 'tab', 'title': "Information collection: Complete the lead's profile", remote: true do %>
+        <span class="round-tab">
+          <% if @lead.information_collected == true %>
+            <i class="fas fa-check-circle"></i>
+          <% else %>
+            <i class="far fa-user-circle"></i>
+          <% end %>
+        </span>
+        <p class="round-tab-subtitle"><%= Phase.find(1).name %></p>
+      <% end %>
+    </li>
+    <% if @lead.property_found == true %>
+      <li role="presentation" class="<% if @active == 2 %>active<% end %> done wow fadeInLeft" data-wow-delay="0.1s" id="steps_bar_step2">
+    <% else %>
+      <li role="presentation" class="<% if @active == 2 %>active<% end %> wow fadeInLeft" data-wow-delay="0.1s" id="steps_bar_step2">
+    <% end %>
+      <%= link_to step2_lead_path, 'data-lead-tab': 'tab', 'aria-controls': 'step2', 'role': 'tab', 'title': "Property hunt: Check suitable properties", remote: true do %>
+        <span class="round-tab">
+          <% if @lead.property_found == true %>
+            <i class="fas fa-check-circle"></i>
+          <% else %>
+            <i class="far fa-compass"></i>
+          <% end %>
+        </span>
+        <p class="round-tab-subtitle"><%= Phase.find(2).name %></p>
+      <% end %>
+    </li>
+    <% if @lead.negotiation_completed == true %>
+      <li role="presentation" class="<% if @active == 3 %>active<% end %> done wow fadeInLeft" data-wow-delay="0.2s" id="steps_bar_step3">
+    <% else %>
+      <li role="presentation" class="<% if @active == 3 %>active<% end %> wow fadeInLeft" data-wow-delay="0.2s" id="steps_bar_step3">
+    <% end %>
+      <%= link_to step3_lead_path, 'data-lead-tab': 'tab', 'aria-controls': 'step3', 'role': 'tab', 'title': "Negotiation: Keep track of the latest interactions", remote: true do %>
+        <span class="round-tab">
+          <% if @lead.negotiation_completed == true %>
+            <i class="fas fa-check-circle"></i>
+          <% else %>
+            <i class="far fa-handshake"></i>
+          <% end %>
+        </span>
+        <p class="round-tab-subtitle"><%= Phase.find(3).name %></p>
+      <% end %>
+    </li>
+
+    <% if @lead.deposit_paid == true %>
+      <li role="presentation" class="<% if @active == 4 %>active<% end %> done wow fadeInLeft" data-wow-delay="0.3s" id="steps_bar_step4">
+    <% else %>
+      <li role="presentation" class="<% if @active == 4 %>active<% end %> wow fadeInLeft" data-wow-delay="0.3s" id="steps_bar_step4">
+    <% end %>
+      <%= link_to step4_lead_path, 'data-lead-tab': 'tab', 'aria-controls': 'step4', 'role': 'tab', 'title': "Deposit payment: Calculate amounts and schedule notifications", remote: true do %>
+        <span class="round-tab">
+          <% if @lead.deposit_paid == true %>
+            <i class="fas fa-check-circle"></i>
+          <% else %>
+            <i class="far fa-money-bill-alt"></i>
+          <% end %>
+        </span>
+        <p class="round-tab-subtitle"><%= Phase.find(4).name %></p>
+      <% end %>
+    </li>
+
+    <% if @lead.commission_sorted == true %>
+      <li role="presentation" class="<% if @active == 5 %>active<% end %> done wow fadeInLeft" data-wow-delay="0.4s" id="steps_bar_step5">
+    <% else %>
+      <li role="presentation" class="<% if @active == 5 %>active<% end %> wow fadeInLeft" data-wow-delay="0.4s" id="steps_bar_step5">
+    <% end %>
+      <%= link_to step5_lead_path, 'data-lead-tab': 'tab', 'aria-controls': 'step5', 'role': 'tab', 'title': "Contract signature: Calculate sorting amounts", remote: true do %>
+        <span class="round-tab">
+          <% if @lead.commission_sorted == true %>
+            <i class="fas fa-check-circle"></i>
+          <% else %>
+            <i class="fas fa-signature"></i>
+          <% end %>
+        </span>
+        <p class="round-tab-subtitle"><%= Phase.find(5).name %></p>
+      <% end %>
+    </li>
+
+  </ul>
+</div>
+
+<script>
+  jQuery(document).ready(function( $ ) {
+    $("[data-lead-tab='tab']").on('click', this, function(){
+      console.log('click');
+      $("#spinner").fadeIn('slow');
+      $("#spinner").click(function(){
+        $("#spinner").hide();
+      })
+    });
+  });
+</script>

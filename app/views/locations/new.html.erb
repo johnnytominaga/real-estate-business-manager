@@ -1,0 +1,34 @@
+<section id="internal-hero">
+  <div class="hero-container" style="background-image: url(<%= asset_path "hero-bg.jpg" %>); background-position: center;">
+  </div>
+</section>
+
+<main class="main">
+  <section class="header wow fadeInUp" style="padding: 60px 0 60px 0;">
+    <div class="container">
+      <div class="row">
+        <div class="section-header">
+          <h3>Add a location</h3>
+        </div>
+        <div class="col-md-4 col-md-offset-4">
+          <div class="form">
+            <%= form_for @location do |f| %>
+              <div class="form-group">
+                <%= f.text_field :name, autofocus: true, placeholder: "Location", class: "form-control" %>
+              </div>
+
+              <div class="form-group">
+        <%= f.collection_select :area_id, Area.order(:id), :id, :area, {prompt: "Select Area..."}, {id: "property_area_select"} %>
+              </div>
+
+              <div class="actions">
+                <%= f.submit "Save", class: "btn btn-normal btn-block text-center" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <br/><hr/><br/>
+    </div>
+  </div>
+</main>

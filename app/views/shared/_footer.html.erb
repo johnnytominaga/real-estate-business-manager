@@ -1,0 +1,162 @@
+<% if (!user_signed_in?) %>
+<!--   Footer   -->
+<footer id="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-3 col-md-6 footer-info">
+          <% if @request_url.include?('rocklandmalta.com') || @request_url.include?('jr-dev-07') %>
+            <h3>Rockland</h3>
+            <p>Rockland Real Estate is a member of the <a href="https://rocklnd.com" target="_blank">Rocklnd Group</a>.<br/></p>
+            <p>
+              <strong>Phone:</strong> +356 7955-5586<br>
+              <strong>Email:</strong> info@rocklandmalta.com<br>
+            </p>
+            <div class="social-links">
+              <a href="https://fb.com/rocklandmalta" target="_blank" class="facebook"><i class="fab fa-facebook"></i></a>
+              <a href="mailto:info@rocklandmalta.com" target="_blank" class="email"><i class="far fa-envelope"></i></a>
+            </div>
+          <% else %>
+            <h3>Real Estate CRM</h3>
+            <p>Real Estate CRM is a member of the <a href="https://rocklnd.com" target="_blank">Rocklnd Group</a>.<br/></p>
+            <p>
+              <strong>Phone:</strong> +356 7955-5586<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+            <div class="social-links">
+              <a href="#" target="_blank" class="facebook"><i class="fab fa-facebook"></i></a>
+              <a href="mailto:info@example.com" target="_blank" class="email"><i class="far fa-envelope"></i></a>
+            </div>
+
+          <% end %>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><i class="ion-ios-arrow-right"></i><%= link_to "Home", root_path %></li>
+            <li><i class="ion-ios-arrow-right"></i><%= link_to "Properties", properties_path %></li>
+            <li><i class="ion-ios-arrow-right"></i><%= link_to "Locations", locations_path %></li>
+            <li><i class="ion-ios-arrow-right"></i><%= link_to "/careers" do %>Careers<% end %></li>
+            <li><i class="ion-ios-arrow-right"></i><%= link_to "/terms-conditions" do %>Terms of service<% end %></li>
+            <li><i class="ion-ios-arrow-right"></i><%= link_to "/privacy-policy" do %>Privacy policy<% end %></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Our offices</h4>
+            <h5>St. Julian's</h5>
+            <p>
+              37, Gorg Borg Olivier Street <br>
+              Spinola Bay, St. Julian's, Malta<br>
+            </p>
+            <h5>Birkirkara</h5>
+            <p>
+              338, Naxxar Road <br>
+              Birkirkara, Malta<br>
+            </p>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-newsletter">
+          <p style="font-size:11px">
+            * Prices and property availability dates may not be up to date and are to be confirmed upon request.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <% if @request_url.include?('rocklandmalta.com') || @request_url.include?('jr-dev-07') %>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+      var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+      (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/5c6c266877e0730ce043b9bf/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+      })();
+    </script>
+    <!--End of Tawk.to Script-->
+  <% else %>
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/58cfecbd3f21d6257c568c64/default';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+    })();
+  </script>
+  <!--End of Tawk.to Script-->
+  <% end %>
+
+<% end %>
+
+  <div class="container">
+    <div class="copyright">
+      <% if @request_url.include?('rocklandmalta.com') || @request_url.include?('jr-dev-07') %>
+        &copy; Copyright <%= Time.current.year %> <strong>Rockland Real Estate</strong>. All rights reserved. ~ Designed internally by a passioned team
+      <% else %>
+        &copy; Copyright <%= Time.current.year %> <strong>Real Estate CRM</strong>. All rights reserved. ~ Designed internally by a passioned team
+      <% end %>
+    </div>
+  </div>
+</footer><!-- #footer -->
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- Cookie consent BEGIN -->
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+  <script>
+    <% if @request_url.include?('rocklandmalta.com') || @request_url.include?('jr-dev-07') %>
+      <% cookie_consent_color = "#b9a17f" %>
+    <% else %>
+      <% cookie_consent_color = "#53ffdd" %>
+    <% end %>
+  window.addEventListener("load", function(){
+  window.cookieconsent.initialise({
+    "palette": {
+      "popup": {
+        "background": "#444646",
+        "text": "#d6d6d6"
+      },
+      "button": {
+        "background": "transparent",
+        "text": "<%= cookie_consent_color %>",
+        "border": "<%= cookie_consent_color %>"
+      }
+    },
+    "position": "bottom-left",
+    "content": {
+      "message": "This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies.",
+      "href": "<%= privacy_policy_path %>"
+    }
+  })});
+  </script>
+<!-- Cookie consent END  -->
+
+<% if !user_signed_in? %>
+  <!-- AddToAny BEGIN -->
+  <div class="a2a_kit a2a_kit_size_32 a2a_floating_style a2a_vertical_style" style="right:0px; top:50%; background: none;" data-a2a-url="https://example.com" data-a2a-title="Real Estate CRM">
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_whatsapp"></a>
+    <a class="a2a_button_email"></a>
+    <a class="a2a_button_copy_link"></a>
+  </div>
+  <script>
+    var a2a_config = a2a_config || {};
+    a2a_config.num_services = 4;
+    a2a_config.icon_color="transparent,#444646";
+  </script>
+  <script async src="https://static.addtoany.com/menu/page.js"></script>
+  <!-- AddToAny END -->
+<% end %>

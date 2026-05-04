@@ -1,0 +1,2 @@
+var propertyId = <%= @property.id %>
+$('#visit_date_' + propertyId).html("<%= j (render 'leads/show/step3/add_visit_date_form') %>");

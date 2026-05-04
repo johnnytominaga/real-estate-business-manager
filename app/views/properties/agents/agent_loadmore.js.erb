@@ -1,0 +1,6 @@
+$('#property_listing').append("<%= j render partial: 'properties/agents/agent_properties_list', locals: {properties: @arrProperties} %>");
+<% if @properties.next_page %>
+  $('#next_page').attr('href', "<%= agents_agent_loadmore_properties_path(page: @properties.next_page, q: @q) %>");
+<% else %>
+  $('#load-more').remove();
+<% end %>

@@ -1,0 +1,258 @@
+<%= stylesheet_link_tag 'direct_uploads', media: 'all' %>
+<%= stylesheet_link_tag 'candidates/candidates', media: 'all', 'data-turbolinks-track' => true %>
+
+
+<section id="candidates-hero">
+  <div class="hero-container" style="background-image: url('<%= asset_path 'careers/candidates-header.jpg' %>'); background-position: top center; background-repeat: no-repeat; background-size: cover; ">
+    <div class="container" style="padding: 30vh 0">
+      <h1 <% if @request_url.include?('rocklandmalta.com') || @request_url.include?('jr-dev-07') %>class="candidates-header-rockland"<% end %>>Join our team</h1>
+      <h2>
+        <%= image_tag "quote-sign-left.png", class: "quote-sign-left", alt: "" %>
+        Opportunities don't happen. We create them.
+        <%= image_tag "quote-sign-right.png", class: "quote-sign-right", alt: "" %>
+      </h2>
+    </div>
+  </div>
+</section>
+<main class="main">
+  <section class="header" id="our-mission" style="padding: 60px 0 0 0;">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-header">
+            <h3 class="wow fadeIn">Our mission</h3>
+            <p class="wow fadeIn" data-wow-delay="0.1s">
+              <%= image_tag "quote-sign-left.png", class: "quote-sign-left", alt: "" %>
+                Build bridges between investment owners and investors and connect them through the best and smoothest experience possible.
+              <%= image_tag "quote-sign-right.png", class: "quote-sign-right", alt: "" %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="core-values" style="background-image: url('<%= asset_path 'careers/our-values-bg.jpg' %>'); background-position: center center; background-repeat: no-repeat; background-size: 100%; background-attachment: fixed; padding: 20px 0 60px 0;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-header">
+            <h4 class="wow fadeIn">Our core values</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="padding: 0 0 20px 0;">
+        <div class="col-md-3">
+          <div class="card core-values wow fadeInUp" data-wow-delay="0.1s">
+            <%= image_tag "careers/our-values-respect.jpg", class: "card-img-top", alt: "our-core-values-respect" %>
+            <div class="card-body">
+              <h5 class="card-title">Respect</h5>
+              <p class="card-text">We love the fact that we get to meet people from all over the world. We understand that despite of the background and culture everyone expects and deserves being treated respectfully. Our culture is built based of making that happen across all connections we make along the way.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card core-values wow fadeInUp" data-wow-delay="0.2s">
+            <%= image_tag "careers/our-values-honesty.jpg", class: "card-img-top", alt: "our-core-values-honesty" %>
+            <div class="card-body">
+              <h5 class="card-title">Honesty</h5>
+              <p class="card-text">We prioritize freedom and flexibility over control in every aspect of our business. We know that makes us more vulnerable to people with bad intensions. This is why we value so much being surrounded only with people with integrity and who's proven to be honest at all times.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card core-values wow fadeInUp" data-wow-delay="0.3s">
+            <%= image_tag "careers/our-values-openness.jpg", class: "card-img-top", alt: "our-core-values-openness" %>
+            <div class="card-body">
+              <h5 class="card-title">Openness</h5>
+              <p class="card-text">We're crazy about questioning the way we do things. Our goal is to constantly improve and grow. No matter what's your position or how long you've been with us. We encourage everyone to ask big questions and be open about the way they feel about our company and their ideas on how we can be better always.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card core-values wow fadeInUp" data-wow-delay="0.4s">
+            <%= image_tag "careers/our-values-partnership.jpg", class: "card-img-top", alt: "our-core-values-partnership" %>
+            <div class="card-body">
+              <h5 class="card-title">Partnership</h5>
+              <p class="card-text">We're building our company together as a team. Everyone in our team is responsible for each other's growth and success. Competition is only encouraged if it helps everyone else triumph.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card core-values wow fadeInUp" data-wow-delay="0.5s">
+            <%= image_tag "careers/our-values-care.jpg", class: "card-img-top", alt: "our-core-values-care" %>
+            <div class="card-body">
+              <h5 class="card-title">Care</h5>
+              <p class="card-text">Be caring, open and encouraging. With everyone. At all times.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card core-values wow fadeInUp" data-wow-delay="0.6s">
+            <%= image_tag "careers/our-values-agility.jpg", class: "card-img-top", alt: "our-core-values-agility" %>
+            <div class="card-body">
+              <h5 class="card-title">Agility</h5>
+              <p class="card-text">We move fast, we change, we adapt, we make mistakes and learn along the way. We don't believe we should do anything just because everyone does it. We create our own tools, processes and ways of working. Sometimes they work. Others we learn. That's what makes things interesting and exciting.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card core-values wow fadeInUp" data-wow-delay="0.7s">
+            <%= image_tag "careers/our-values-simple.jpg", class: "card-img-top", alt: "our-core-values-simple" %>
+            <div class="card-body">
+              <h5 class="card-title">Keep it simple and simplify from that</h5>
+              <p class="card-text">No matter how far we've reached, we'll constantly seek for better and more simple ways of doing everything. We're obssessed about it.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card core-values wow fadeInUp" data-wow-delay="0.8s">
+            <%= image_tag "careers/our-values-diversity.jpg", class: "card-img-top", alt: "our-core-values-diversity" %>
+            <div class="card-body">
+              <h5 class="card-title">Diversity</h5>
+              <p class="card-text">We're increadibly proud of the fact that we have people from every corner of the planet working in our team. We believe diversity makes us better, stronger and more prepared to serve our customers. And just as important, we love to be able to open the doors and create opportunities for everyone willing to put the hours and hardwork into pursuing our mission by our side.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="padding: 60px 0 0 0;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-header" style="padding: 0 0 20px 0;" id="candidate">
+            <h3 class="wow fadeInUp">Live your best life</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12 text-center wow fadeInUp" data-wow-delay="0.2s">
+              <p>Come and be part of our increadible team!<br/>
+                We'll support you with over 25 years of experience in real estate, passion for excellence and commitment to find each of our clients the easiest way home!
+                <br/><br/>
+                Real Estate CRM is the perfect place for everyone seeking a job position that offers:
+              </p>
+            </div>
+          </div>
+          <div class="row" id="candidate-icons">
+            <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.3s">
+              <%= image_tag "careers/careers-commission.png", alt: "The Highest Commission Rates in Malta" %>
+              <p>The Highest Commission Rates in Malta</p>
+            </div>
+            <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.4s">
+              <%= image_tag "careers/careers-training.png", alt: "Full Real Estate Market Training and Sales Coaching" %>
+              <p>Full Real Estate Market Training and Sales Coaching</p>
+            </div>
+            <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.5s">
+              <%= image_tag "careers/careers-hours.png", alt: "Flexible Working Hours" %>
+              <p>Flexible Working Hours</p>
+            </div>
+            <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.6s">
+              <%= image_tag "careers/careers-workplace.png", alt: "Exciting and Inspiring  Workplace" %>
+              <p>Exciting and Inspiring  Workplace</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% if browser.platform.ios? || browser.platform.android? %>
+    <section style="background-image: url('<%= asset_path 'careers/our-team.jpg' %>'); background-position: center center; background-repeat: no-repeat; background-size: 100%; background-attachment: scroll; padding: 20vh 0;">
+  <% else %>
+    <section style="background-image: url('<%= asset_path 'careers/our-team.jpg' %>'); background-position: center center; background-repeat: no-repeat; background-size: 100%; background-attachment: fixed; padding: 60vh 0;">
+  <% end %>
+    <div class="container">
+      <p></p>
+    </div>
+  </section>
+  <section style="margin: 60px 0;">
+    <div class="container">
+      <div class="section-header">
+        <h3 class="wow fadeInUp">Join us</h3>
+        <p class="wow fadeInUp" data-wow-delay="0.1s">We have thousands of available properties and dozens more being added daily. Help us transform them into a perfect home or workplace.
+          <br/><br/>
+          Interested? Apply today!
+        </p>
+      </div>
+
+      <%= form_for @candidate do |f| %>
+        <div class="row">
+          <div class="col-md-12 wow fadeIn">
+            <h5>Enter your personal information to apply</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 input wow fadeIn" data-wow-delay="0.1s">
+            <div class="form-group">
+              <%= f.text_field :first_name, placeholder: "Name *", class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-md-4 input wow fadeIn" data-wow-delay="0.2s">
+            <div class="form-group">
+              <%= f.text_field :last_name, placeholder: "Last name *", class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-md-4 input wow fadeIn" data-wow-delay="0.3s">
+            <div class="form-group">
+              <%= f.select :position, options_for_select(Candidate.positions.map { |key, value| [key.humanize, key] }), {prompt: "Job position *"}, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 input wow fadeIn" data-wow-delay="0.4s">
+            <div class="form-group">
+              <%= f.country_select :phone_country_code, { priority_countries: ["MT", "IT", "GB"], priority_countries_divider: "~~~~~~", include_blank: 'Select country code *'}, {class: "form-control countries"} %>
+            </div>
+          </div>
+          <div class="col-md-4 input wow fadeIn" data-wow-delay="0.5s">
+            <div class="form-group">
+              <%= f.telephone_field :phone_number, placeholder: "Phone (without country code) *", class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-md-4 input wow fadeIn" data-wow-delay="0.6s">
+            <div class="form-group">
+              <%= f.email_field :email, placeholder: "Email *", class: "form-control" %>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="padding: 20px 0;">
+          <div class="col-md-12 wow fadeIn" data-wow-delay="0.7s">
+            <%= f.label :curriculum do %>
+                <i class="fas fa-file-upload"></i>
+                Upload your CV (PDF or DOC)
+                <%= f.file_field :curriculum, direct_upload: true,
+                        accept: 'application/pdf,
+                                application/zip,
+                                application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                %>
+            <% end %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 input wow fadeIn" data-wow-delay="0.8s">
+            <div class="form-group">
+              <%= f.label :presentation do %>Presentation letter<% end %><br/>
+              <%= f.text_area :presentation, placeholder: "Write your presentation letter (optional)", rows: 6 %>
+            </div>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-md-offset-4 col-md-4">
+            <div class="actions wow fadeIn">
+              <%= f.submit "Apply now", class: "btn btn-normal btn-block" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+  </section>
+
+</main>

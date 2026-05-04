@@ -1,0 +1,78 @@
+Name: <%= @lead.name %>
+(this client had already contacted us)
+
+Email: <%= @lead.email %>
+Phone number: <%= @lead.phone %>
+The client is interested in:
+
+Contract type: <%= @lead_contract_type %>
+  <% if !@lead_unique_areas.blank? %>
+      <%= pluralize(@lead_unique_areas.count, "Area") %>:
+
+        <% @lead_unique_areas.each do |a| %>
+          <%= Area.find(a).area %>
+        <% end %>
+  <% end %>
+  <% if !@lead_unique_locations.blank? %>
+      <%= pluralize(@lead_unique_locations.count, "Location") %>:
+
+        <% @lead_unique_locations.each do |l| %>
+          <%= Location.find(l).name %>
+        <% end %>
+  <% end %>
+From: <%= @lead_check_in_date %>
+For: <%= @lead.budget %>
+
+<% if !@lead.description.blank? %>
+Additional information sent by the client:
+<%= @lead.description %>
+<% end %>
+
+<%= @property_link %>
+<%= @lead_link %>
+
+
+Name: <%= @lead.name %>
+(this client had already contacted us)
+
+Email: <%= @lead.email %>
+Phone number: <%= @lead.phone %>
+The client is also interested in:
+
+<% if !@lead_properties.blank? %>
+  <% @lead_properties.each do |property| %>
+    <% @property_id = property.property_id %>
+    <%= link_to "This property", property_url(@property_id) %>
+  <% end %>
+<% end %>
+<% if !@lead.property_type.blank? && @lead.property_type != "0" %>Type of Property: <%= @lead.property_type %><% end %>
+Purpose: <%= @lead.contract_type %>
+<% if !@lead_areas.blank? %>
+  Area:
+  <% @lead_areas.each do |a| %>
+    <%= Area.where("id = ? ", a.area_id).collect(&:area) %>
+  <% end %>
+<% end %>
+<% if !@lead_locations.blank? %>
+  <%= pluralize(@lead_locations.count, "Location") %>:
+  <% @lead_locations.each do |l| %>
+    <%= Location.where("id = ? ", l.location_id).collect(&:name) %>
+  <% end %>
+<% end %>
+<% if !@lead.bedrooms.blank? && @lead.bedrooms != 0 %>With: More than <%= @lead.bedrooms %> Bedrooms<% end %>
+From: <%= @lead.check_in_date.strftime("%d/%m/%Y") %>
+For: <%= @lead.budget %>
+
+<% if !@lead.description.blank? %>
+Additional information sent by the client:
+<%= @lead.description %>
+<% end %>
+<%= @property_link %>
+
+<%= @lead_link %>
+<% if !@lead_unique_properties.blank? %>
+  Other properties the client may also be interested in:
+  <% @lead_unique_properties.each do |p| %>
+    <%= link_to p, Rails.application.routes.url_helpers.property_url(p) %>
+  <% end %>
+<% end %>

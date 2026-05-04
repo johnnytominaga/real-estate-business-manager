@@ -1,0 +1,10 @@
+$('#notifications').html("<%= j render @notifications %>");
+$('#pagination').html("<%= j render partial: 'notifications/pagination' %>");
+
+var element_to_scroll_to = $('.section-header')[0];
+element_to_scroll_to.scrollIntoView({
+  block: 'center',
+  behavior: 'smooth'
+});
+
+$("#spinner").hide();

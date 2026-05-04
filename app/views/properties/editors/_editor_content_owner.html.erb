@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-md-12">
+    <% if !@property_owner.name.blank? && @property_owner.name != "0" %>
+      <%= link_to editors_editor_edit_owner_properties_path(id: @property_owner.id), "data-toggle": "modal", "data-target": "#editor_edit_owner_details", id: "owner_#{@property_owner.id}", alt: "Edit owner details", "aria-label": "Edit owner details", title: "Edit owner details", remote: true do %>
+        <p class="text-center"><i class="ion-ios-contact-outline"></i> <%= @property_owner.name %></p>
+      <% end %>
+    <% else %>
+      <div class="text-center empty">
+      <%= link_to editors_editor_edit_owner_properties_path(id: @property_owner.id), "data-toggle": "modal", "data-target": "#editor_edit_owner_details", id: "owner_#{@property_owner.id}", alt: "Edit owner details", "aria-label": "Edit owner details", title: "Edit owner details", remote: true do %>
+          <p><i class="fas fa-exclamation-circle"></i> Add owner's name</p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= link_to owner_path(@property_owner.id), alt: "Call owner", "aria-label": "Call owner", title: "Call owner" do %>
+      <p class="box-title text-center" data-wow-delay="0.3s">
+        <i class="ion-ios-telephone-outline"></i> <%= @property_owner.full_phone_number %>
+      </p>
+    <% end %>
+  </div>
+</div>

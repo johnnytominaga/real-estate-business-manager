@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-6">
+    <h4 class="wow zoomInDown" data-wow-delay="0.3s"><%= @phase.name %> updates</h4>
+  </div>
+  <div class="col-md-6 text-right wow zoomInDown" data-wow-delay="0.4s">
+    <%= link_to new_lead_phase3_lead_path, id: 'add_status', remote: true do %>Add status update <i class="fas fa-plus-circle"></i><% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12" id="new_lead_phase3"></div>
+</div>
+<div class="row">
+  <div class="col-md-12" id="lead_phase_page_step3">
+    <%= render partial: 'leads/show/step3/lead_phase_list' %>
+  </div>
+</div>

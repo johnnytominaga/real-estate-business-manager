@@ -1,0 +1,37 @@
+<% if !lead_property.contract_amount.blank? %>
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-4 deposit-amount text-center">
+        <h2 data-toggle="counter-up">
+          <% if !lead_property.contract_amount.blank? %>
+            <% if lead_property.vat_client? %>
+              <%= number_to_currency((lead_property.contract_amount * 0.45), unit: "€", precision: 0) %>
+            <% else %>
+              <%= number_to_currency((lead_property.contract_amount * 0.45 / 1.18), unit: "€", precision: 0) %>
+            <% end %>
+          <% end %>
+        </h2>
+        <h5>Your estimated share</h5>
+      </div>
+      <div class="col-md-4 deposit-amount text-center">
+        <h2 data-toggle="counter-up">
+          <% if !lead_property.contract_amount.blank? %>
+            <% if lead_property.vat_owner? %>
+              <%= number_to_currency((lead_property.contract_amount * 0.55), unit: "€", precision: 0) %>
+            <% else %>
+              <%= number_to_currency((lead_property.contract_amount * 0.55 / 1.18), unit: "€", precision: 0) %>
+            <% end %>
+          <% end %>
+
+        </h2>
+        <h5>Agency's estimated share</h5>
+      </div>
+      <!-- <div class="col-md-4 deposit-amount text-center">
+        <h2 data-toggle="counter-up">
+          < %= number_to_currency((lead_property.contract_amount * 0.55), unit: "€", precision: 0) %>
+        </h2>
+        <h5>< %= User.find(Property.find(lead_property.property_id).assigned_to).fullname %>'s estimated share</h5>
+      </div> -->
+    </div>
+  </div>
+<% end %>

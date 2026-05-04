@@ -1,0 +1,11 @@
+<p style="margin: 0 0 30px 0;"><strong>Date: </strong>
+  <% if !lead_property.visit_date.blank? %>
+    <%= link_to add_visit_date_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id), remote: true do %>
+      <%= lead_property.visit_date.to_time.strftime("%d/%m/%Y") %>
+    <% end %>
+  <% else %>
+    <%= link_to add_visit_date_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id), remote: true do %>
+      Add visit date to create a reminder
+    <% end %>
+  <% end %>
+</p>

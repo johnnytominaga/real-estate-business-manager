@@ -1,0 +1,9 @@
+$('#lead_title').html("<%= j render 'leads/show/lead_title', id: @lead.id %>");
+$('#lead_boxes').html("<%= j render 'leads/show/lead_boxes', locals: {lead: @lead, id: @lead.id} %>");
+
+// Step 1
+$('#tabs_step1_tables').html("<%= j render 'leads/show/step1/tables', locals: {lead: @lead, id: @lead.id} %>");
+$('#lead_description').html("<%= j render 'leads/show/step1/lead_description', locals: {lead: @lead, id: @lead.id} %>");
+$('#created_date').html("<%= j render 'leads/show/step1/created_date', locals: {lead: @lead, id: @lead.id} %>");
+$("#spinner").hide();
+<%= render "shared/message_js" %>

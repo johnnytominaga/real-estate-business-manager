@@ -1,0 +1,2 @@
+var propertyId = <%= @property.id %>
+$('#proposal_amount_' + propertyId).html("<%= j (render 'leads/show/step3/add_proposal_amount_form') %>");

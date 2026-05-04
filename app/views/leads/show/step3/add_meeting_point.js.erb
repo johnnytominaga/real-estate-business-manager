@@ -1,0 +1,2 @@
+var propertyId = <%= @property.id %>
+$('#meeting_point_' + propertyId).html("<%= j (render 'leads/show/step3/add_meeting_point_form') %>");

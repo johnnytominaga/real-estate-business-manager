@@ -1,0 +1,84 @@
+<% if !@properties.blank? %>
+  <% @properties.each_with_index do |p, index| %>
+    <div class="panel panel-default wow fadeIn" data-wow-delay="0.<%= index %>s">
+      <div class="panel-body">
+        <div class="row" style="margin-bottom: 30px;">
+          <div class="col-md-2">
+            <%= link_to p, target: "_blank" do %>
+              <div class="row">
+                <div class="col-md-12">
+                  <%= image_tag p.cover_photo("400X400", request.host), style: 'width:100%;' %>
+                  <span class="status"><b><%= p.contract_type %></b></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <p style="margin: 5px 0;">ID: <%= p.id %></p>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-10">
+                <%= link_to p, target: "_blank" do %>
+                  <div class="property-title" >
+                    <h4 style="margin: 0 0 0 0;">
+                      <%= p.property_title %>
+                    </h4><br/>
+                  </div>
+                <% end%>
+              </div>
+              <div class="col-md-2 text-right">
+                <% if p.suggested_property(@lead).deposit_paid == true %>
+                  <%= link_to update_lead_property_lead_path(lead_property_id: p.suggested_property(@lead), deposit_paid: false, status: "Proposal approved"), method: :patch, remote: true do %><span class="edit-button done done-icon" title="Unmark deposit as paid"></span><% end %>
+                <% else %>
+                  <%= link_to update_lead_property_lead_path(lead_property_id: p.suggested_property(@lead), deposit_paid: true, status: "Deposit paid"), method: :patch,  remote: true do %><span class="edit-button deposit-icon" title="Mark deposit as paid"></span><% end %>
+                <% end %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 deposit-input" id="field_deposit_amount_<%= p.id %>">
+                <%= render 'leads/show/step4/field_deposit_amount', lead_property: p.suggested_property(@lead) %>
+              </div>
+              <div class="col-md-6 deposit-input" id="field_contract_amount_<%= p.id %>">
+                <%= render 'leads/show/step4/field_contract_amount', lead_property: p.suggested_property(@lead) %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 deposit-input" id="field_deposit_for_bills_<%= p.id %>">
+                <%= render 'leads/show/step4/field_deposit_for_bills', lead_property: p.suggested_property(@lead) %>
+              </div>
+              <% if @lead.contract_type == "Commercial" %>
+                <div class="col-md-6 deposit-input" id="field_premium_amount_<%= p.id %>">
+                  <%= render 'leads/show/step4/field_premium_amount', lead_property: p.suggested_property(@lead) %>
+                </div>
+              <% end %>
+            </div>
+            <div class="row">
+              <div class="col-md-6 deposit-input" id="field_contract_start_date_<%= p.id %>">
+                <%= render 'leads/show/step4/field_contract_start_date', lead_property: p.suggested_property(@lead) %>
+              </div>
+              <div class="col-md-6 deposit-input" id="field_contract_end_date_<%= p.id %>">
+                <%= render 'leads/show/step4/field_contract_end_date', lead_property: p.suggested_property(@lead) %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 deposit-input" id="field_contract_signature_date_<%= p.id %>">
+                <%= render 'leads/show/step4/field_contract_signature_date', lead_property: p.suggested_property(@lead) %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" id="deposit_calculator_<%= p.id %>" style="margin-bottom: 20px;">
+          <%= render 'leads/show/step4/deposit_calculator', lead_property: p.suggested_property(@lead) %>
+        </div>
+
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="text-center">
+    <h4>No properties have been approved for deposit collection. Go to Main Opportunities and update them accordingly.</h4>
+  </div>
+<% end %>

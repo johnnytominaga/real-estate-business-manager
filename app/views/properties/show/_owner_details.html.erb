@@ -1,0 +1,58 @@
+<div class="modal-header">
+  <strong>Owner details</strong>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+</div>
+<div class="modal-body">
+  <div class="row text-center" style="padding: 30px;">
+    <% if !@owner.name.blank? && @owner.name != "0" %><h4>Name: <%= @owner.name %></h4><% end %>
+    <h4>Phone number: <%= @property.property_owner_phone_number %></h4><br/>
+    <% if !@owner.additional_info.blank? && @owner.additional_info != "0" %><h4>Additional info: <%= @owner.additional_info %></h4><% end %>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="row text-center">
+    <% if browser.platform.ios? || browser.platform.android? %>
+      <div class="col-md-3">
+        <%= link_to owner_path(@owner.id), class: "btn btn-normal" do %>
+          <i class="fa fa-phone fa-w-16 fa-flip-horizontal"></i> Call owner now
+        <% end %>
+      </div>
+      <div class="col-md-3">
+        <%= link_to "whatsapp://send?text=#{@property.share_with_owner_encoded}", class: "btn btn-normal" do %>
+          <i class="fab fa-whatsapp"></i> Share with the team
+        <% end %>
+      </div>
+      <div class="col-md-3">
+        <%= link_to "whatsapp://send?text=#{@property.share_without_owner_encoded}", class: "btn btn-normal" do %>
+          <i class="fab fa-facebook-square"></i> Share with a client
+        <% end %>
+      </div>
+      <div class="col-md-3">
+        <%= link_to edit_owner_path(@owner.id), class: "btn btn-normal" do %>
+          <i class="far fa-edit"></i> Update owner details
+        <% end %>
+      </div>
+    <% else %>
+      <div class="col-md-4" style="display: flex;">
+        <textarea id="share_bar_owner" class="share_bar" rows="1" style="position: fixed; left: 10000px;"><%= @property.share_with_owner %></textarea>
+        <button class="btn btn-form btn-normal clipboard-btn" style="width:100%;" data-clipboard-action="copy" data-clipboard-target="#share_bar_owner">
+            <i class="fab fa-whatsapp"></i> Share with the team
+        </button>
+      </div>
+      <div class="col-md-4" style="display: flex;">
+        <textarea id="share_bar_owner_client" class="share_bar" rows="1" style="position: fixed; left: 10000px;"><%= @property.share_without_owner %></textarea>
+        <button class="btn btn-form btn-normal clipboard-btn" style="width:100%;" data-clipboard-action="copy" data-clipboard-target="#share_bar_owner_client">
+            <i class="fab fa-whatsapp"></i> Share with a client
+        </button>
+      </div>
+      <div class="col-md-4">
+        <%= link_to edit_owner_path(@owner.id), class: "btn btn-normal" do %>
+          <i class="far fa-edit"></i> Update owner details
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

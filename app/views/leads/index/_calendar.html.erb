@@ -1,0 +1,209 @@
+<div class="row">
+  <div class="col-md-10">
+    <div class="calendar-container">
+      <div id="calendar"></div>
+      <div style='clear:both'></div>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="selector-container">
+      <div class="row">
+        <div class="col-md-12">
+          <table class="color-code table">
+            <tr style="border:none">
+              <th scope="col">Color code</th>
+            </tr>
+            <tr class="red">
+              <td>Not assigned</td>
+            </tr>
+            <tr class="dark-green">
+              <td>Assigned</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" style="margin: 0 0 25px 0;">
+          <%= link_to new_from_agent_leads_path, id: 'add_lead_header', 'data-toggle':"modal", 'data-target': ".bd-example-modal-lg", remote: true do %>Add lead <i class="fas fa-plus-circle"></i><% end %>
+        </div>
+      </div>
+      <!-- < % if !@leads.blank? %> -->
+        <%= search_form_for @search, class: 'form-group', remote: true, url: leads_path do |f| %>
+          <%= f.hidden_field :check_in_date, id: "check_in_date", value: params[:check_in_date], onchange: "$(this.form).submit()" %>
+          <div class="row">
+            <div class="col-md-12 select">
+              <div class="form-group">
+                <label>Filter agent</label>
+                <%= f.select :user_id, options_for_select(@agents.order('first_name ASC').collect {|u| [u.first_name, u.id]},params[:user_id]), {:include_blank => 'Select all'}, {
+                  onchange: "Rails.fire(this.form, 'submit');
+                  $('#spinner').fadeIn('slow');
+                  $('#spinner').click(function(){
+                    $('#spinner').hide();
+                  })",
+                  class: "form-control",
+                  id: "filter_agent"
+                  } %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 select">
+              <div class="form-group">
+                <label>Filter contract type</label>
+                <%= f.select :contract_type, options_for_select({"Rent" => 1, "Sales" => 2, "Commercial" => 3}), {:include_blank => 'Select all'}, {
+                  onchange: "Rails.fire(this.form, 'submit');
+                  $('#spinner').fadeIn('slow');
+                  $('#spinner').click(function(){
+                    $('#spinner').hide();
+                  })",
+                  class: "form-control",
+                  id: 'filter_contract_type'
+                  } %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <!-- < % end %> -->
+    </div>
+  </div>
+
+</div>
+
+<%= javascript_include_tag 'fullcalendar/jquery.fullcalendar' %>
+<%= javascript_include_tag 'fullcalendar/jquery.ui-fullcalendar' %>
+<%= javascript_include_tag 'fullcalendar/jquery.easing' %>
+<%= javascript_include_tag 'fullcalendar/jquery-ui.datepicker' %>
+<%= javascript_include_tag 'fullcalendar/moment' %>
+<%= javascript_include_tag 'fullcalendar/fullcalendar' %>
+<script>
+  window.leads = <%= raw @leads.to_json %>
+  // console.log(leads);
+
+  jQuery(document).ready(function( $ ) {
+
+
+    function showLeads(data) {
+      return data.map(function (e) {
+        if (e.user_id){
+          var leadColor = "dark-green"
+          var user_id = e.user_id
+        } else {
+          var leadColor = "red"
+          var user_id = "N/A"
+        }
+
+        return {
+          id: e.id,
+          name: e.name,
+          start: e['check_in_date'],
+          contract_type: e.contract_type,
+          information_collected: e.information_collected,
+          property_found: e.property_found,
+          negotiation_completed: e.negotiation_completed,
+          deposit_paid: e.deposit_paid,
+          contract_signed: e.contract_signed,
+          commission_paid: e.commission_paid,
+          budget: e.budget,
+          contract_period: e.contract_period,
+          bedrooms: e.bedrooms,
+          property_type: e.property_type,
+          no_of_people: e.no_of_people,
+          nationality: e.nationality,
+          description: e.description,
+          user_id: e.user_id,
+          className: leadColor        }
+      })
+    }
+
+    /* initialize the calendar
+    -----------------------------------------------------------------*/
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'title',
+        center: '', //'agendaDay,agendaWeek,month',
+        right: 'prev,next today'
+      },
+      height: "parent",
+      eventLimit: false,
+      // editable: true, // Ability to drag and drop
+      firstDay: 0, //  1(Monday) this can be changed to 0(Sunday) for the USA system
+      // selectable: true, // Create new events
+      defaultView: 'month',
+      axisFormat: 'h:mm',
+      allDaySlot: true,
+      defaultDate: $('#check_in_date').val(),
+      events: showLeads(leads),
+      eventRender: function(event, element, view) {
+        return $(`
+          <a href="<%= leads_path %>/${event.id}" target="_blank" class="fc-day-grid-event fc-h-event fc-event fc-start fc-end ${event.className}">
+            <div class="fc-content ${event.contract_type}">
+              <span class="fc-title font-small" title="${event.name}:
+              Budget: ${event.budget}
+              Check in date: ${event.check_in_date}
+              Contract type: ${event.contract_type}
+              Contract period: ${event.contract_period}
+              No. of bedrooms: ${event.bedrooms}
+              Property type: ${event.property_type}
+              No. of people: ${event.no_of_people}
+              Nationality: ${event.nationality}
+              Description: ${event.description}
+
+              Information collected? ${event.information_collected}
+              Property found? ${event.property_found}
+              Negotiation completed? ${event.negotiation_completed}
+              Deposit paid? ${event.deposit_paid}
+              Contract signed? ${event.contract_signed}
+
+              Assigned to Agent id: ${event.user_id}
+              ">
+              ${event.budget} - ${event.name} - ${event.contract_type}
+            </span>
+            </div>
+          </a>
+          `);
+      },
+      // selectable: true,
+      // select: function(start, jsEvent, view) {
+      //   var check_in_date = moment(start);
+      //
+      //   $('#new_calendar').on('shown.bs.modal', function () {
+      //     $('.td').trigger('focus')
+      //   });
+      //
+      //   $('#calendar_check_in_date').datepicker({
+      //     dateFormat: "yy-mm-dd",
+      //     setDate: check_in_date
+      //   });
+      //   $('#calendar_check_in_date').val(check_in_date.format("YYYY-MM-DD"));
+      //
+      // }
+    });
+
+    $('.fc-prev-button').click(function() {
+      var current = new Date($('#check_in_date').val());
+      var prev = new Date(current.getFullYear(), current.getMonth() - 1, 1)
+      $('#check_in_date').val(moment(prev).format('YYYY-MM-DD'))
+      $('#check_in_date').trigger('change')
+      $("#spinner").fadeIn('slow');
+    });
+
+    $('.fc-next-button').click(function() {
+      var current = new Date($('#check_in_date').val());
+      var next = new Date(current.getFullYear(), current.getMonth() + 1, 1)
+      $('#check_in_date').val(moment(next).format('YYYY-MM-DD'))
+      $('#check_in_date').trigger('change')
+      $("#spinner").fadeIn('slow');
+    });
+
+    $('.fc-today-button').click(function() {
+      var current = new Date();
+      var today = new Date(current.getFullYear(), current.getMonth(), current.getDate())
+      $('#check_in_date').val(moment(today).format('YYYY-MM-DD'))
+      $('#check_in_date').trigger('change')
+      $("#spinner").fadeIn('slow');
+    });
+
+  });
+
+</script>

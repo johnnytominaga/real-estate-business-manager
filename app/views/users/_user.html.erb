@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="col-md-6">
+          <%= image_tag user.show_avatar('100x100'), class: "img-circle avatar-small" %>
+        </div>
+        <div class="col-md-6">
+          <strong><%= user.id %></strong>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <strong><%= link_to user_path(user.id) do %><%= user.fullname %><% end %></strong>
+      </div>
+      <div class="col-md-2">
+        Sign in count: <%= user.sign_in_count %>
+      </div>
+      <div class="col-md-2">
+        Created on:
+        <% if !user.created_at.blank? %>
+          <%= user.created_at.to_time.strftime("%d/%m/%Y") %>
+        <% end %>
+      </div>
+      <div class="col-md-2">
+        Last sign in:
+        <% if !user.last_sign_in_at.blank? %>
+          <%= user.last_sign_in_at.to_time.strftime("%d/%m/%Y") %>
+        <% end %>
+      </div>
+      <div class="col-md-2">
+        <%= link_to edit_user_path(user.id), method: :post do %>
+          <% if user.is_active == true %>
+            <div class="text-info">
+              Active
+            </div>
+          <% else %>
+            <div class="text-danger">
+              Blocked
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

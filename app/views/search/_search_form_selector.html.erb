@@ -1,0 +1,141 @@
+<div class="row text-center wow fadeInUp"  data-wow-delay="0.1s" style="padding:0 0 20px 0;">
+  <div class="btn-group btn-group-sm">
+    <button type="button" class="btn btn-primary selector" id="selector_rent"><%= link_to "For rent", properties_path(q: {contract_type_eq: 1}), :remote => true %></button>
+    <button type="button" class="btn btn-secondary selector" id="selector_sales"><%= link_to "For sale", properties_path(q: {contract_type_eq: 2}), :remote => true %></button>
+    <button type="button" class="btn btn-secondary selector" id="selector_commercial_lease"><%= link_to "Commercial lease", properties_path(q: {contract_type_eq: 3}), :remote => true %></button>
+    <button type="button" class="btn btn-secondary selector" id="selector_commercial_sale"><%= link_to "Commercial for sale", properties_path(q: {contract_type_eq: 4}), :remote => true %></button>
+  </div>
+</div>
+  <!-- SEARCH FORM -->
+  <%= render partial: 'search/search_form_rent' %>
+
+<script>
+
+  jQuery(document).ready(function( $ ) {
+
+    $(function(){
+
+    function GetURLParameter(sParam){
+      var sPageURL = window.location.search.substring(1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++)
+      {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam)
+        {
+            return sParameterName[1];
+        };
+      };
+    };
+
+      var ContractType = GetURLParameter('q%5Bcontract_type_eq%5D');
+
+
+      if (ContractType == 1){
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_rent' %>");
+        $("#selector_rent").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#selector_sales").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#properties_title").text("Properties for rent");
+      }
+      if (ContractType == 2){
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_sales' %>");
+        $("#selector_rent").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_sales").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#properties_title").text("Properties for sale");
+      }
+      if (ContractType == 3){
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_commercial' %>");
+        $("#selector_rent").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_sales").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#properties_title").text("Commercial lease properties");
+      }
+      if (ContractType == 4){
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_commercial' %>");
+        $("#selector_rent").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_sales").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#properties_title").text("Commercial sale properties");
+      }
+
+
+    });
+
+    $("#selector_rent").click(function(){
+        $("#selector_rent").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#selector_sales").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_rent' %>");
+        $("#properties_title").text("Properties for rent");
+    });
+    $("#clear_rent").click(function(){
+        $("#selector_rent").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#selector_sales").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_rent' %>");
+        $("#properties_title").text("Properties for rent");
+    });
+
+    $("#selector_sales").click(function(){
+        $("#selector_rent").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_sales").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_sales' %>");
+        $("#properties_title").text("Properties for sale");
+    });
+    $("#clear_sales").click(function(){
+        $("#selector_rent").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#selector_sales").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_rent' %>");
+        $("#properties_title").text("Properties for rent");
+    });
+
+    $("#selector_commercial_lease").click(function(){
+        $("#selector_rent").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_sales").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_commercial' %>");
+        $("#properties_title").text("Commercial lease properties");
+    });
+    $("#clear_commercial_lease").click(function(){
+        $("#selector_rent").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#selector_sales").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_rent' %>");
+        $("#properties_title").text("Properties for rent");
+    });
+
+    $("#selector_commercial_sale").click(function(){
+        $("#selector_rent").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_sales").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_commercial_sale' %>");
+        $("#properties_title").text("Commercial properties for sale");
+    });
+    $("#clear_commercial_sale").click(function(){
+        $("#selector_rent").removeClass("btn btn-secondary selector").addClass("btn btn-primary selector");
+        $("#selector_sales").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_lease").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#selector_commercial_sale").removeClass("btn btn-primary selector").addClass("btn btn-secondary selector");
+        $("#search_form_selector").replaceWith("<%= j render partial: 'search/search_form_rent' %>");
+        $("#properties_title").text("Properties for rent");
+    });
+
+
+  });
+
+</script>

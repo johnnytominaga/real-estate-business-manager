@@ -1,0 +1,34 @@
+<% if !@owner_properties.blank? %>
+  <% @owner_properties.each_with_index do |property, index| %>
+    <%= link_to editor_edit_property_property_path(id: property.id, original: @property_ranked.id), "data-toggle": "modal", "data-target": "#editor_edit_property", id: "editor_edit_property_#{property.id}", alt: "Edit property", "aria-label": "Edit property", title: "Edit property", remote: true do %>
+      <div class="row editor-right-row wow fadeInDown" data-wow-delay="0.<%= index %>s">
+        <div class="col-md-2">
+          <%= image_tag property.cover_photo("100X100", request.host), class: "editor-right-row img-circle" %>
+        </div>
+        <div class="col-md-8">
+          <span><b>
+            <%= property.property_title %>
+          </b><% if !property.flat_no.blank? && property.flat_no != "0" %>(<%= property.flat_no %>)<% end %></span><br/>
+          <span><%= property.location.name %><br/>
+            <% if !property.availability_date.blank? && property.availability_date != "0" %>
+              Available from: <%= property.availability_date.to_time.strftime("%d/%m/%Y") %>
+            <% end %>
+          </span>
+        </div>
+        <div class="col-md-2">
+          <% if !property.price.blank? && property.price != 0 %>
+            <span>
+              <%= property.property_price %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% else %>
+  <div class="row editor-right-row">
+    <div class="col-md-12">
+      <p>This owner doesn't have other properties listed.</p>
+    </div>
+  </div>
+<% end %>

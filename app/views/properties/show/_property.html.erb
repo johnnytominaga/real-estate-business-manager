@@ -1,0 +1,503 @@
+<section id="property-details" class="header" style="padding: 60px 0 60px 0">
+  <div class="container">
+    <div class="row" style="padding: 0 0 20px 0;">
+      <div class="col-md-8">
+        <div class="section-header wow fadeInUp">
+          <!-- TITLE -->
+          <h3>
+            <%= @property.property_title %>
+            <% if user_signed_in? %>
+              <% if !@property.flat_no.blank? && @property.flat_no != '0' %>
+                 (<%= @property.flat_no %>)
+              <% end %>
+            <% end %>
+          </h3>
+          <p>
+            <b>ID: <%= @property.id %> | <%= @property.area.area %> | <%= @property.contract_type %></b><br/>
+            <% if !@property.availability_date.blank? && @property.availability_date != "0" %>
+              Available from:
+              <% if (!user_signed_in?) %>
+                <% if @property.availability_date < Date.today() - 30.days %>
+                  <% @date = @property.availability_date.to_time + 1.year %>
+                  <%= @date.strftime("%B %Y") %>
+                <% else %>
+                  <%= @property.availability_date.to_time.strftime("%B %Y") %>
+                <% end %>
+              <% else %>
+                <%= @property.availability_date.to_time.strftime("%d/%m/%Y") %>
+              <% end %>
+            <% end %>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-header wow fadeInUp">
+
+              <% if @property.sold == true %>
+                <h3>SOLD</h3>
+              <% else %>
+                <% if !@property.price.blank? && @property.price != 0 %>
+                  <h3>
+                    <%= @property.property_price %>
+                  </h3>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="property-buttons">
+          <% if (!user_signed_in?) %>
+            <div class="row">
+              <div class="col-md-12 wow fadeInUp">
+                <!-- CONTACT FORM -->
+                <div id="contact_form_property">
+                  <%= button_to contact_from_property_property_path, class: "btn btn-normal", "data-toggle": "modal", "data-target": "#contact-from-property-modal", id: "contact-from-property-button", remote: true do %>
+                    <i class="fas fa-heart"></i> I'm interested in this property!
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% else %>
+            <div class="row">
+              <!-- OWNER DETAILS -->
+              <div class="col-md-6 wow fadeInUp">
+                <%= button_to  owner_details_property_path(owner_id: @property.owner_id), class: "btn btn-normal", "data-toggle": "modal", "data-target": "#owner-modal", id: "owner-details-button", remote: true do %>
+                  <i class="far fa-address-card"></i> Owner details
+                <% end %>
+              </div>
+              <!-- AGENT UPDATE -->
+              <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <%= button_to edit_property_path, class: "btn btn-normal", "data-toggle": "modal", "data-target": "#update-property-modal", id: "agent-update-button", remote: true do %>
+                <i class="far fa-edit"></i> Update info
+                <% end %>
+              </div>
+            </div>
+            <% if browser.platform.ios? || browser.platform.android? %>
+              <div class="row">
+                <div class="col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                  <%= link_to owner_path(@property.property_owner), class: "btn btn-normal" do %>
+                    <i class="fa fa-phone fa-w-16 fa-flip-horizontal"></i> Call owner now
+                  <% end %>
+                </div>
+                <div class="col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                  <!-- SHARE WHATSAPP -->
+                  <%= link_to "whatsapp://send?text=#{@property.share_with_owner_encoded}", class: "btn btn-normal" do %>
+                    <i class="fab fa-whatsapp"></i> Share with the team
+                  <% end %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                  <%= link_to "whatsapp://send?text=#{@property.share_without_owner_encoded}", class: "btn btn-normal" do %>
+                    <i class="fab fa-whatsapp"></i> Share with a client
+                  <% end %>
+                </div>
+                <div class="col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                  <%= link_to "fb-messenger://share/?link=#{request.original_url}", class: "btn btn-normal" do %>
+                    <i class="fab fa-facebook-square"></i> Share link on Messenger
+                  <% end %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 wow fadeInUp" data-wow-delay="0.6s" style="display:flex;overflow-x: hidden;">
+                  <textarea id="share_bar_client" class="share_bar" rows="1" style="position: fixed; left: 10000px;"><%= @property.share_without_owner %></textarea>
+                  <button class="btn btn-form btn-normal clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#share_bar_client" style="width:100%;">
+                      <i class="fab fa-facebook-square"></i> Copy to share
+                  </button>
+                </div>
+              </div>
+            <% else %>
+              <div class="row">
+                <div class="col-md-12 wow fadeInUp" data-wow-delay="0.3s" style="display:flex;">
+                  <textarea id="share_bar" class="share_bar" rows="1" style="position: fixed; left: 10000px;"><%= @property.share_with_owner %></textarea>
+                  <button class="btn btn-form btn-normal clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#share_bar" style="width:100%;">
+                      <i class="fab fa-whatsapp"></i> Share with the team
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 wow fadeInUp" data-wow-delay="0.4s" style="display:flex;overflow-x: hidden;">
+                  <textarea id="share_bar_client" class="share_bar" rows="1" style="position: fixed; left: 10000px;"><%= @property.share_without_owner %></textarea>
+                  <button class="btn btn-form btn-normal clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#share_bar_client" style="width:100%;">
+                      <i class="fab fa-facebook-square"></i> Share with a client
+                  </button>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="padding: 0 0 40px 0">
+      <!-- CAROUSEL -->
+      <div class="col-md-8">
+        <%= render partial: "properties/show/property_carousel", locals: {property: @property} %>
+      </div>
+      <!-- GOOGLE MAPS -->
+      <div class="col-md-4 wow fadeInUp">
+        <div id="property-map" style="width: 100%; height: 70vh"></div>
+
+        <% if user_signed_in? %>
+          <div class="row text-center" style="padding:10px;">
+            <% if (!@property.address.blank? && @property.address != "0") %>
+              <h4>Address: <%= @property.address %><br/>
+              <%= @property.location.name %></h4>
+            <% end %>
+          </div>
+          <% if current_user.role_id == "admin" || current_user.role_id == "manager" %>
+            <% if !@property.listed_by.blank? && @property.listed_by != "0" %>
+              <div class="row text-center" style="padding:10px;">
+                <strong>
+                  Listed by: <%= @property.listed_by_user.first_name %>
+                </strong>
+              </div>
+            <% end %>
+          <% end %>
+          <% if (!@property.updated_at.blank? && @property.updated_at != "0" && !@property.updated_by.blank? ) %>
+            <div class="row text-center" style="padding:10px;">
+              Last updated by:
+                <%= link_to user_path(@property.updated_by_user.nickname) do %>
+                  <%= image_tag @property.updated_by_user.show_avatar('100x100'), class: "img-circle avatar-small" %>
+                  <strong>
+                    <%= @property.updated_by_user.first_name %> <%= @property.updated_by_user.last_name %>
+                  </strong>
+                <% end %>
+                  on <%= @property.updated_at.to_time.strftime("%d/%m/%Y") %>
+            </div>
+          <% end %>
+          <% if (!@property.assigned_to.blank? && @property.assigned_to != "0") %>
+            <div class="row text-center" style="padding:10px;">
+              Listing rights:
+              <% if !User.find(@property.assigned_to).nickname.blank? %>
+                <%= link_to user_path(User.find(@property.assigned_to).nickname) do %>
+                  <%= image_tag User.find(@property.assigned_to).show_avatar('100x100'), class: "img-circle avatar-small" %>
+                  <strong>
+                    <%= User.find(@property.assigned_to).first_name %> <%= User.find(@property.assigned_to).last_name %>
+                  </strong>
+                <% end %>
+              <% else %>
+                <%= link_to user_path(User.find(2).nickname) do %>
+                  <%= image_tag User.find(@property.assigned_to).show_avatar('100x100'), class: "img-circle avatar-small" %>
+                  <strong>
+                    <%= User.find(@property.assigned_to).first_name %> <%= User.find(@property.assigned_to).last_name %>
+                  </strong>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+
+        <% end %>
+      </div>
+
+    </div>
+
+    <!-- RENT FEATURES -->
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row text-center" style="padding: 0 0 40px 0;">
+          <% if @property.property_type? %>
+            <%= content_tag :div, class: "col-md-3 wow fadeInUp" do %>
+              <i class="fas fa-home fa-2x"></i><br/>
+              <%= @property.property_type %>
+            <% end %>
+          <% end %>
+          <% if @property.bedrooms? %>
+            <%= content_tag :div, class: "col-md-3 wow fadeInUp", "data-wow-delay": "0.1s" do %>
+              <i class="fas fa-bed fa-2x"></i><br/>
+              <%= @property.bedrooms %>
+            <% end %>
+          <% end %>
+          <% if @property.style? %>
+            <%= content_tag :div, class: "col-md-3 wow fadeInUp", "data-wow-delay": "0.2s" do %>
+              <i class="fas fa-star-of-life fa-2x"></i><br/>
+              <%= @property.style %>
+            <% end %>
+          <% end %>
+          <% if @property.bathrooms? %>
+            <%= content_tag :div, class: "col-md-3 wow fadeInUp", "data-wow-delay": "0.3s" do %>
+              <i class="fas fa-bath fa-2x"></i><br/>
+              <%= @property.bathrooms %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="col-md-6 wow fadeInUp">
+            <h4>ESSENTIALS</h4>
+            <table class="table table-hover">
+              <tbody>
+                <% if !@property.price.blank? && @property.price != 0 %>
+                  <tr>
+                    <th scope="row">Price</th>
+                    <td><%= @property.property_price %>
+                    </td>
+                  </tr>
+                <% end %>
+                <% if !@property.premium.blank? && @property.premium != 0 %>
+                  <tr>
+                    <th scope="row">Premium</th>
+                    <td>€<%= @property.premium %></td>
+                  </tr>
+                <% end %>
+                <% if !@property.deposit.blank? && @property.deposit != 0 %>
+                  <tr>
+                    <th scope="row">Does the owner charge a deposit or ask for payments in advance?</th>
+                    <td><% if @property.deposit == true %>Yes<% else %>No<% end %></td>
+                  </tr>
+                <% end %>
+                <% if !@property.property_type.blank? && @property.property_type != 0 %>
+                  <tr>
+                    <th scope="row">Type</th>
+                    <td><%= @property.property_type %></td>
+                  </tr>
+                <% end %>
+                <% if !@property.permit_class.blank? && @property.permit_class != 0 %>
+                  <tr>
+                    <th scope="row">Permit class</th>
+                    <td><%= @property.permit_class %></td>
+                  </tr>
+                <% end %>
+                <% if !@property.floor.blank? && @property.floor != 0 %>
+                  <tr>
+                    <th scope="row">Floor</th>
+                    <td><%= @property.floor %></td>
+                  </tr>
+                <% end %>
+                <% if !@property.sqm.blank? && @property.sqm != 0 %>
+                  <tr>
+                    <th scope="row">Area in sqm</th>
+                    <td><%= @property.sqm %></td>
+                  </tr>
+                <% end %>
+                <% if !@property.condition.blank? && @property.condition != 0 %>
+                  <tr>
+                    <th scope="row">Condition</th>
+                    <td><%= @property.condition %></td>
+                  </tr>
+                <% end %>
+                <% if !@property.office_rooms.blank? && @property.office_rooms != 0 %>
+                  <tr>
+                    <th scope="row">Office rooms</th>
+                    <td><%= @property.office_rooms %></td>
+                  </tr>
+                <% end %>
+                <% if !@property.bedrooms.blank? && @property.bedrooms != 0 %>
+                  <tr>
+                    <th scope="row">No. of bedrooms</th>
+                    <td><%= @property.bedrooms %></td>
+                  </tr>
+                <% end %>
+                <% if !@property.bathrooms.blank? && @property.bathrooms != 0 %>
+                  <tr>
+                    <th scope="row">No. of bathrooms</th>
+                    <td><%= @property.bathrooms %></td>
+                  </tr>
+                <% end %>
+                <% if !@property.style.blank? && @property.style != 0 %>
+                  <tr>
+                    <th scope="row">Style</th>
+                    <td><%= @property.style %></td>
+                  </tr>
+                <% end %>
+                <% if !@property.availability_date.blank? && @property.availability_date != "0" %>
+                  <tr>
+                    <th scope="row">Available from</th>
+                    <td>
+                      <% if (!user_signed_in?) %>
+                        <% if @property.availability_date < Date.today() - 30.days %>
+                          <% @date = @property.availability_date.to_time + 1.year %>
+                          <%= @date.strftime("%B %Y") %>
+                        <% else %>
+                          <%= @property.availability_date.to_time.strftime("%B %Y") %>
+                        <% end %>
+                      <% else %>
+                        <%= @property.availability_date.to_time.strftime("%d/%m/%Y") %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+                <% if ((!@property.updated_at.blank? && @property.updated_at != "0") && user_signed_in?) %>
+                  <tr>
+                    <th scope="row">Latest update</th>
+                    <td><%= @property.updated_at.to_time.strftime("%d/%m/%Y") %></td>
+                  </tr>
+                <% end %>
+                <% if ((!@property.obs.blank? && @property.obs != "0") && user_signed_in?) %>
+                  <tr>
+                    <th scope="row">Obs</th>
+                    <td><%= @property.obs %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-6 wow fadeInUp">
+            <% if
+              (!@property.balconies.blank? && @property.balconies != 0) ||
+              (!@property.ac.blank? && @property.ac != "0") ||
+              (!@property.roof.blank? && @property.roof != "0") ||
+              (!@property.yard.blank? && @property.yard != "0") ||
+              (!@property.seaview.blank? && !@property.seaview != "0") ||
+              (!@property.seafront.blank? && @property.seafront != "0") ||
+              (!@property.unfurnished.blank? && @property.unfurnished != "0") ||
+              (!@property.swimming_pool.blank? && @property.swimming_pool != "0") ||
+              (!@property.pet_friendly.blank? && @property.pet_friendly != "0") ||
+              (!@property.jacuzzi.blank? && @property.jacuzzi != "0")
+            %>
+              <h4>FEATURES</h4>
+            <% end %>
+            <table class="table table-hover">
+              <tbody>
+                <% if !@property.balconies.blank? && @property.balconies != 0 %>
+                  <tr>
+                    <th scope="row"><i class="fas fa-binoculars"></i> Balconies: <%= @property.balconies %></th>
+                  </tr>
+                <% end %>
+                <% if !@property.ac.blank? && @property.ac != "0" %>
+                  <tr>
+                    <th scope="row"><i class="far fa-snowflake"></i> Air-conditioner</th>
+                  </tr>
+                <% end %>
+                <% if !@property.roof.blank? && @property.roof != "0" %>
+                  <tr>
+                    <th scope="row"><i class="fas fa-chess-rook"></i> Use of roof</th>
+                  </tr>
+                <% end %>
+                <% if !@property.yard.blank? && @property.yard != "0" %>
+                  <tr>
+                    <th scope="row"><i class="fab fa-pagelines"></i> Yard</th>
+                  </tr>
+                <% end %>
+                <% if !@property.seaview.blank? && !@property.seaview != "0" %>
+                  <tr>
+                    <th scope="row"><i class="fas fa-ship"></i> Sea view</th>
+                  </tr>
+                <% end %>
+                <% if !@property.seafront.blank? && @property.seafront != "0" %>
+                  <tr>
+                    <th scope="row"><i class="fas fa-umbrella-beach"></i> Sea front</th>
+                  </tr>
+                <% end %>
+                <% if !@property.unfurnished.blank? && @property.unfurnished != "0" %>
+                  <tr>
+                    <th scope="row"><i class="fas fa-dolly-flatbed"></i> Unfurnished</th>
+                  </tr>
+                <% end %>
+                <% if !@property.swimming_pool.blank? && @property.swimming_pool != "0" %>
+                  <tr>
+                    <th scope="row"><i class="fas fa-swimmer"></i> Swimming pool</th>
+                  </tr>
+                <% end %>
+                <% if !@property.jacuzzi.blank? && @property.jacuzzi != "0" %>
+                  <tr>
+                    <th scope="row"><i class="fas fa-glass-martini-alt"></i> Jacuzzi</th>
+                  </tr>
+                <% end %>
+                <% if !@property.pet_friendly.blank? && @property.pet_friendly != "0" %>
+                  <tr>
+                    <th scope="row"><i class="fas fa-paw"></i> Pet friendly</th>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <% if !@leads.blank? %>
+          <div class="row">
+            <div class="col-md-12">
+              <h4>Suggest to a lead</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div id="scroll_list"></div>
+            <div class="col-md-12" id="leads_list">
+              <%= render partial: 'properties/show/leads' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade bd-example-modal-lg" id="contact-from-property-modal" tabindex="-1" role="dialog" aria-labelledby="ContactFromPropertyModel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content" id="contact_from_property">
+      </div>
+    </div>
+  </div>
+  <script>
+    $('#contact-from-property-modal').on('shown.bs.modal', function () {
+      $('#contact-from-property-button').trigger('focus')
+    });
+  </script>
+
+  <div class="modal fade bd-example-modal-lg" id="owner-modal" tabindex="-1" role="dialog" aria-labelledby="OwnerDetailsModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content" id="owner_details">
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $('#owner-modal').on('shown.bs.modal', function () {
+      $('#owner-details-button').trigger('focus')
+    });
+  </script>
+
+  <div class="modal fade bd-example-modal-lg" id="update-property-modal" tabindex="-1" role="dialog" aria-labelledby="AgentUpdateModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content" id="property_edit">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $('#update-property-modal').on('shown.bs.modal', function () {
+      $('#agent-update-button').trigger('focus')
+    });
+  </script>
+
+
+  <!-- CAROUSEL -->
+  <script>
+    // Initialize and add the map
+    function initPropertyMap() {
+      // The location of Uluru
+      var uluru = {lat: <% if !@property.latitude.blank? && @property.latitude != "0" %><%= @property.latitude %><% else %>35.9426466<% end %>, lng: <% if !@property.longitude.blank? && @property.longitude != "0" %><%= @property.longitude %><% else %>14.2382618<% end %>};
+      // The map, centered at Uluru
+      var propertyMap = new google.maps.Map(
+          document.getElementById('property-map'), {
+            zoom: 12,
+            center: uluru
+          });
+
+      var propertyCircle = new google.maps.Circle({
+        strokeColor: '#ff0050',
+        strokeOpacity: 0.4,
+        strokeWeight: 1,
+        fillColor: '#ff0050',
+        fillOpacity: 0.35,
+        map: propertyMap,
+        center: uluru,
+        radius: 1200
+      })
+
+      // The marker, positioned at Uluru
+      // var marker = new google.maps.Marker({position: uluru, map: propertyMap});
+    }
+
+  </script>
+  <!--Load the API from the specified URL
+  * The async attribute allows the browser to render the page while the API loads
+  * The key parameter will contain your own API key (which is not needed for this tutorial)
+  * The callback parameter executes the initMap() function
+  -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhX1nMcpb_JIUOIsS0UqdLFYll0aQ6lEQ&callback=initPropertyMap">
+  </script>
+</section>

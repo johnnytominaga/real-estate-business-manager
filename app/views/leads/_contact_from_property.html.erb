@@ -1,0 +1,141 @@
+<%= form_with model: @lead, method: :post do |f| %>
+  <div class="row">
+    <%= f.hidden_field :contract_type, value: @property.contract_type %>
+
+    <% if @property.price.nil? || @property.price <= 800 %><%= f.hidden_field :budget, value: "Up to €800" %>
+      <% elsif @property.price.between?(801, 900) %><%= f.hidden_field :budget, value: "€800 - 900" %>
+      <% elsif @property.price.between?(901, 1100) %><%= f.hidden_field :budget, value: "€900 - 1,100" %>
+      <% elsif @property.price.between?(1101, 1500) %><%= f.hidden_field :budget, value: "€1,100 - 1,500" %>
+      <% elsif @property.price > 1500 %><%= f.hidden_field :budget, value: "Over €1,500" %>
+      <% elsif @property.price <= 100000 %><%= f.hidden_field :budget, value: "Up to €100,000" %>
+      <% elsif @property.price.between?(100001, 200000) %><%= f.hidden_field :budget, value: "€100,001 - 200,000" %>
+      <% elsif @property.price.between?(200001, 300000) %><%= f.hidden_field :budget, value: "€200,001 - 300,000" %>
+      <% elsif @property.price.between?(300001, 450000) %><%= f.hidden_field :budget, value: "€300,001 - 450,000" %>
+      <% elsif @property.price > 450000 %><%= f.hidden_field :budget, value: "Over €450,000" %>
+      <% elsif @property.price <= 15 %><%= f.hidden_field :budget, value: "Up to €15/day" %>
+      <% elsif @property.price.between?(16, 25) %><%= f.hidden_field :budget, value: "€16 - 25/day" %>
+      <% elsif @property.price.between?(26, 40) %><%= f.hidden_field :budget, value: "€26 - 40/day" %>
+      <% elsif @property.price.between?(41, 100) %><%= f.hidden_field :budget, value: "€41 - 100/day" %>
+      <% elsif @property.price.between?(101, 200) %><%= f.hidden_field :budget, value: "€101 - 200/day" %>
+      <% elsif @property.price > 200 %><%= f.hidden_field :budget, value: "Over €201/day" %>
+    <% end %>
+    <%= f.fields_for :lead_properties, @property.lead_properties.build do |p| %>
+      <%= p.hidden_field :property_id, value: @property.id %>
+      <%= p.hidden_field :status, value: "Suggested by client" %>
+    <% end %>
+    <%= f.fields_for :lead_locations, @location.lead_locations.build do |l| %>
+      <%= l.hidden_field :location_id, value: @location.id %>
+    <% end %>
+    <%= f.fields_for :lead_areas, @area.lead_areas.build do |a| %>
+      <%= a.hidden_field :area_id, value: @area.id %>
+    <% end %>
+    <%= f.fields_for :lead_phases, @phase.lead_phases.build do |s| %>
+      <%= s.hidden_field :phase_id, value: @phase.id %>
+      <%= s.hidden_field :comment, value: "Client contacted from property id: #{@property.id}" %>
+    <% end %>
+    <div class="row">
+      <div class="col-md-12 input">
+        <div class="form-group text-left">
+          <%= f.label :name do %>Name *<% end %>
+          <%= f.text_field :name, placeholder: "Full name", class: "form-control", id: "lead_name_property" %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 input">
+        <div class="form-group text-left">
+          <%= f.label :phone_country_code do %>Phone number country code from<% end %>
+          <%= f.country_select :phone_country_code, { include_blank: 'Select a country', priority_countries: ["MT", "IT", "GB"], priority_countries_divider: "~~~~~~"}, {class: "form-control countries", id: 'lead_country_code_property'} %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 input">
+        <div class="form-group text-left">
+          <%= f.label :phone do %>Phone (without country code) *<% end %>
+          <%= f.telephone_field :phone, placeholder: "Your phone number", class: "form-control", id: "lead_phone_property", maxlength: "12" %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 input">
+        <div class="form-group text-left">
+          <%= f.label :email %>
+          <%= f.email_field :email, placeholder: "Your email", class: "form-control", id: "lead_email_property", maxlength: "50" %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 input">
+        <div class="form-group text-left">
+          <%= f.label :check_in_date %>
+          <%= f.text_field :check_in_date, placeholder: "When do you need it from? *", class: "form-control", readonly: true, id: "lead_move_in_date_property" %>
+        </div>
+      </div>
+    </div>
+    <% if @property.contract_type == "Rent" %>
+      <div class="row">
+        <div class="col-md-12 input">
+          <div class="form-group text-left">
+            <%= f.label :contract_period %>
+            <%= f.select :contract_period, options_for_select(Lead.contract_periods.map { |key, value| [key.humanize, key] }),
+              {prompt: "How long do you need it for?"},
+              {class: "form-control" }
+            %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="actions" style="padding: 20px 15px 0 15px;">
+          <%= f.submit "Contact us", class: "btn btn-normal btn-block", id: "btnContactProperty" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+
+  $('#btnContactProperty').click(function() {
+    $("#spinner").fadeIn('slow');
+  });
+
+  function phone_number_format(){
+    var max_chars = 12;
+      $('#lead_phone_property').keydown( function(e){
+          if ($(this).val().length >= max_chars) {
+              $(this).val($(this).val().substr(0, max_chars));
+          }
+      });
+
+      $('#lead_phone_property').keyup( function(e){
+          if ($(this).val().length >= max_chars) {
+              $(this).val($(this).val().substr(0, max_chars));
+          }
+      });
+  }
+
+
+  (function($) {
+    $.fn.inputFilter = function (inputFilter) {
+      return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+        if (inputFilter(this.value)) {
+          this.oldValue = this.value;
+          this.oldSelectionStart = this.selectionStart;
+          this.oldSelectionEnd = this.selectionEnd;
+        } else if (this.hasOwnProperty("oldValue")) {
+          this.value = this.oldValue;
+          this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+        }
+      });
+    };
+  }(jQuery));
+
+  $("#lead_phone_property").inputFilter(function(value) {
+    return /^\d*$/.test(value);
+  });
+</script>

@@ -1,0 +1,322 @@
+<div class="row" id="search_form_selector">
+  <div class="col-md-12">
+    <!--SEARCH PANEL -->
+    <%= search_form_for @search, url: agents_agent_search_properties_path, remote: true do |f| %>
+
+      <%= f.hidden_field :contract_type_eq, value: "4" %>
+      <div class="row">
+        <div class="col-md-3 input wow fadeIn" data-wow-delay="0.1s">
+          <div class="form-group">
+            <%= f.label :location_name_cont, "Location:" %>
+            <button type="button" class="form-control text-left" data-toggle="collapse" data-target="#locations_list" id="locations_selector">
+              Select location<i class="fa fa-chevron-down pull-right"></i>
+            </button>
+            <div id="locations_list" class="collapse">
+              <div class="panel panel-default">
+                <ul class="list-group scrollable-menu">
+                  <% Area.all.each do |area| %>
+                    <li class="list-group-item">
+                      <div class="row search-form">
+                        <div class="col-xs-1 input">
+                          <input type="checkbox" id="<%= area.id %>" class="parent">
+                        </div>
+                        <div class="col-xs-10 input toggle" id="dropdown-detail-<%= area.id %>" data-toggle="detail-<%= area.id %>">
+                          <label><%= area.area %></label><i class="fas fa-plus pull-right"></i>
+                        </div>
+                      </div>
+                      <div id="detail-<%= area.id %>">
+                        <ul class="list-group">
+                          <% Location.where("area_id = ?", area.id).each do |location| %>
+                            <div class="row search-form">
+                              <li class="list-group-item input" style="height: 2.2em">
+                                <label>
+                                  <div class="col-xs-1"><%= check_box_tag('q[location_name_cont_any][]', location.name, false, class: "parent-#{area.id}", id: "s#{location.id}") %></div>
+                                  <%= location.name %>
+                                </label>
+                              </li>
+                            </div>
+                          <% end %>
+                        </ul>
+                      </div>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 input wow fadeIn" data-wow-delay="0.2s">
+          <div class="form-group">
+            <label>Availability date:</label>
+            <input type="text" class="form-control" id="property_availability_date" aria-describedby="availabilityDate" placeholder="Select a date" readonly="true">
+            <%= f.hidden_field :availability_date_gteq, id: "minDate" %>
+            <%= f.hidden_field :availability_date_lteq, id: "maxDate" %>
+          </div>
+        </div>
+        <div class="col-md-2 input wow fadeIn" data-wow-delay="0.3s">
+          <div class="form-group">
+            <label>Minimum area (sqm):</label>
+            <%= f.number_field :sqm_gteq, placeholder: "Area in sqm", class: "form-control" %>
+          </div>
+        </div>
+        <div class="col-md-3 input wow fadeIn" data-wow-delay="0.4s">
+          <div class="form-group">
+            <label>Price range (€):</label>
+            <div id="slider-range"></div>
+          </div>
+        </div>
+        <div class="col-md-1 input wow fadeIn" data-wow-delay="0.5s">
+          <div class="form-group">
+            <label>From:</label>
+            <%= f.text_field :price_gteq, class: "form-control" %>
+          </div>
+        </div>
+        <div class="col-md-1 input wow fadeIn" data-wow-delay="0.6s">
+          <div class="form-group">
+            <label>To:</label>
+            <%= f.text_field :price_lteq, class: "form-control" %>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="more-search-options" style="display:none;">
+        <div class="row">
+          <div class="col-md-3 input">
+            <div class="form-group">
+              <label>Property type:</label>
+              <%= f.select :property_type_eq, options_for_select(Property.property_types.map { |key, value| [key.humanize, value] }, \
+                                            :disabled => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 29, 30]),
+                                            {prompt: "Select Type of Property..."}, class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-md-2 input">
+            <div class="form-group">
+              <label>ID</label>
+              <%= f.text_field :id_cont, placeholder: "Enter ID...", class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-md-2 input">
+            <div class="form-group">
+              <label>Only with pictures:</label>
+              <%= f.select :photos_count_gteq, [['Yes', 1], ['No', 0]], {prompt: "Select..."}, class: "form-control" %>
+            </div>
+          </div>
+
+          <% if (user_signed_in?) %>
+            <div class="col-md-2 input">
+              <div class="form-group">
+                <label>Updates since:</label>
+                <%= f.text_field :updated_at_gteq, placeholder: "Select a date (in the past)", class: "form-control", id: "property_updated_since", readonly: true %>
+              </div>
+            </div>
+            <div class="col-md-3 input">
+              <div class="form-group">
+                <label>Addresses that contain:</label>
+                <%= f.text_field :address_cont, class: "form-control", placeholder: "Start typing..." %>
+              </div>
+            </div>
+
+          <% end %>
+        </div>
+        <% if (user_signed_in?) %>
+          <div class="row">
+            <div class="col-md-2 input">
+              <div class="form-group">
+                <label>Owner's phone number:</label>
+                <%= f.autocomplete_field :owner_phone_number_cont, autocomplete_owner_phone_number_owners_path,
+                              'data-auto-focus' => false,
+                              'data-noMatchesLabel' => "No existing owners have been found",
+                              :placeholder => 'Start typing the phone number...',
+                              :class => "form-control"
+                              %>
+              </div>
+            </div>
+            <div class="col-md-2 input">
+              <div class="form-group">
+                <label>Owner's Name:</label>
+                <%= f.autocomplete_field :owner_name_cont, autocomplete_owner_name_owners_path,
+                              'data-auto-focus' => true,
+                              'data-noMatchesLabel' => "No existing owners have been found",
+                              :placeholder => "Start typing the onwer's name...",
+                              :class => "form-control"
+                              %>
+              </div>
+            </div>
+            <div class="col-md-3 input">
+              <div class="form-group">
+                <label>Owner's additional info:</label>
+                <%= f.autocomplete_field :owner_additional_info_cont, autocomplete_owner_additional_info_owners_path,
+                              'data-auto-focus' => false,
+                              'data-noMatchesLabel' => "No existing owners have been found",
+                              :placeholder => 'Start typing the phone number...',
+                              :class => "form-control"
+                              %>
+              </div>
+            </div>
+            <div class="col-md-3 input">
+              <div class="form-group">
+                <label>Comments that contain:</label>
+                <%= f.text_field :obs_cont, class: "form-control", placeholder: "Start typing..." %>
+              </div>
+            </div>
+          </div>
+
+        <% end %>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="btn-group btn-group-sm">
+            <button type="button" class="btn btn-secondary selector" id="selector_rent"><%= link_to "For rent", agents_agent_search_properties_path(q: {contract_type_eq: 1}), :remote => true %></button>
+            <button type="button" class="btn btn-secondary selector" id="selector_sales"><%= link_to "For sale", agents_agent_search_properties_path(q: {contract_type_eq: 2}), :remote => true %></button>
+            <button type="button" class="btn btn-secondary selector" id="selector_commercial_lease"><%= link_to "Commercial lease", agents_agent_search_properties_path(q: {contract_type_eq: 3}), :remote => true %></button>
+            <button type="button" class="btn btn-primary selector" id="selector_commercial_sale"><%= link_to "Commercial for sale", agents_agent_search_properties_path(q: {contract_type_eq: 4}), :remote => true %></button>
+          </div>
+        </div>
+
+        <div class="col-md-2 col-md-offset-4 text-right">
+          <div id="more-search-button" style="cursor:pointer; padding: 0 0 15px 0;">More options <i class="fas fa-plus-circle"></i></div>
+        </div>
+      </div>
+
+      <div class="row" style="margin: 15px 0 0 0;">
+        <div class="col-md-3 col-md-offset-6 text-right">
+          <span style="margin:10px 0;" id="clear_commercial_sale"><%= link_to agents_agent_search_properties_path(q: {contract_type_eq: 4}), :remote => true do %>Clear <i class="fas fa-redo-alt"></i><% end %></span>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <%= f.submit "Search commercial properties", class: "btn btn-form", style: "width: 100%;" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<script>
+  $(function(){
+    $("#q_price_gteq").val('100');
+    $("#q_price_lteq").val('10000000');
+    $("#slider-range").slider({
+      range: true,
+      min: 100,
+      max: 10000000,
+      step: 50,
+      values: [100, 10000000],
+      slide: function(event, ui) {
+        $("#q_price_gteq").val(ui.values[0]);
+        $("#q_price_lteq").val(ui.values[1]);
+      }
+    });
+
+    $(".ui-widget-header").css('background', '#444646')
+    $(".ui-state-default, .ui-widget-content").css('background', 'white')
+    $(".ui-state-default, .ui-widget-content").css('border-color', '#dddddd')
+
+  })
+</script>
+
+<!-- Availability Date -->
+<script>
+  $(function(){
+    $('#property_availability_date').change(function () {
+      var availabilityDate = $("#property_availability_date").val();
+        // alert(contractType);
+      var lowDate = new Date(Date.parse(availabilityDate))
+      // console.log(lowDate);
+      var highDate = new Date(availabilityDate)
+      lowDate.setDate(lowDate.getDate() - 15);
+      highDate.setDate(highDate.getDate() + 15);
+
+      var Ldd = lowDate.getDate();
+      var Lmm = lowDate.getMonth() + 1;
+      var Ly = lowDate.getFullYear();
+
+      var Hdd = highDate.getDate();
+      var Hmm = highDate.getMonth() + 1;
+      var Hy = highDate.getFullYear();
+
+      var lDateFormat = Ldd + '-' + Lmm + '-' + Ly;
+      var hDateFormat = Hdd + '-' + Hmm + '-' + Hy;
+
+      // console.log(lDateFormat);
+      // console.log(hDateFormat);
+
+        $("#maxDate").val(hDateFormat);
+        $("#minDate").val(lDateFormat);
+    });
+  });
+</script>
+<script>
+  $(document).ready(function() {
+    $('[id^=detail-]').hide();
+    $('.toggle').click(function() {
+        $input = $( this );
+        $target = $('#'+$input.attr('data-toggle'));
+        $target.slideToggle();
+    });
+  });
+</script>
+
+<!-- Location checkboxes -->
+<script>
+  $(document).ready(function(){
+
+    var checkboxes = $('#locations_list input:checkbox[class^="parent-"]');
+    var parentCheckboxes = $('#locations_list input:checkbox[class="parent"]');
+
+    $(checkboxes).add(parentCheckboxes).change(function(){
+        var countCheckedCheckboxes = checkboxes.filter(':checked').length;
+        // $('#count-checked-checkboxes').text(countCheckedCheckboxes);
+        var countCheckedText = countCheckedCheckboxes + " locations selected"
+
+        if(countCheckedCheckboxes == 1){
+          var selectedLocation = checkboxes.filter(':checked').val()
+          $('#locations_selector').text(selectedLocation);
+          // console.log(selectedLocation);
+        } else {
+          $('#locations_selector').text(countCheckedText);
+        }
+
+    });
+
+    var checkboxHandlerObj = {
+    init: function() {
+        $('#locations_list input:checkbox[class="parent"]').click(checkboxHandlerObj.parentClicked);
+        $('#locations_list input:checkbox[class^="parent-"]').click(checkboxHandlerObj.childClicked)
+    },
+    parentClicked: function() {
+        var parentCheck = this.checked;
+        $('#locations_list input:checkbox[class="parent-' + $(this).attr('id') + '"]').each(function() {
+            this.checked = parentCheck
+        });
+    },
+    childClicked: function() {
+        var temp = $(this).attr('class').split('-');
+        var parentId = temp[1];
+        $('#' + parentId)[0].checked = $('#locations_list input:checkbox[class="' + $(this).attr('class') + '"]:checked').length !== 0;
+        }
+    }
+
+    checkboxHandlerObj.init();
+
+  })
+</script>
+
+<script>
+$(document).ready(function(){
+
+  $('#more-search-button').click( function(){
+
+    $('#more-search-options').slideToggle(200, function () {
+      //execute this after slideToggle is done
+      //change text of header based on visibility of content div
+      $('#more-search-button').html(function () {
+          //change text based on condition
+          return $('#more-search-options').is(":visible") ? "Hide options <i class='fas fa-minus-circle'></i>" : "More options <i class='fas fa-plus-circle'></i>";
+      });
+    });
+  });
+
+});
+</script>

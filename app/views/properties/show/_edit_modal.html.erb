@@ -1,0 +1,59 @@
+  <div class="modal-header">
+    <strong>Property update</strong>
+    <button type="button" class="close"  style="padding: 0 10px 0 0;" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <% if @property.contract_type == "Rent" %>
+      <%= render "properties/edit/form_rent" %>
+    <% elsif @property.contract_type == "Sales" %>
+      <%= render "properties/edit/form_sales" %>
+    <% elsif @property.contract_type == "Commercial lease" %>
+      <%= render "properties/edit/form_commercial" %>
+    <% elsif @property.contract_type == "Commercial sale" %>
+      <%= render "properties/edit/form_commercial_sale" %>
+    <% end %>
+  </div>
+
+<script>
+// Datepicker
+  jQuery(document).ready(function( $ ) {
+    var dateToday = new Date();
+
+    $('#property_availability_date').datepicker({
+      defaultDate: "+1d",
+      numberOfYears: 3,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'dd-M-yy',
+      minDate: dateToday
+    });
+  });
+</script>
+
+<script>
+//UPLOAD FILES
+$(function() {
+
+  $(document).on('change', ':file', function() {
+    var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+    console.log(numFiles)
+    console.log(label)
+    if(numFiles > 0) {
+      $(this).parents('span').siblings('#selected_photos').css("display", "block").text(numFiles + " files selected");
+    }
+  });
+});
+
+</script>
+
+<script>
+  $('#btnSubmit').click(function() {
+    $('#update-property-modal').modal('hide');
+  });
+</script>

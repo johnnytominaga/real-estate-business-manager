@@ -1,0 +1,28 @@
+<section id="internal-hero">
+  <div class="hero-container" style="background-image: url(<%= randomized_internal_header_image %>); background-position: top;">
+  </div>
+</section>
+
+<main class="main" id="property_details">
+
+  <% if @property.contract_type == "Management" %>
+    <%= render partial: 'properties/property_management/property' %>
+  <% else %>
+    <%= render partial: 'properties/show/property' %>
+    <%= render partial: 'properties/show/property_suggestions'%>
+
+    <% if (!user_signed_in?) %>
+      <section id="contact" class="wow fadeInUp">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+                <% @isProperty = 1 %><!-- Hides Google maps in Property details page -->
+                <%= render partial: 'leads/contact' %>
+            </div>
+          </div>
+        </div>
+      </section>
+    <% end %>
+
+  <% end %>
+</main>

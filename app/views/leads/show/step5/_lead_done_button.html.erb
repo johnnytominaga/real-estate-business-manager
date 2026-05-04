@@ -1,0 +1,22 @@
+<%= form_with model: @lead, url: phase_completed_lead_path, method: :patch, html: {id: 'commission_sorted_form'}, remote: true do |f| %>
+    <div class="done-button" title="All done! Commission sorted!">
+      <%= f.label :commission_sorted, class: "centralized" do %>
+        <% if @lead.commission_sorted == true %>
+          <%= f.check_box :commission_sorted, id: "commission_sorted", value: params[:contract_signed],  class: 'checkbox is-checked check', style:'-webkit-appearance: none;' %>
+        <% else %>
+          <%= f.check_box :commission_sorted, id: "commission_sorted", value: params[:contract_signed],  class: 'checkbox check', style:'-webkit-appearance: none;' %>
+        <% end %>
+        <span style="padding: 0 0 0 5px;">Commission sorted!</span>
+      <% end %>
+    </div>
+<% end %>
+
+<script>
+  $('#commission_sorted').click(function(){
+    $('.checkbox').toggleClass('is-checked');
+    var elem = $('#commission_sorted_form')[0]
+    Rails.fire(elem, 'submit');
+    // $('#information_collected').trigger('submit.rails')
+  });
+  $('.done-button[title]').tooltip();
+</script>

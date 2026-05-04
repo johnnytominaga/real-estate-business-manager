@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <!-- Head -->
+  <head>
+    <!-- Info -->
+    <%= content_tag :title, "Real Estate CRM » Error - #{@exception.status} (#{@exception.response.to_s.gsub("_", " ").titleize})" %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <!-- Styling -->
+    <%= stylesheet_link_tag :exception_handler %>
+    <%= favicon_link_tag "favicon/favicon.ico" %>
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Mr+Dafoe|Playfair+Display:400,900i|Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+    <% if x = ExceptionHandler.config.options(@exception.status) %>
+      <style>body { background: url("<%= asset_path x %>") center center no-repeat !important; background-size: cover !important; }</style>
+    <% end %>
+
+    <!-- Auth -->
+    <%= csrf_meta_tags %>
+  </head>
+
+  <!-- Body -->
+  <%= content_tag :body, yield %>
+
+  <!-- Footer -->
+  <% if ExceptionHandler.config.try(:social) %>
+    <%= content_tag :footer do %>
+      <% ExceptionHandler.config.social.each do |k,v| %>
+        <%= link_to image_tag("exception_handler/connect/#{k}.png"), ExceptionHandler::Config::SOCIAL[k] + "/" + v, id: k, title: "#{k.to_s.titleize} Feed", target: :blank if v %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+</html>

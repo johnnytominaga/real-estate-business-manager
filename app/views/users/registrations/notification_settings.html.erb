@@ -1,0 +1,41 @@
+<section id="internal-hero">
+  <div class="hero-container" style="background-image: url(<%= asset_path "hero-bg.jpg" %>); background-position: center;">
+  </div>
+</section>
+
+<main class="main">
+  <section id="devise-edit-profile" class="header wow fadeInUp">
+    <div class="container">
+      <div class="row">
+        <div class="section-header" style="padding:60px 0 0 0;">
+          <h3>Notification settings</h3>
+        </div>
+      </div>
+      <%= form_for :setting, url: notification_settings_path do |f| %>
+        <div class="row">
+          <div class="col-md-3">
+            <%= render 'users/registrations/edit_profile_menu' %>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-12 input">
+                <div class="form-group" style='padding: 30px 0 0 0; display: flex; justify-content:center;'>
+                  <%= f.check_box :enable_email, class: "form-control" %> Receive notifications by email
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="form-group">
+              <div class="actions" style="padding: 20px 15px 0 15px;">
+                <%= f.submit "Save", class: "btn btn-normal btn-block" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</main>

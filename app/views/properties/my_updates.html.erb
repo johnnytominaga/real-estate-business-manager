@@ -1,0 +1,28 @@
+<section id="internal-hero">
+  <div class="hero-container" style="background-image: url(<%= randomized_internal_header_image %>); background-position: top;">
+  </div>
+</section>
+
+<main class="main">
+  <section id="new-property" style="padding: 60px 0px;">
+    <div class="container">
+      <div class="row">
+        <div class="section-header wow fadeInUp">
+          <h3 id="properties_title">Your updates</h3>
+        </div>
+      </div>
+      <div class="row wow fadeInUp text-right" data-wow-delay="0.2s" id="property_sorting" style="padding: 10px 0 30px 0;">
+        <%= render partial: 'search/properties_sort', locals: {properties: @arrProperties} %>
+
+      </div>
+
+      <div class="row" id="new-property">
+        <%= render partial: 'search/properties_list', locals: {properties: @arrProperties} %>
+      </div>
+      <div class="row text-center" id="property_listing_loadmore">
+        <%= render partial: 'search/properties_list_loadmore' %>
+      </div>
+    </div>
+
+  </section>
+</main>

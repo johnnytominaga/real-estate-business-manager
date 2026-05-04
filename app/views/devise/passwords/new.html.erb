@@ -1,0 +1,28 @@
+<section id="devise">
+  <div class="hero-container" style="background-image: url(<%= asset_path "hero-bg.jpg" %>); background-position: bottom center;">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-6" style="padding-top: 12rem;">
+        <div class="panel panel-default wow fadeInUp">
+          <div class="panel-heading">
+            <div class="section-header">
+              <h3>Forgot your password?</h3>
+            </div>
+          </div>
+          <div class="panel-body">
+            <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+              <%= render 'shared/devisemes' %>
+
+              <div class="form-group">
+                <%= f.email_field :email, autofocus: true, placeholder: "Email", class: "form-control" %>
+              </div>
+
+              <div class="actions">
+                <%= f.submit "Send me reset password instructions", class: "btn btn-primary" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

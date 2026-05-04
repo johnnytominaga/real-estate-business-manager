@@ -1,0 +1,5 @@
+<%= render "shared/message_js" %>
+$("#update_availability_date").html("<%= j (render 'properties/editors/editor_form_availability') %>");
+$("#other_properties").html("<%= j (render 'properties/editors/editor_content_other_properties') %>");
+$("#share_property").html("<%= j render 'properties/editors/bottom_navbar/editor_content_share' %>")
+$("#spinner").hide();

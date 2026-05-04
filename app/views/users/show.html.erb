@@ -1,0 +1,85 @@
+<section id="internal-hero">
+  <div class="hero-container" style="background-image: url(<%= randomized_internal_header_image %>); background-position: top;">
+  </div>
+</section>
+
+<main class="main">
+  <section id="profile" class="header">
+    <div class="container">
+      <div class="row"  style="padding:60px 0 0 0;">
+        <div class="col-md-3 text-center wow fadeIn">
+            <%= image_tag @user.show_avatar('300x300'), class: "img-circle avatar-medium" %>
+            <% if current_user && current_user != @user %>
+              <%= link_to "Send message", conversations_path(sender_id: current_user.id, recipient_id: @user.id), method: :post, class: "btn btn-default"%>
+            <% end %>
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section-header wow fadeIn" data-wow-delay="0.1s">
+                <h3><%= @user.first_name %> <%= @user.last_name %></h3>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-4 wow fadeIn" data-wow-delay="0.2s">
+                  <p><strong><%= Property.where("assigned_to = ?", @user.id).count %></strong> property listing rights</p>
+                </div>
+                <div class="col-md-4 wow fadeIn" data-wow-delay="0.3s">
+                  <p><strong><%= Property.where("updated_by = ?", @user.id).count %></strong> properties last updated by <%= @user.first_name %></p>
+                </div>
+                <div class="col-md-4 wow fadeIn" data-wow-delay="0.4s">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 wow fadeIn" data-wow-delay="0.2s">
+                  <p style="margin: 5px 0;"><b style="font-style:italic;"><%= @user.nickname %></b></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 wow fadeIn" data-wow-delay="0.2s">
+                  <p style="margin: 5px 0;"><%= @user.email %></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 wow fadeIn" data-wow-delay="0.3s">
+                  <p>
+                    <% if !@user.phone_number.blank? %>
+                      <%= @user.phone_number %>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12 wow fadeIn" data-wow-delay="0.2s">
+              <hr/>
+              <h4><%= @user.first_name %>'s property listings</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+                <div class="row wow fadeIn text-right" data-wow-delay="0.1s" id="property_sorting" style="padding: 10px 0 30px 0;">
+                  <%= render partial: 'search/properties_sort', locals: {properties: @arrProperties} %>
+                </div>
+                <div class="row" id="property_listing">
+                  <%= render partial: 'search/properties_list', locals: {properties: @arrProperties} %>
+                </div>
+                <div class="row text-center" id="property_listing_loadmore">
+                  <%= render partial: 'users/users_loadmore' %>
+                </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

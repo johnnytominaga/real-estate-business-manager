@@ -1,0 +1,55 @@
+# See https://help.github.com/articles/ignoring-files for more about ignoring files.
+
+# Ignore bundler config.
+/.bundle
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore uploaded files in development.
+/storage/*
+!/storage/.keep
+
+/public/assets
+.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+# Figaro / application secrets — NEVER commit.
+/config/application.yml
+
+# Environment / secrets files.
+.env
+.env.*
+!.env.example
+
+# Node / Yarn
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Coverage / test artifacts
+/coverage
+/spec/tmp
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Rails build artifacts
+/public/packs
+/public/packs-test

@@ -1,0 +1,84 @@
+<div class="col-md-3 text-left">
+  <div class="panel panel-default panel-info wow fadeInUp">
+    <div class="panel-body text-center">
+      <div class="row">
+        <div class="col-md-12">
+          <h3><%= @lead.full_phone_number %></h3>
+          <p>Phone</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 centralized">
+          <div class="circle centralized purple">
+            <i class="fas fa-phone"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-3 text-left">
+  <div class="panel panel-default panel-info wow fadeInUp" data-wow-delay="0.1s">
+    <div class="panel-body text-center">
+      <div class="row">
+        <div class="col-md-12">
+          <h3>
+            <% if !@lead.contract_type.blank? %>
+              <%= @lead.contract_type %>
+            <% end %>
+          </h3>
+          <p>Contract type</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 centralized">
+          <div class="circle centralized purple-green">
+            <i class="fas fa-file-signature"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-3 text-left">
+  <div class="panel panel-default panel-info wow fadeInUp" data-wow-delay="0.2s">
+    <div class="panel-body text-center">
+      <div class="row">
+        <div class="col-md-12">
+          <h3>
+            <% if !@lead.budget.blank? %>
+              <%= @lead.budget %>
+            <% end %>
+          </h3>
+          <p>Budget</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 centralized">
+          <div class="circle centralized green-purple">
+            <i class="fas fa-euro-sign"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-3 text-left">
+  <div class="panel panel-default panel-info wow fadeInUp" data-wow-delay="0.3s">
+    <div class="panel-body text-center">
+      <div class="row">
+        <div class="col-md-12">
+          <h3><% if !@lead.check_in_date.blank? %><%= @lead.check_in_date.to_time.strftime("%d/%m/%Y") %><% end %></h3>
+          <p>Check in date</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 centralized">
+          <div class="circle centralized green">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

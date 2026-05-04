@@ -1,0 +1,11 @@
+<p><strong>Amount: </strong>
+  <% if !lead_property.proposal_amount.blank? %>
+    <%= link_to add_proposal_amount_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id), remote: true do %>
+      <%= lead_property.convert_to_currency %>
+    <% end %>
+  <% else %>
+    <%= link_to add_proposal_amount_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id), remote: true do %>
+      Add proposed amount
+    <% end %>
+  <% end %>
+</p>

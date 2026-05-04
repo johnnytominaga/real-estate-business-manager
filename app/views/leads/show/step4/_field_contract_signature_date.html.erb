@@ -1,0 +1,5 @@
+<% if !lead_property.contract_signature_date.blank? %>
+  <%= link_to edit_deposit_info_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id, attribute: 'contract_signature_date'), remote: true do %><strong>Contract will be signed on: </strong><%= lead_property.contract_signature_date.to_time.strftime("%d/%m/%Y") %><% end %>
+<% else %>
+  <%= link_to edit_deposit_info_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id, attribute: 'contract_signature_date'), remote: true do %><strong>Contract will be signed on: </strong>Click to add<% end %>
+<% end %>

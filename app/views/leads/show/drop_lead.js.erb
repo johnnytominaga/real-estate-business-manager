@@ -1,0 +1,7 @@
+<% if current_user.role_id == 'manager' || current_user.role_id == 'admin' %>
+  var redirectUrl = "<%== j leads_path %>"
+<% else %>
+  var redirectUrl = "<%== j my_leads_path %>"
+<% end %>
+
+window.location.href = redirectUrl;

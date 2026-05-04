@@ -1,0 +1,5 @@
+<% if !lead_property.blank? %>
+  <%= link_to delete_lead_property_property_path(property_id: property, lead_id: lead), method: :delete,  remote: true do %><span class="add-property-button remove close-icon" title="Remove property from this lead's suggestions"></span><% end %>
+<% else %>
+  <%= link_to create_lead_property_property_path(property_id: property, lead_id: lead, status: "Suggested by agent"), method: :post,  remote: true do %><span class="add-property-button check-icon" title="Add property to list of suggestions for this lead"></span><% end %>
+<% end %>

@@ -1,0 +1,8 @@
+$('#leads_list tr:last').after("<%= j render partial: 'leads/my_leads/leads_list', locals: {leads: @arrLeads} %>");
+<% if @leads_list.next_page %>
+  $('#next_page').attr('href', "<%= loadmore_my_leads_leads_path(page: @leads_list.next_page, q: @q, source: 'my_leads' ) %>");
+<% else %>
+  $('#load-more').remove();
+<% end %>
+$("#spinner").hide();
+<%= render "shared/message_js" %>

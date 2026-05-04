@@ -1,0 +1,11 @@
+$('#new_lead_phase1').html("");
+$('#new_lead_phase2').html("");
+$('#new_lead_phase3').html("");
+$('#new_lead_phase4').html("");
+
+$('#lead_phase_page_step1').html("<%= j (render 'leads/show/step1/lead_phase_list') %>");
+$('#lead_phase_page_step3').html("<%= j (render 'leads/show/step3/lead_phase_list') %>");
+$('#lead_phase_page_step4').html("<%= j (render 'leads/show/step4/lead_phase_list') %>");
+$('#lead_phase_page_step5').html("<%= j (render 'leads/show/step5/lead_phase_list') %>");
+$("#spinner").hide();
+<%= render "shared/message_js" %>

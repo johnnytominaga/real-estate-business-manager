@@ -1,0 +1,19 @@
+$('#step2').html("<%= j (render 'leads/show/tabs_step2', properties: @arrProperties, q: @q) %>");
+$('#step1').removeClass("active");
+$('#step2').addClass("active");
+$('#step3').removeClass("active");
+$('#step4').removeClass("active");
+$('#step5').removeClass("active");
+$('#steps_bar_step1').removeClass("active");
+$('#steps_bar_step2').addClass("active");
+$('#steps_bar_step3').removeClass("active");
+$('#steps_bar_step4').removeClass("active");
+$('#steps_bar_step5').removeClass("active");
+$("#spinner").hide();
+<%= render "shared/message_js" %>
+
+var element_to_scroll_to = $('#step2-title')[0];
+element_to_scroll_to.scrollIntoView({
+  block: 'center',
+  behavior: 'smooth'
+});

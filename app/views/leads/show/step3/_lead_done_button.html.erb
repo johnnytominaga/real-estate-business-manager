@@ -1,0 +1,22 @@
+<%= form_with model: @lead, url: phase_completed_lead_path, method: :patch, html: {id: 'negotiation_completed_form'}, remote: true do |f| %>
+    <div class="done-button" title="Negotiation completed">
+      <%= f.label :negotiation_completed do %>
+        <% if @lead.negotiation_completed == true %>
+          <%= f.check_box :negotiation_completed, id: "negotiation_completed", value: params[:negotiation_completed],  class: 'checkbox is-checked check', style:'-webkit-appearance: none;' %>
+        <% else %>
+          <%= f.check_box :negotiation_completed, id: "negotiation_completed", value: params[:negotiation_completed],  class: 'checkbox check', style:'-webkit-appearance: none;' %>
+        <% end %>
+        Done!
+      <% end %>
+    </div>
+<% end %>
+
+<script>
+  $('#negotiation_completed').click(function(){
+    $('.checkbox').toggleClass('is-checked');
+    var elem = $('#negotiation_completed_form')[0]
+    Rails.fire(elem, 'submit');
+    // $('#information_collected').trigger('submit.rails')
+  });
+  $('.done-button[title]').tooltip();
+</script>

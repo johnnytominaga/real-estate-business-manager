@@ -1,0 +1,3 @@
+$('#property_listing').html("<%= j render partial: 'properties/agents/agent_properties_list', locals: {properties: @arrProperties} %>");
+$('#property_sorting').html("<%= j render partial: 'search/properties_sort', locals: {properties: @arrProperties} %>");
+$('#property_listing_loadmore').html("<%= j render partial: 'properties/agents/agent_properties_list_loadmore' %>");

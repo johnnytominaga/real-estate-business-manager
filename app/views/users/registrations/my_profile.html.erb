@@ -1,0 +1,96 @@
+<section id="internal-hero">
+  <div class="hero-container" style="background-image: url(<%= asset_path "hero-bg.jpg" %>); background-position: center;">
+  </div>
+</section>
+
+<main class="main">
+  <section id="profile" class="header">
+    <div class="container">
+      <div class="row"  style="padding:60px 0 0 0;">
+        <div class="col-md-3 text-center wow fadeIn">
+          <%= link_to edit_profile_path do %>
+            <%= image_tag current_user.show_avatar('300x300'), class: "img-circle avatar-medium" %>
+          <% end %>
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+              <div class="section-header wow fadeIn" data-wow-delay="0.1s">
+                <h3><%= current_user.first_name %> <%= current_user.last_name %> <%= link_to edit_profile_path do %><i class="fas fa-user-cog"></i><% end %></h3>
+              </div>
+            </div>
+            <div class="col-md-3 text-right">
+              <%= link_to notifications_path do %>
+                You have <span id="num_of_unread"><%= current_user.unread %></span> <% if current_user.unread == 1 %>notification<% else %>notifications<% end %>
+              <% end %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-4 wow fadeIn" data-wow-delay="0.2s">
+                  <p><strong><%= Property.where("assigned_to = ?", current_user.id).count %></strong> property listing rights</p>
+                </div>
+                <div class="col-md-4 wow fadeIn" data-wow-delay="0.3s">
+                  <p><strong><%= Property.where("updated_by = ?", current_user.id).count %></strong> properties last updated by you</p>
+                </div>
+                <div class="col-md-4 wow fadeIn" data-wow-delay="0.4s">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 wow fadeIn" data-wow-delay="0.2s">
+                  <p style="margin: 5px 0;"><b style="font-style:italic;"><%= current_user.nickname %></b></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 wow fadeIn" data-wow-delay="0.2s">
+                  <p style="margin: 5px 0;"><%= current_user.email %></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 wow fadeIn" data-wow-delay="0.3s">
+                  <p>
+                    <% if !current_user.phone_number.blank? %>
+                      <%= current_user.phone_number %>
+                    <% else %>
+                      <%= link_to "Add phone number", edit_profile_path %>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12 wow fadeIn" data-wow-delay="0.2s">
+              <hr/>
+              <h4>
+                <% if current_user.role_id == "editor" %>
+                  My updates
+                <% else %>
+                  My property listings
+                <% end %>
+              </h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row wow fadeIn text-right" data-wow-delay="0.1s" id="property_sorting" style="padding: 10px 0 30px 0;">
+                <%= render partial: 'search/properties_sort', locals: {properties: @arrProperties} %>
+              </div>
+              <div class="row" id="property_listing">
+                <%= render partial: 'search/properties_list', locals: {properties: @arrProperties} %>
+              </div>
+              <div class="row text-center" id="property_listing_loadmore">
+                <%= render partial: 'users/registrations/my_profile_loadmore' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

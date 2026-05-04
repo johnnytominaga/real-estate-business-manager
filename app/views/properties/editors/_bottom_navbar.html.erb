@@ -1,0 +1,45 @@
+<div class="row-bottom">
+  <div class="col-md-6">
+    <div id="share_property" style="display: flex;">
+      <%= render partial: 'properties/editors/editor_content_share', locals: {property: @property_ranked} %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <%= link_to stop_calling_property_path(@property_ranked), id: 'stop_calling', remote: true, method: :post do %>
+        <div class="cube flip-to-bottom wow flipInX" data-wow-delay="0.2s">
+          <div class="default-state stop-calling">
+            <span>Stop calling</span>
+          </div>
+          <div class="active-state stop-calling">
+            <span>Skip this <i class="far fa-stop-circle"></i></span>
+          </div>
+        </div>
+      <% end %>
+
+      <%= link_to not_answering_property_path(@property_ranked), id: 'not_answering', remote: true, method: :post do %>
+        <div class="cube flip-to-bottom wow flipInX" data-wow-delay="0.4s">
+          <div class="default-state no-answer">
+            <span>No answer</span>
+          </div>
+          <div class="active-state no-answer">
+            <span>Skip this <i class="fas fa-step-forward"></i></span>
+          </div>
+        </div>
+      <% end %>
+
+      <%= link_to editor_done_property_path(@property_ranked), id: 'editor_done' , remote: true, method: :post do %>
+        <div class="cube flip-to-bottom wow flipInX" data-wow-delay="0.6s">
+          <div class="default-state">
+            <span>Done <i class="fas fa-chevron-right"></i></span>
+          </div>
+          <div class="active-state">
+            <span>Go to next <i class="fas fa-chevron-right"></i></span>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+
+</div>

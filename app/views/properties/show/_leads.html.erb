@@ -1,0 +1,85 @@
+<% if !@leads.blank? %>
+  <% @leads.each_with_index do |lead, index| %>
+  <div class="panel panel-default wow fadeInUp" data-wow-delay="0.<%= index %>s">
+    <div class="panel-body" id="lead_<%= lead.id %>">
+      <div class="row">
+        <div class="col-md-8">
+          <%= link_to lead_path(lead), target: "_blank" do %>
+            <h5 style="margin: 0 0 10px 0;"><%= lead.name %></h5>
+          <% end %>
+        </div>
+        <div class="col-md-4 text-right lead-buttons-row" id="create_lead_property_<%= lead.id %>">
+          <%= render 'properties/show/lead_property_button', lead_property: @property.suggested_property(lead), lead: lead.id, property: @property.id %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <% if !lead.phone.blank? %>
+            <p style="margin: 0px;"><i class="fas fa-phone"></i> <%= lead.full_phone_number %></p>
+          <% end %>
+          <% if !lead.budget.blank? %>
+            <p style="margin: 0px;"><strong>Budget: </strong> <%= lead.budget %></p>
+          <% end %>
+          <% if !lead.nationality.blank? %>
+            <p style="margin: 0px;"><strong>Nationality: </strong> <%= lead.nationality %></p>
+          <% end %>
+          <% if !lead.no_of_people.blank? %>
+            <p style="margin: 0px;"><strong>No. of people: </strong> <%= lead.no_of_people %></p>
+          <% end %>
+          <% if !lead.bedrooms.blank? %>
+            <p style="margin: 0px;"><strong>No. of bedrooms: </strong> <%= lead.bedrooms %></p>
+          <% end %>
+        </div>
+        <div class="col-md-6 text-right">
+          <% if !lead.check_in_date.blank? %>
+            <strong>Check in date: </strong><%= lead.check_in_date.to_time.strftime("%d/%m/%Y") %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+
+          <% if lead.lead_locations.length > 0 %>
+            <b>Locations: </b>
+            <%= lead.lead_locations.map{|l|
+              Location.find(l.location_id).name
+            }.uniq.join(', ') %>
+          <% else %>
+            <b>Areas: </b>
+            <% if lead.lead_areas.length > 0 %>
+              <%= lead.lead_areas.map{|a|
+                 Area.find(a.area_id).area
+              }.uniq.join(', ') %>
+            <% end %>
+          <% end %>
+          <strong>Current status: </strong>
+            <% if lead.deposit_paid == true %>
+              Deposit paid
+            <% elsif lead.negotiation_completed == true %>
+              Client's proposal has been accepted. Waiting for deposit.
+            <% elsif lead.property_found == true %>
+              The client liked one of the properties you've shared.
+            <% elsif lead.information_collected == true %>
+              Show more properties to this client.
+            <% else %>
+              More information may be needed about this client.
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+<% end %>
+<div class="text-center">
+  <%= will_paginate @leads, {link_options: {'data-remote': true}, params: { action: 'show_leads' }, renderer: BootstrapPagination::Rails, previous_label: "«", next_label: "»", inner_window: 1, outer_window: 0} %>
+</div>
+
+<script>
+  $('.pagination a').click(function() {
+    $("#spinner").fadeIn('slow');
+    $("#spinner").click(function(){
+      $("#spinner").hide();
+    })
+
+  });
+</script>

@@ -1,0 +1,36 @@
+Name: <%= @lead.name %>
+(NEW LEAD)
+
+Email: <%= @lead.email %>
+Phone number: <%= @lead.phone %>
+
+
+<% if !@lead.property_type.blank? && @lead.property_type != "0" %>
+  Type of Property: <%= @lead.property_type %>
+<% end %>
+
+Contract type: <%= @lead_contract_type %>
+
+<% if !@lead_unique_areas.blank? %>
+  <%= pluralize(@lead_unique_areas.count, "Area") %>:
+    <% @lead_unique_areas.each do |a| %>
+      <%= Area.find(a).area %>
+    <% end %>
+<% end %>
+<% if !@lead_unique_locations.blank? %>
+  <%= pluralize(@lead_unique_locations.count, "Location") %>:
+    <% @lead_unique_locations.each do |l| %>
+      <%= Location.find(l).name %>
+    <% end %>
+<% end %>
+
+<% if !@lead.bedrooms.blank? && @lead.bedrooms != 0 %>With: More than <%= @lead.bedrooms %><% end %>
+From: <%= @lead_check_in_date %>
+For: <%= @lead.budget %>
+
+<% if !@lead.description.blank? %>
+  Additional information sent by the client:
+  <%= @lead.description %>
+<% end %>
+
+<%= @lead_link %>

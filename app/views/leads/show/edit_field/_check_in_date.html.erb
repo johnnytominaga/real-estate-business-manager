@@ -1,0 +1,43 @@
+<th scope="row" class="edit-form wow zoomInDown">Check in date</th>
+<td>
+  <%= form_with model: @lead, url: update_field_leads_path(id: @lead), html: {class: 'form_row'}, remote: true, method: :patch do |f| %>
+    <div class="col-md-6">
+      <%= f.text_field :check_in_date, value: (@lead.check_in_date.to_time.strftime("%d-%m-%Y") unless (@lead.check_in_date.blank? && @lead.check_in_date == "0")), placeholder: "Check in date", class: "form-control edit-field wow zoomInDown", id: "edit_check_in_date", "data-wow-delay" => "0.2s", readonly: true %>
+    </div>
+    <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s" style="padding: 0px; display: inline-flex;">
+      <div class="actions">
+        <%= button_tag(:name => "cancel", :class => "edit-button cancel cancel-icon wow zoomInDown", :id => "btnCancel", "data-wow-delay" => "0.3s" ) do %><% end %>
+      </div>
+      <div class="actions">
+        <%= button_tag(:name => "save", :class => "edit-button save save-icon wow zoomInDown", :id => "btnSubmit", "data-wow-delay" => "0.4s") do %><% end %>
+      </div>
+
+    </div>
+  <% end %>
+</td>
+
+<script>
+  jQuery(document).ready(function( $ ) {
+
+    var dateToday = new Date();
+
+    $('#edit_check_in_date').datepicker({
+      defaultDate: "+1d",
+      numberOfYears: 3,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'dd-M-yy',
+      minDate: dateToday
+
+
+    });
+
+    $('#btnSubmit, #btnCancel').click(function() {
+      $("#spinner").fadeIn('slow');
+      $("#spinner").click(function(){
+        $("#spinner").hide();
+      })
+    });
+
+  });
+</script>

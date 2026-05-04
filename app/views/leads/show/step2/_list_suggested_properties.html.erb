@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-md-12">
+    <h4 class="wow zoomInDown" style="margin: 0 0 10px 0;">Selected properties for <%= @lead.name %></h4>
+    <p style="font-size: 10px; font-style: italic; margin: 0 0 20px 0"><i class="fas fa-info-circle"></i> Click on <i class="fas fa-heart"></i> to add property to the Main Opportunities list</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <% if !@selected_properties.blank? %>
+      <% @selected_properties.each_with_index do |p, index| %>
+        <div class="panel panel-default wow fadeInUp" id="selected_property_item" data-wow-delay="0.<%= index %>s">
+          <div class="panel-body<% if p.suggested_property(@lead).status == "Reproved" %> reproved<% end %>" id="lead_selected_property_<%= p.id %>">
+            <div class="row selected_property_details">
+              <div class="col-md-1">
+                <%= link_to property_path(p.id), target: '_blank' do %><%= image_tag p.cover_photo("300X300", request.host), class: "img-circle avatar-small"%><% end %>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-12">
+                    <%= link_to property_path(p.id), target: '_blank' do %><% if p.bedrooms? %><%= p.bedrooms %>-bedroom <% end %><% if p.property_type? %><%= p.property_type %><% end %><% end %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <p class="small-font">
+                      ID: <%= p.id %> - <% if p.location_id? %><%= Location.find(p.location_id).name %><% end %>
+                    </p>
+                    <p class="small-font">
+                      <%= p.property_price %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 text-right edit-buttons-row">
+                <% if p.suggested_property(@lead).status == "Reproved" %>
+                  <%= link_to update_lead_property_lead_path(lead_property_id: p.suggested_property(@lead), status: "Approved for visit"), method: :patch,  remote: true do %><span class="edit-button green approved-icon" title="Unmark as reproved"></span><% end %>
+                <% else %>
+                  <%= link_to update_lead_property_lead_path(lead_property_id: p.suggested_property(@lead), status: "Reproved"), method: :patch,  remote: true do %><span class="edit-button delete reproved-icon" title="Mark as reproved"></span><% end %>
+                <% end %>
+                <% if p.suggested_property(@lead).shared_with_lead == true %>
+                  <%= link_to update_lead_property_lead_path(lead_property_id: p.suggested_property(@lead), shared_with_lead: false, status: "Suggested by agent"), method: :patch, remote: true do %><span class="edit-button done done-icon" title="Unmark as shared"></span><% end %>
+                <% else %>
+                  <%= link_to update_lead_property_lead_path(lead_property_id: p.suggested_property(@lead), shared_with_lead: true, status: "Shared with client"), method: :patch, remote: true do %><span class="edit-button share-icon" title="Mark as shared"></span><% end %>
+                <% end %>
+                <% if p.suggested_property(@lead).liked_by_lead == true %>
+                  <%= link_to update_lead_property_lead_path(lead_property_id: p.suggested_property(@lead), liked_by_lead: false, status: "Shared with client"), method: :patch, remote: true do %><span class="edit-button done done-icon" title="Unmark as liked"></span><% end %>
+                <% else %>
+                  <%= link_to update_lead_property_lead_path(lead_property_id: p.suggested_property(@lead), liked_by_lead: true, status: "Approved for visit"), method: :patch,  remote: true do %><span class="edit-button purple-green heart-icon" title="Mark as liked"></span><% end %>
+                <% end %>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p>Add properties to keep track of what you've already shared with this lead.</p>
+    <% end %>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function () {
+      //Initialize tooltips
+      $('.edit-button[title]').tooltip();
+  });
+
+</script>

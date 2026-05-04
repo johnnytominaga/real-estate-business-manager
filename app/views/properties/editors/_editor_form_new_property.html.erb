@@ -1,0 +1,144 @@
+<div class="modal-header">
+  <div class="row modal-header-editor">
+    <strong>Add new property owned by</strong>
+    <button type="button" class="close"  data-dismiss="modal" aria-label="Close" id="btnClose">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <h4><% if !@property_owner.name.blank? || @property_owner.name != "0" %><%= @property_owner.name %> » <% end %><%= @property_owner.phone_number %></h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div id="property_form_selector">
+        <div class="btn-group btn-group-md">
+          <button type="button" class="btn btn-secondary" id="selector_rent">For rent</button>
+          <button type="button" class="btn btn-secondary" id="selector_sales">For sale</button>
+          <button type="button" class="btn btn-secondary" id="selector_commercial">Commercial</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div id="new_property_form" style="padding: 20px 0 0 0;"></div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+
+  function location_selector(){
+
+    $('#property_location_select').parent().hide()
+    var property_locations = $('#property_location_select').html()
+
+    $('#property_area_select').on("change", function(){
+
+      var selected_property_area = $('#property_area_select').find(":selected").text();
+      var escaped_area = selected_property_area.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1')
+      var options = $(property_locations).filter("optgroup[label=" + escaped_area + "]").html()
+      // var options = $("optgroup[label=" + escaped_area + "]").html()
+      // console.log(escaped_area)
+
+      if ($(options).length){
+        $('#property_location_select').html(options)
+        return $('#property_location_select').parent().show()
+
+      } else {
+        $('#property_location_select').empty()
+         return $('#property_location_select').parent().hide()
+
+        }
+
+    });
+
+  }
+
+  function date_selector() {
+    var dateToday = new Date();
+
+    $('#property_availability_date').datepicker({
+      defaultDate: "+1d",
+      numberOfYears: 3,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'dd-M-yy',
+      minDate: dateToday
+    });
+  }
+
+  function flat_no() {
+    $('#flat_no_check').click(function(){
+      $('#flat_no_field').toggle(this.checked);
+    });
+  }
+
+  function select_files() {
+
+    $(document).on('change', ':file', function() {
+      var input = $(this),
+          numFiles = input.get(0).files ? input.get(0).files.length : 1,
+          label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+      input.trigger('fileselect', [numFiles, label]);
+
+      if(numFiles > 0) {
+        $(this).parents('span').siblings('#selected_photos').css("display", "block").text(numFiles + " files selected");
+      }
+    });
+  };
+
+  function cancel_button() {
+    $('#btnSubmit, #btnCancel').click(function() {
+      $('#editor_editor_new_property').modal('hide');
+      var numFiles = 0
+      $('#selected_photos').text(numFiles + " files selected").css("display", "none");
+    });
+  }
+
+  $("#property_form_selector").on("click", "#selector_rent", function(){
+      $("#selector_rent").removeClass("btn btn-secondary").addClass("btn btn-primary");
+      $("#selector_sales").removeClass("btn btn-primary").addClass("btn btn-secondary");
+      $("#selector_commercial").removeClass("btn btn-primary").addClass("btn btn-secondary");
+      <% @property = Property.new %>
+      $("#new_property_form").html("<%= j render partial: 'properties/new/editor_form_new_property_rent', locals: {owner: @property_owner} %>");
+      location_selector()
+      date_selector()
+      flat_no()
+      select_files()
+      cancel_button()
+  });
+
+  $("#property_form_selector").on("click", "#selector_sales", function(){
+      $("#selector_rent").removeClass("btn btn-primary").addClass("btn btn-secondary");
+      $("#selector_sales").removeClass("btn btn-secondary").addClass("btn btn-primary");
+      $("#selector_commercial").removeClass("btn btn-primary").addClass("btn btn-secondary");
+      <% @property = Property.new %>
+      $("#new_property_form").html("<%= j render partial: 'properties/new/editor_form_new_property_sales', locals: {owner: @property_owner} %>");
+      location_selector()
+      date_selector()
+      flat_no()
+      select_files()
+      cancel_button()
+  });
+
+  $("#property_form_selector").on("click", "#selector_commercial", function(){
+      $("#selector_rent").removeClass("btn btn-primary").addClass("btn btn-secondary");
+      $("#selector_sales").removeClass("btn btn-primary").addClass("btn btn-secondary");
+      $("#selector_commercial").removeClass("btn btn-secondary").addClass("btn btn-primary");
+      <% @property = Property.new %>
+      $("#new_property_form").html("<%= j render partial: 'properties/new/editor_form_new_property_commercial', locals: {owner: @property_owner} %>");
+      location_selector()
+      date_selector()
+      flat_no()
+      select_files()
+      cancel_button()
+  });
+
+</script>

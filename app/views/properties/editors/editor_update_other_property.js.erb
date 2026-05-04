@@ -1,0 +1,4 @@
+<%= render "shared/message_js" %>
+$('#editor_edit_property').modal('hide');
+$("#other_properties").html("<%= j (render 'properties/editors/editor_content_other_properties') %>");
+$("#spinner").hide();

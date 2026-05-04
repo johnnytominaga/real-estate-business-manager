@@ -1,0 +1,26 @@
+<th scope="row" class="edit-form wow zoomInDown">Nationality</th>
+<td>
+  <%= form_with model: @lead, url: update_field_leads_path(id: @lead), html: {class: 'form_row'}, remote: true, method: :patch do |f| %>
+    <div class="col-md-6">
+      <%= f.country_select :nationality, { include_blank: 'Select a country', priority_countries: ["MT", "IT", "GB"], priority_countries_divider: "~~~~~~"}, {class: "form-control countries edit-field wow zoomInDown", style: 'padding: 0px;', "data-wow-delay" => "0.2s"} %>
+    </div>
+    <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s" style="padding: 0px; display: inline-flex;">
+      <div class="actions">
+        <%= button_tag(:name => "cancel", :class => "edit-button cancel cancel-icon wow zoomInDown", :id => "btnCancel", "data-wow-delay" => "0.3s" ) do %><% end %>
+      </div>
+      <div class="actions">
+        <%= button_tag(:name => "save", :class => "edit-button save save-icon wow zoomInDown", :id => "btnSubmit", "data-wow-delay" => "0.4s") do %><% end %>
+      </div>
+
+    </div>
+  <% end %>
+</td>
+
+<script>
+  $('#btnSubmit, #btnCancel').click(function() {
+    $("#spinner").fadeIn('slow');
+    $("#spinner").click(function(){
+      $("#spinner").hide();
+    })
+  });
+</script>

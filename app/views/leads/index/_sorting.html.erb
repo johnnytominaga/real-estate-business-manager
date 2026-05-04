@@ -1,0 +1,20 @@
+<tr class="wow fadeIn">
+  <th scope="col"><%= sort_link(@search, :id, "ID", {default_order: :desc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :name, "Lead name", {default_order: :asc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :check_in_date, "Check in date", {default_order: :asc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :contract_type, "Contract type", {default_order: :asc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :created_at, "Created on", {default_order: :asc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :updated_at, "Updated on", {default_order: :desc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :deposit_paid, "Deposit paid?", {default_order: :desc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :contract_signed, "Contract signed?", {default_order: :desc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :commission_paid, "Commission paid?", {default_order: :desc}, { :remote => true, :method => :get }) %></th>
+  <th scope="col"><%= sort_link(@search, :user_id, "Assigned agent", {default_order: :asc}, { :remote => true, :method => :get }) %></th>
+</tr>
+
+<script>
+  $(function () {
+    $('a.sort_link').on("click", function () {
+      $("#spinner").fadeIn('slow');
+    });
+  });
+</script>

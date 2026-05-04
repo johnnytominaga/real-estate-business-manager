@@ -1,0 +1,37 @@
+<% if !lead_property.contract_amount.blank? %>
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-4 deposit-amount text-center">
+        <h2 data-toggle="counter-up">
+          <% if !lead_property.contract_amount.blank? && !lead_property.deposit_amount.blank? && !lead_property.deposit_for_bills.blank? %>
+            <%= number_to_currency(((lead_property.contract_amount / 2) + (lead_property.contract_amount / 2 * 0.18) + lead_property.deposit_amount + lead_property.deposit_for_bills + lead_property.contract_amount ), unit: "€", precision: 0) %>
+          <% elsif !lead_property.contract_amount.blank? && !lead_property.deposit_amount.blank? %>
+            <%= number_to_currency(((lead_property.contract_amount / 2) + (lead_property.contract_amount / 2 * 0.18) + lead_property.deposit_amount + lead_property.contract_amount ), unit: "€", precision: 0) %>
+          <% elsif !lead_property.contract_amount.blank? && !lead_property.deposit_for_bills.blank? %>
+            <%= number_to_currency(((lead_property.contract_amount / 2) + (lead_property.contract_amount / 2 * 0.18) + lead_property.deposit_for_bills + lead_property.contract_amount ), unit: "€", precision: 0) %>
+          <% else %>
+            <%= number_to_currency((lead_property.contract_amount / 2) + (lead_property.contract_amount / 2 * 0.18 + lead_property.contract_amount ), unit: "€", precision: 0) %>
+          <% end %>
+        </h2>
+        <h5>Estimated client's balance</h5>
+        <p><strong>Deposit: </strong><% if !lead_property.deposit_amount.blank? %><%= number_to_currency(( lead_property.deposit_amount ), unit: "€", precision: 0) %><% end %></p>
+        <p><strong>Deposit for bills: </strong><% if !lead_property.deposit_for_bills.blank? %><%= number_to_currency(( lead_property.deposit_for_bills ), unit: "€", precision: 0) %><% end %></p>
+        <p><strong>1st month of rent: </strong><% if !lead_property.contract_amount.blank? %><%= number_to_currency(( lead_property.contract_amount ), unit: "€", precision: 0) %><% end %></p>
+        <p><strong>Agency fee: </strong><% if !lead_property.contract_amount.blank? %><%= number_to_currency(( lead_property.contract_amount / 2 ), unit: "€", precision: 0) %><% end %></p>
+        <p><strong>VAT: </strong><% if !lead_property.contract_amount.blank? %><%= number_to_currency(( lead_property.contract_amount / 2 * 0.18 ), unit: "€", precision: 0) %><% end %></p>
+      </div>
+      <div class="col-md-4 deposit-amount text-center">
+        <h2 data-toggle="counter-up">
+          <%= number_to_currency((lead_property.contract_amount / 2) + (lead_property.contract_amount / 2 * 0.18), unit: "€", precision: 0) %>
+        </h2>
+        <h5>Estimated owner's balance</h5>
+        <p><strong>Agency fee: </strong><% if !lead_property.contract_amount.blank? %><%= number_to_currency(( lead_property.contract_amount / 2 ), unit: "€", precision: 0) %><% end %></p>
+        <p><strong>VAT: </strong><% if !lead_property.contract_amount.blank? %><%= number_to_currency(( lead_property.contract_amount / 2 * 0.18 ), unit: "€", precision: 0) %><% end %></p>
+      </div>
+      <div class="col-md-4 deposit-amount text-center">
+        <h2 data-toggle="counter-up"><%= number_to_currency(((lead_property.contract_amount) + (lead_property.contract_amount * 0.18)), unit: "€", precision: 0) %></h2>
+        <h5>Total estimated commission</h5>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,26 @@
+<% if !@property_ranked.blank? %>
+  <% if @property_ranked.contract_type == "Rent" %>
+    $("#update_fields").html("<%= j (render 'properties/editors/editor_content_rent') %>");
+  <% elsif @property_ranked.contract_type == "Sales" %>
+    $("#update_fields").html("<%= j (render 'properties/editors/editor_content_sales') %>");
+  <% elsif @property_ranked.contract_type == "Commercial lease" %>
+    $("#update_fields").html("<%= j (render 'properties/editors/editor_content_commercial') %>");
+  <% elsif @property_ranked.contract_type == "Commercial sale" %>
+    $("#update_fields").html("<%= j (render 'properties/editors/editor_content_commercial_sale') %>");
+  <% end %>
+<% else %>
+  $("#update_fields").text("Something went wrong. Please, contact your manager.");
+<% end %>
+$("#update_title").html("<%= j render 'properties/editors/editor_content_title' %>")
+$("#share_property").html("<%= j render 'properties/editors/bottom_navbar/editor_content_share' %>")
+$('#editor_edit_owner_details').modal('hide');
+$('#owner_details').html("<%= j( render partial: 'properties/editors/editor_content_owner', locals: {owner: @property_owner}) %>");
+$('#property_id').html("<%= j( render partial: 'properties/editors/editor_content_property_id', locals: {owner: @property_owner}) %>");
+$("#update_availability_date").html("<%= j (render 'properties/editors/editor_form_availability') %>");
+$("#other_properties").html("<%= j (render 'properties/editors/editor_content_other_properties') %>");
+$("#update_photos").html("<%= j (render 'properties/editors/editor_content_photos') %>");
+$("#bottom_navbar_buttons").html("<%= j (render 'properties/editors/bottom_navbar/bottom_navbar_buttons') %>");
+$('#editor_modal_new_property').html("<%= j render partial: 'properties/editors/editor_form_new_property' %>");
+$('#editor_new_property_button').html("<%= j render partial: 'properties/editors/editor_content_new_property_button' %>");
+<%= render "shared/message_js" %>
+$("#spinner").hide();

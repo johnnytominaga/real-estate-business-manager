@@ -1,0 +1,15 @@
+<div class="row">
+  <%= form_with model: @lead, url: drop_lead_lead_path(@lead.id), method: :patch do |f| %>
+    <div class="col-md-9">
+      <%= f.text_field :reason_for_dropping, placeholder: "Enter reason for dropping...", class: 'new_lead_phase_field wow lightSpeedIn' %>
+    </div>
+    <div class="col-md-3 wow fadeIn" data-wow-delay="0.1s" style="padding: 0px; display: inline-flex; justify-content: center;">
+      <div class="actions">
+        <%= button_tag(:name => "cancel", :class => "edit-button cancel cancel-icon wow zoomInDown", :id => "btnCancel", "data-wow-delay": "0.2s" ) do %><% end %>
+      </div>
+      <div class="actions">
+        <%= button_tag(:name => "save", :class => "edit-button save save-icon wow zoomInDown", :id => "btnSubmit", "data-wow-delay": "0.3s") do %><% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

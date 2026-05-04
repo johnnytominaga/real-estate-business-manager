@@ -1,0 +1,139 @@
+/*
+*= require fullcalendar/fullcalendar
+*/
+::-webkit-scrollbar{
+  height:5px;
+  width:6px;
+  border-radius: 4px;
+  background: transparent;
+      transition: all 0.3s ease;
+}
+::-webkit-scrollbar:hover{
+    background: #c6c7ca;
+}
+::-webkit-scrollbar-thumb{
+    background:#53ffdd;
+    border-radius: 4px;
+}
+
+
+
+#candidates-hero {
+  width: 100%;
+  height: 100vh;
+  background: top center;
+  background-size: cover;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  #candidates-hero {
+    background-attachment: fixed;
+  }
+}
+
+#candidates-hero:before {
+  content: "";
+  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+
+#candidates-hero .hero-container {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+
+#candidates-hero h1 {
+  margin: 0;
+  font-size: 80px;
+  line-height: 56px;
+  color: #fff;
+  font-family: "Mr Dafoe";
+  font-size: none;
+  font-weight: 400;
+}
+
+#candidates-hero h1.candidates-header-rockland {
+  font-family: 'Playball' !important;
+}
+
+@media (max-width: 768px) {
+  #candidates-hero h1 {
+    font-size: 6rem;
+    line-height: 36px;
+  }
+}
+
+#candidates-hero h2 {
+  color: #fff;
+  margin-bottom: 0px;
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  #candidates-hero h2 {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 0px;
+  }
+}
+
+
+#candidates-hero a{
+  color: #fff;
+}
+
+#candidate {
+  padding: 60px 0;
+}
+
+#candidate-icons {
+  padding: 60px 0;
+}
+
+#candidate-icons img{
+  width: 80px;
+}
+#candidate-icons p{
+  font-weight: bold;
+  padding: 10px 0 0 0;
+}
+
+
+.card.core-values {
+  width: 100%;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card.core-values:hover {
+  background: none;
+}
+
+.card.core-values img {
+  width: 100%;
+}
+
+.card.core-values .card-body {
+  padding: 15px;
+  background-color: rgba(255,255,255,0.8);
+  overflow: -webkit-paged-x;
+}
+
+
+.card.core-values .card-text {
+  background: none;
+}

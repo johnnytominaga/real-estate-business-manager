@@ -1,0 +1,5 @@
+<% if lead_property.vat_owner == true %>
+  <%= link_to update_contract_info_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id, contract_stage: 'vat_owner', contract_stage_value: false), class: "centralized", method: :patch, remote: true do %><span class="edit-button done done-icon" title="Mark as true"></span>Owner paid VAT<% end %>
+<% else %>
+  <%= link_to update_contract_info_lead_path(lead_property_id: lead_property.id, property_id: lead_property.property_id, contract_stage: 'vat_owner', contract_stage_value: true), class: "centralized", method: :patch,  remote: true do %><span class="edit-button green deposit-icon" title="Mark as false"></span>Owner paid VAT<% end %>
+<% end %>

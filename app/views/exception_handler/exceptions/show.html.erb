@@ -1,0 +1,18 @@
+<%= content_tag :div, class: "exception",
+  data: {
+    status: @exception.status,
+    response: @exception.response.to_s.humanize,
+    rails: Rails.version
+  },
+  onclick: ("location.href=\"#{root_url}\";" if @exception.status.to_s.first == "5" && Rails.application.routes.recognize_path("/")) do
+%>
+  <div class="row">
+    <%= content_tag :h1, "Ooops! " + @exception.status.to_s + ' - ' + @exception.description.html_safe %>
+  </div>
+  <div class="row">
+    <%= content_tag :span, "We can't seem to find the page you're looking for." %>
+  </div>
+  <div class="row">
+    <p style="font-size: 16px;"><%= link_to "Go to home page »", root_path %></p>
+  </div>
+<% end %>

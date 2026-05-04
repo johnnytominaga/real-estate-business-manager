@@ -1,0 +1,304 @@
+<%= form_with model: @property, url: property_path, method: :patch do |f| %>
+
+  <%= f.hidden_field :contract_type, value: @property.contract_type %>
+  <% if @property.payment_format.blank? && @property.payment_format == 0 %>
+    <%= f.hidden_field :payment_format, value: "Monthly" %>
+  <% end %>
+    <div class="row" style="padding: 30px;">
+      <div class="row">
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :availability_date %>
+            <%= f.text_field :availability_date, value: (@property.availability_date.to_time.strftime("%d-%m-%Y") unless (@property.availability_date.blank? && @property.availability_date == 0)), class: "form-control", readonly: true, id: "property_availability_date" %>
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+              <%= f.label :price do %>Monthly Price (€)<% end %>
+              <%= f.number_field :price, in: 100..200000, step: 1, placeholder: "Enter monthly rent amount", class: "form-control"  %>
+
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :address %>
+            <%= f.text_field :address, placeholder: "Enter property's address", class: "form-control"  %>
+          </div>
+        </div>
+      </div>
+      <% if current_user.role_id == "admin" || current_user.role_id == "manager" %>
+        <div class="row">
+          <div class="col-md-3 input">
+            <div class="form-group">
+              <%= f.label :property_type %>
+              <%= f.select :property_type, options_for_select(Property.property_types.map { |key, value| [key.humanize, key] }, \
+                                  :disabled => ["Land", "Bar", "Cafeteria", "Corner shop",
+                                  "Dive centre", "Office", "Office room", "Warehouse", "Clinic",
+                                  "Restaurant", "Catering", "Salon", "Showroom"], :selected => f.object.property_type),
+                                  {:include_blank => true}, class: "form-control" %>
+
+            </div>
+          </div>
+          <div class="col-md-3 input">
+            <div class="form-group">
+              <%= f.label :bedrooms %>
+              <%= f.number_field :bedrooms, in: 1..10, step: 1, placeholder: "Enter the number of bedrooms", class: "form-control"  %>
+            </div>
+          </div>
+          <div class="col-md-3 input">
+            <div class="form-group wow fadeIn" data-wow-delay="0.1s">
+              <%= f.label :area_id do %>Area *<% end %>
+              <%= f.collection_select :area_id, Area.order(:id), :id, :area, {prompt: "Select Area..."}, {id: "property_area_select"} %>
+            </div>
+          </div>
+          <div class="col-md-3 input">
+            <div class="form-group wow fadeIn">
+              <%= f.label :location_id do %>Location *<% end %>
+              <%= f.grouped_collection_select :location_id, Area.order(:id), :locations, :area, :id, :name, {prompt: "Select Location..."}, {id: "property_location_select"} %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :style %>
+            <%= f.select :style, options_for_select(Property.styles.map { |key, value| [key.humanize, key] }),
+                          id: "property_style", prompt: "Select...", class: "form-control" %>
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :bathrooms %>
+            <%= f.number_field :bathrooms, in: 1..1000, step: 1, placeholder: "Enter the number of bathrooms", class: "form-control"  %>
+          </div>
+        </div>
+        <div class="col-md-4 input">
+          <div class="form-group">
+            <%= f.label :balconies %>
+            <%= f.number_field :balconies, in: 1..1000, step: 1, placeholder: "Enter the number of balconies", class: "form-control"  %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :ac do %>
+                <%= f.check_box :ac %> Air-Conditioner
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :roof do %>
+                <%= f.check_box :roof %> Use of roof
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :yard do %>
+                <%= f.check_box :yard %> Yard
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :seafront do %>
+                <%= f.check_box :seafront %> Sea front
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :seaview do %>
+                <%= f.check_box :seaview %> Sea view
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :swimming_pool do %>
+                <%= f.check_box :swimming_pool %> Swimming pool
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :jacuzzi do %>
+                <%= f.check_box :jacuzzi %> Jacuzzi
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :unfurnished do %>
+                <%= f.check_box :unfurnished %> Unfurnished
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 input">
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <%= f.label :pet_friendly do %>
+                <%= f.check_box :pet_friendly %> Pet friendly
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 input">
+          <div class="form-group">
+            <%= f.label :obs %><br/>
+            <%= f.text_area :obs, rows: 3 %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="upload-photos text-center">
+              <%= f.label :property_photos do %>
+                <span class="btn btn-form btn-medium upload">
+                  <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                  Upload photos
+                  <%= f.file_field :property_photos, multiple: true,
+                          accept: 'image/jpeg,
+                                  image/png,
+                                  image/gif'
+                                  %>
+                </span>
+                <p id="selected_photos" stype="display:none;"></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <% if current_user.role_id == "admin" || current_user.role_id == "manager" %>
+          <div class="col-md-3 input">
+            <%= f.label :assigned_to do %>Listing rights<% end %>
+            <%= f.select :assigned_to, options_for_select(User.where('role_id = ? OR role_id = ?', 1,3).where('is_active = ?', true).where('id != ? OR id != ?',1,2).order('first_name ASC').map { |key, value| [key.fullname.humanize, key.id] }, :selected => f.object.assigned_to),
+                          {include_blank: "Select..."}, {id: "assigned_to", class: "form-control"} %>
+
+          </div>
+          <div class="col-md-3 text-right input">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="checkbox-inline">
+                  <%= f.label :sold, id: "mark_sold_label" do %>
+                    Deactivate property
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="checkbox-inline">
+                  <label class="switch">
+                    <%= f.check_box :sold, id: "mark_sold_check" %>
+                      <span class="switch slider round"></span>
+                  </label>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        <% elsif current_user.role_id == "editor" %>
+          <div class="col-md-offset-3 col-md-3 text-right input">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="checkbox-inline">
+                  <%= f.label :sold, id: "mark_sold_label" do %>
+                    Deactivate property
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="checkbox-inline">
+                  <label class="switch">
+                    <%= f.check_box :sold, id: "mark_sold_check" %>
+                      <span class="switch slider round"></span>
+                  </label>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        <% end %>
+
+      </div>
+      <div class="row text-center">
+        <div class="col-md-6">
+          <button name="cancel_edit_property" type="button" class="btn btn-secondary btn-block" style="margin: 0 0 10px 0" data-dismiss="modal">Cancel</button>
+        </div>
+        <div class="col-md-6">
+          <div class="actions">
+            <%= button_tag(:name => "update_edit_property", :class => "btn btn-normal btn-block", style: "margin: 0 0 10px 0", :id => "btnSubmit") do %>
+              <i class="far fa-save"></i> Save
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<% end %>
+
+<script>
+  jQuery(document).ready(function( $ ) {
+    $("#btnSubmit").click(function(){
+      $("#spinner").fadeIn('slow');
+    });
+
+    function location_selector(){
+
+      $('#property_location_select').parent().hide()
+      var property_locations = $('#property_location_select').html()
+
+      $('#property_area_select').on("change", function(){
+
+        var selected_property_area = $('#property_area_select').find(":selected").text();
+        var escaped_area = selected_property_area.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1')
+        var options = $(property_locations).filter("optgroup[label=" + escaped_area + "]").html()
+        // var options = $("optgroup[label=" + escaped_area + "]").html()
+        // console.log(escaped_area)
+
+        if ($(options).length){
+          $('#property_location_select').html(options)
+          return $('#property_location_select').parent().show()
+
+        } else {
+          $('#property_location_select').empty()
+           return $('#property_location_select').parent().hide()
+
+          }
+
+      });
+
+    }
+
+  });
+</script>

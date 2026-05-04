@@ -1,0 +1,1 @@
+Figaro.require_keys("mailgun_address", "mailgun_port", "mailgun_domain", "mailgun_authentication", "mailgun_user_name", "mailgun_password", "aws_access_key_id", "aws_secret_access_key", "aws_bucket")

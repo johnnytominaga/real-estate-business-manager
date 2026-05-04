@@ -1,0 +1,46 @@
+<div class="row availability wow fadeIn" id="update_availability_date">
+  <% if !@property_ranked.availability_date.blank? && @property_ranked.availability_date != "0" %>
+    <p style="padding:0px;"><i class="ion-ios-calendar-outline"></i> Availability date: <%= @property_ranked.availability_date.to_time.strftime("%d/%m/%Y") %></p>
+  <% else %>
+    <div class="text-center empty">
+      <p><i class="fas fa-exclamation-circle"></i> Add availability date</p>
+    </div>
+  <% end %>
+  <div class="update-availability">
+    <div class="icon first" id="this_property">This</div>
+    <div class="icon" id="all_properties">All</div>
+    <%= link_to editors_editor_all_add_3_months_properties_path(id: @property_ranked.id), remote:true, method: :patch do %>
+      <div class="icon" id="all_add_3_months">All+3</div>
+    <% end %>
+    <%= link_to editors_editor_all_add_6_months_properties_path(id: @property_ranked.id), remote:true, method: :patch do %>
+      <div class="icon last" id="all_add_6_months">All+6</div>
+    <% end %>
+    <div class="label">Update</div>
+  </div>
+</div>
+
+<script>
+  jQuery(document).ready(function( $ ) {
+
+    $("#this_property").on("click", this, function(){
+
+      var myAttribute = "availability_date";
+      var contractType = "<%= @property_ranked.contract_type.to_s.downcase %>";
+      var propertyId = "<%= @property_ranked.id.to_i %>"
+      $("#update_availability_date").load("/properties/edit_field?attribute=" + myAttribute + "&contract_type=" + contractType + "&id=" + propertyId);
+
+    });
+
+    $("#all_properties").on("click", this, function(){
+
+      var myAttribute = "availability_date";
+      var contractType = "<%= @property_ranked.contract_type.to_s.downcase %>";
+      var propertyId = "<%= @property_ranked.id.to_i %>";
+      var update_all = 1;
+      $("#update_availability_date").load("/properties/edit_field?attribute=" + myAttribute + "&contract_type=" + contractType + "&id=" + propertyId + "&update_all=" + update_all);
+
+    });
+
+  });
+
+</script>

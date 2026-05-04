@@ -1,0 +1,31 @@
+<h4 class="wow zoomInDown">General info</h4>
+<div class="table-responsive" style="overflow-y:hidden;">
+  <table class="table table-striped borderless editable fadeIn" id="general_info_table">
+    <tbody>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.1s" data-link="edit_field_name">
+        <th scope="row">Name</th>
+        <td><% if !@lead.name.blank? %><%= @lead.name %><% end %></td>
+      </tr>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.2s" data-link="edit_field_phone">
+        <th scope="row">Phone</th>
+        <td><% if !@lead.phone.blank? %><%= @lead.full_phone_number %><% end %></td>
+      </tr>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.3s" data-link="edit_field_email">
+        <th scope="row">Email</th>
+        <td><% if !@lead.email.blank? %><%= @lead.email %><% end %></td>
+      </tr>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.4s" data-link="edit_field_nationality">
+        <th scope="row">Nationality</th>
+        <td><% if !@lead.nationality.blank? %><%= @lead.nationality %><% end %></td>
+      </tr>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.5s" data-link="edit_field_budget">
+        <th scope="row">Budget</th>
+        <td><% if !@lead.budget.blank? %><%= @lead.budget %><% end %></td>
+      </tr>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.6s" data-link="edit_field_check_in_date">
+        <th scope="row">Check in date</th>
+        <td><% if !@lead.check_in_date.blank? %><%= @lead.check_in_date.to_date.strftime("%d/%m/%Y") %><% end %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

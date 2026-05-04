@@ -1,0 +1,9 @@
+<%= render "shared/message_js" %>
+$("#spinner").hide();
+$('#leads_list').html("<%= j (render 'properties/show/leads')%>");
+
+var element_to_scroll_to = $('#scroll_list')[0];
+element_to_scroll_to.scrollIntoView({
+  block: 'center',
+  behavior: 'smooth'
+});

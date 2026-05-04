@@ -1,0 +1,36 @@
+<% if !@phase_updates_p4.blank? %>
+  <% @phase_updates_p4.each_with_index do |p, index| %>
+    <div class="panel panel-default wow fadeInUp" id="phase_item" data-wow-delay="0.<%= index %>s">
+      <div class="panel-body" id="lead_phase_<%= p.id %>">
+        <div class="row">
+          <div class="col-md-8">
+            <%= p.comment %>
+          </div>
+          <div class="col-md-4 text-right edit-buttons-row">
+            <%= link_to edit_lead_phase_lead_path(lead_phase_id: p.id), remote: true do %><span class="edit-button edit-icon" title="Edit"></span><% end %>
+            <%= link_to delete_lead_phase_lead_path(lead_phase_id: p.id),  data: { confirm: 'Are you sure?' }, method: :delete, remote: true do %><span class="edit-button delete delete-icon" title="Delete"></span><% end %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <p class="small-font">
+              <%= p.created_at.to_time.strftime("%d/%m/%Y") %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="text-center">
+    <%= will_paginate @phase_updates_p4, {link_options: {'data-remote': true}, params: { step: 4, action: 'show_step4' }, renderer: BootstrapPagination::Rails, previous_label: "«", next_label: "»", inner_window: 1, outer_window: 0} %>
+  </div>
+<% else %>
+  <p>Add status updates to keep track of the interactions you've made with this lead.</p>
+<% end %>
+
+
+<script>
+
+  $('.edit-button[title]').tooltip();
+
+</script>

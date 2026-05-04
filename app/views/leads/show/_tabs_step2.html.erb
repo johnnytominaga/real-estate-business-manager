@@ -1,0 +1,14 @@
+<div class="row step-title">
+  <div class="col-md-8 wow fadeInUp">
+    <h3 id="step2-title"><%= @phase.name %></h3>
+  </div>
+  <div class="col-md-4 text-center wow zoomInDown" data-wow-delay="0.5s" id="done_button_step2">
+    <%= render 'leads/show/step2/lead_done_button' %>
+  </div>
+</div>
+<div class="row" id="lead_property_specs" style="padding: 20px 0;">
+  <%= render 'leads/show/step2/lead_property_specs' %>
+</div>
+<div class="row">
+  <%= render 'leads/show/step2/property_lists', properties: @arrProperties, q: @q  %>
+</div>

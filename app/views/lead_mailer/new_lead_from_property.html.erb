@@ -1,0 +1,37 @@
+<h1>Name: <%= @lead.name %></h1><br/>
+<h4>(NEW LEAD)</h4>
+
+<p>Email: <%= @lead.email %></p>
+<p>Phone number: <%= @lead.phone %></p>
+<ul>
+  <% if !@lead_property.blank? %>
+    <li>The client is looking for: <%= @property_link %></li>
+  <% end %>
+  <% if !@lead.property_type.blank? && @lead.property_type != "0" %><li>Type of Property: <%= @lead.property_type %></li><% end %>
+  <li>Contract type: <%= @lead_contract_type %></li>
+  <% if !@lead_unique_areas.blank? %>
+    <li>
+      <%= pluralize(@lead_unique_areas.count, "Area") %>:<br/>
+        <% @lead_unique_areas.each do |a| %>
+          <%= Area.find(a).area %><br/>
+        <% end %>
+    </li>
+  <% end %>
+  <% if !@lead_unique_locations.blank? %>
+    <li>
+      <%= pluralize(@lead_unique_locations.count, "Location") %>:<br/>
+        <% @lead_unique_locations.each do |l| %>
+          <%= Location.find(l).name %><br/>
+        <% end %>
+    </li>
+  <% end %>
+  <% if !@lead.bedrooms.blank? && @lead.bedrooms != 0 %><li>With: More than <%= @lead.bedrooms %></li><% end %>
+  <li>From: <%= @lead_check_in_date %></li>
+  <li>For: <%= @lead.budget %></li>
+</ul>
+<% if !@lead.description.blank? %>
+  <p>Additional information sent by the client:</p>
+  <p><%= @lead.description %></p>
+<% end %>
+
+<p><%= @lead_link %></p>

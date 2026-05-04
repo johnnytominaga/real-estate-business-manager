@@ -1,0 +1,22 @@
+<%= form_with model: @lead, url: phase_completed_lead_path, method: :patch, html: {id: 'deposit_paid_form'}, remote: true do |f| %>
+    <div class="done-button" title="Deposit paid">
+      <%= f.label :deposit_paid, class: "centralized" do %>
+        <% if @lead.deposit_paid == true %>
+          <%= f.check_box :deposit_paid, id: "deposit_paid", value: params[:deposit_paid],  class: 'checkbox is-checked check', style:'-webkit-appearance: none;' %>
+        <% else %>
+          <%= f.check_box :deposit_paid, id: "deposit_paid", value: params[:deposit_paid],  class: 'checkbox check', style:'-webkit-appearance: none;' %>
+        <% end %>
+        <span style="padding: 0 0 0 5px;">Deposit payment completed!</span>
+      <% end %>
+    </div>
+<% end %>
+
+<script>
+  $('#deposit_paid').click(function(){
+    $('.checkbox').toggleClass('is-checked');
+    var elem = $('#deposit_paid_form')[0]
+    Rails.fire(elem, 'submit');
+    // $('#information_collected').trigger('submit.rails')
+  });
+  $('.done-button[title]').tooltip();
+</script>

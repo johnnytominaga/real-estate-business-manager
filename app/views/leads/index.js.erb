@@ -1,0 +1,5 @@
+$('#calendar_section').html("<%= j render partial: 'leads/index/calendar', locals: {leads: @arrLeads} %>");
+$('#leads_table').html("<%= j render partial: 'leads/index/table', locals: {leads: @arrLeads} %>");
+$('#leads_loadmore').html("<%= j render partial: 'leads/index/loadmore', locals: {leads: @arrLeads} %>");
+$("#spinner").hide();
+<%= render "shared/message_js" %>

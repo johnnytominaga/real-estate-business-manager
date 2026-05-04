@@ -1,0 +1,75 @@
+{
+  "name": "real-estate-crm",
+  "description": "",
+  "scripts": {
+  },
+  "env": {
+    "aws_access_key_id": {
+      "required": true
+    },
+    "aws_bucket": {
+      "required": true
+    },
+    "aws_endpoint": {
+      "required": true
+    },
+    "aws_region": {
+      "required": true
+    },
+    "aws_secret_access_key": {
+      "required": true
+    },
+    "db_password": {
+      "required": true
+    },
+    "LANG": {
+      "required": true
+    },
+    "mailgun_address": {
+      "required": true
+    },
+    "mailgun_authentication": {
+      "required": true
+    },
+    "mailgun_domain": {
+      "required": true
+    },
+    "mailgun_password": {
+      "required": true
+    },
+    "mailgun_port": {
+      "required": true
+    },
+    "mailgun_user_name": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+}

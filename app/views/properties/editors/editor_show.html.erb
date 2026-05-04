@@ -1,0 +1,141 @@
+<%= stylesheet_link_tag 'editor/editor', media: 'all', 'data-turbolinks-track' => true %>
+
+<!-- hero -->
+<section id="internal-hero" style="height: 15vh;">
+  <div class="hero-container" style="background-image: url(<%= randomized_internal_header_image %>); background-position: top;">
+  </div>
+</section><!-- #hero -->
+
+<main id="main">
+  <section id="editor">
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-9 editor-left">
+            <div class="h-100 d-flex align-items-center justify-content-center">
+              <div class="box wow pulse">
+                <div class="row ">
+                  <div class="col-md-3">
+                    <%= render partial: 'properties/editors/editor_content_photos', locals: {property: @property_ranked}%>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="internal-box">
+                          <div id="owner_details">
+                            <%= render partial: 'properties/editors/editor_content_owner', locals: {property: @property_ranked} %>
+                          </div>
+                          <div id="property_id">
+                            <%= render partial: 'properties/editors/editor_content_property_id', locals: {property: @property_ranked} %>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <% if !@property_ranked.updated_at.blank? %>Last updated on: <%= @property_ranked.updated_at.to_time.strftime("%d/%m/%Y") %><% end %><br/>
+                        <% if !@property_ranked.updated_by.blank? %>Updated by: <%= User.find_by(id: @property_ranked.updated_by).fullname %><% end %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="row">
+                      <div class="col-md-7 wow fadeIn" data-wow-delay="0.2s">
+                        <div class="row availability" id="update_title">
+                          <%= render partial: 'properties/editors/editor_content_title', locals: {property: @property_ranked} %>
+
+                        </div>
+                      </div>
+                      <div class="col-md-5 wow fadeIn" data-wow-delay="0.3s">
+                        <div class="row text-right">
+                          <div class="col-md-12">
+                            <%= render "properties/editors/editor_form_availability", locals: {property: @property_ranked} %>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12" style="padding: 0 0 0 10px;">
+                        <div class="box-block">
+                          <div class="row" id="update_fields">
+                              <% if @property_ranked.contract_type == "Rent" %>
+                                <%= render partial: "properties/editors/editor_content_rent", locals: {property: @property_ranked} %>
+                              <% elsif @property_ranked.contract_type == "Sales" %>
+                                <%= render partial: "properties/editors/editor_content_sales", locals: {property: @property_ranked} %>
+                              <% elsif @property_ranked.contract_type == "Commercial lease" %>
+                                <%= render partial: "properties/editors/editor_content_commercial", locals: {property: @property_ranked} %>
+                              <% elsif @property_ranked.contract_type == "Commercial sale" %>
+                                <%= render partial: "properties/editors/editor_content_commercial_sale", locals: {property: @property_ranked} %>
+                              <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 editor-right">
+            <!-- NEW PROPERTY LINK -->
+            <div class="editor-right-row-header wow fadeIn" data-wow-delay="0.1s">
+              <div class="col-md-9 wow fadeIn" data-wow-delay="0.2s">
+                <h5 style="margin: 0px;">Other properties from this owner:</h5>
+              </div>
+              <div class="col-md-3 text-center wow fadeIn" id="editor_new_property_button" data-wow-delay="0.3s">
+                <%= render partial: 'properties/editors/editor_content_new_property_button'%>
+              </div>
+            </div>
+            <!-- END OF NEW PROPERTY LINK -->
+
+            <!-- OTHER PROPERTIES -->
+            <div class="row">
+              <div class="col-md-12" id="other_properties">
+                <%= render partial: 'properties/editors/editor_content_other_properties' %>
+              </div>
+            </div>
+            <!-- END OF OTHER PROPERTIES -->
+          </div>
+        </div>
+    </div>
+    <div class="bottom-navbar" id="editor-navbar">
+      <div class="pull-left bottom_navbar_options">
+        <div id="share_property">
+          <%= render partial: 'properties/editors/bottom_navbar/editor_content_share', locals: {property: @property_ranked} %>
+        </div>
+        <div id="add_reminder">
+          <%= render partial: 'properties/editors/bottom_navbar/remind_to_call' %>
+        </div>
+        <div id="search_owner">
+          <%= render partial: 'properties/editors/bottom_navbar/search_owner' %>
+        </div>
+      </div>
+      <div id="bottom_navbar_buttons">
+        <%= render partial: 'properties/editors/bottom_navbar/bottom_navbar_buttons' %>
+      </div>
+    </div>
+  </section>
+<%= render partial: "properties/editors/editor_modal_new_property", locals: {property: @property_ranked} %>
+<%= render partial: "properties/editors/editor_modal_edit_property", locals: {property: @property_ranked} %>
+<%= render partial: "properties/editors/editor_modal_edit_owner_details", locals: {property: @property_ranked} %>
+
+</main>
+<script>
+
+  $('#stop_calling, #not_answering, #editor_done, #btnSubmit').click(function() {
+    $("#spinner").fadeIn('slow');
+    $("#spinner").click(function(){
+      $("#spinner").hide();
+    })
+  });
+
+  /* Toggle between adding and removing the "responsive" class to the navbar when the user clicks on the icon */
+    function responsiveNavbar() {
+      var x = document.getElementById("editor-navbar");
+      if (x.className === "bottom-navbar") {
+        x.className += " responsive";
+      } else {
+        x.className = "bottom-navbar";
+      }
+    }
+</script>

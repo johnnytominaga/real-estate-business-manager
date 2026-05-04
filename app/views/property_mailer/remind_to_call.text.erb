@@ -1,0 +1,9 @@
+Owner's details:
+<% if !@owner.name.blank? %>
+  Owner: <%= @owner.name %>
+<% end %>
+Phone number: <%= @owner.phone_number %>
+Properties:
+<% @properties.each do |p| %>
+  <%= link_to p.property_title, property_url(p.id) %>, 
+<% end %>

@@ -1,0 +1,4 @@
+<p>Lead: <%= @lead_link %></p>
+<% if !@lead.check_in_date.blank? %>
+  <p>Check in date: <%= @lead.check_in_date %></p>
+<% end %>

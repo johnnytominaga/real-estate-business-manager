@@ -1,0 +1,145 @@
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+#devise {
+  width: 100%;
+  height: 100vh;
+  background: top center;
+  background-size: cover;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  #devise {
+    background-attachment: fixed;
+  }
+}
+
+#devise:before {
+  content: "";
+  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#devise .hero-container {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+
+/* Form Section
+--------------------------------*/
+
+
+#devise .section-header h3 {
+  font-size: 32px;
+  color: #111;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 15px;
+  padding-top: 5px
+}
+
+#devise .section-header h3::before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: #ddd;
+  bottom: 1px;
+  left: calc(50% - 60px);
+}
+
+#devise .section-header h3::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #ff006c;
+  bottom: 0;
+  left: calc(50% - 20px);
+}
+
+#devise .section-header p {
+  text-align: center;
+  padding-bottom: 0px;
+  color: #333;
+}
+
+#devise {
+  padding: 60px 0;
+}
+
+#devise .container {
+  padding: 10px 10px 10px 10px;
+}
+
+#devise .panel-default {
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+  background-color: white;
+}
+
+
+#devise .form input, #devise .form textarea {
+  padding: 10px 14px;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 15px;
+}
+
+#devise .form button[type="submit"] {
+  background: #ff006c;
+  border: 0;
+  padding: 10px 30px;
+  color: #fff;
+  transition: 0.4s;
+  cursor: pointer;
+
+}
+
+#devise .form button[type="submit"]:hover {
+  background: #cc0055;
+}
+
+#devise-edit-profile {
+  background-size: cover;
+  padding: 60px 0 40px 0;
+  position: relative;
+}
+
+#devise-edit-profile .form input, #devise-edit-profile .form textarea {
+  padding: 10px 14px;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 15px;
+}
+
+#devise-edit-profile .form button[type="submit"] {
+  background: #ff006c;
+  border: 0;
+  padding: 10px 30px;
+  color: #fff;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+#devise-edit-profile .form button[type="submit"]:hover {
+  background: #cc0055;
+}

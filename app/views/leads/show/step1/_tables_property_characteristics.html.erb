@@ -1,0 +1,65 @@
+<h4 class="wow zoomInDown" data-wow-delay="0.1s">Property characteristics</h4>
+<div class="table-responsive" style="overflow-y:hidden;">
+  <table class="table table-striped borderless editable fadeIn">
+    <tbody>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.1s" data-link="edit_field_contract_type">
+        <th scope="row">Contract type</th>
+        <td><% if !@lead.contract_type.blank? %><%= @lead.contract_type %><% end %></td>
+      </tr>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.1s" data-link="edit_field_contract_period">
+        <th scope="row">Contract period</th>
+        <td><% if !@lead.contract_period.blank? %><%= @lead.contract_period %><% end %></td>
+      </tr>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.2s" data-link="edit_field_property_type">
+        <th scope="row">Property type</th>
+        <td><% if !@lead.property_type.blank? %><%= Property.property_types.key(@lead.property_type) %><% end %></td>
+      </tr>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.3s" data-link="edit_field_bedrooms">
+        <th scope="row">Bedrooms</th>
+        <td><% if !@lead.bedrooms.blank? %><%= @lead.bedrooms %><% end %></td>
+      </tr>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.4s" data-link="edit_field_no_of_people">
+        <th scope="row">No. of people</th>
+        <td><% if !@lead.no_of_people.blank? %><%= @lead.no_of_people %><% end %></td>
+      </tr>
+      <tr class="wow fadeInUp editable" data-wow-delay="0.4s" data-link="edit_field_pet_friendly">
+        <th scope="row">Pet friendly?</th>
+        <td><% if @lead.pet_friendly == true %>Yes<% end %></td>
+      </tr>
+      <tr class="wow fadeInUp locations" data-wow-delay="0.5s" id="areas_row">
+        <th scope="row">Areas</th>
+        <td>
+          <span>
+            <% if @areas.length > 0 %>
+              <%= @areas.map{|a| a.area }.join(', ') %>
+            <% end %>
+          </span>
+        </td>
+      </tr>
+      <tr class="wow fadeInUp locations" data-wow-delay="0.5s" id="locations_row">
+        <th scope="row">Locations</th>
+        <td>
+          <span>
+            <% if @locations.length > 0 %>
+              <%= @locations.map{|l| l.name }.join(', ') %>
+            <% else %>
+              Add locations
+            <% end %>
+          </span>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+<script>
+  jQuery(document).ready(function( $ ) {
+    $('#areas_row, #locations_row').click(function(){
+      var element_to_scroll_to = $('#locations_list')[0];
+      element_to_scroll_to.scrollIntoView({
+        block: 'center',
+        behavior: 'smooth'
+      });
+    })
+  });
+</script>

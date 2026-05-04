@@ -1,0 +1,11 @@
+<h3>Owner's details:</h3>
+<% if !@owner.name.blank? %>
+  <p>Owner: <%= @owner.name %></p>
+<% end %>
+<p>Phone number: <%= @owner.phone_number %></p>
+<p>Properties:</p>
+<ul>
+  <% @properties.each do |p| %>
+    <li><%= link_to p.property_title, property_url(p.id) %></li>
+  <% end %>
+</ul>

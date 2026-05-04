@@ -1,0 +1,10 @@
+<%= search_form_for @search, class: 'bottom-navbar-form', remote: true, url: editor_properties_path do |f| %>
+  <%= f.autocomplete_field :owner_phone_number_cont, autocomplete_owner_phone_number_owners_path,
+                'data-auto-focus' => false,
+                'data-noMatchesLabel' => "No existing owners have been found",
+                :placeholder => "Enter an owner's phone number...",
+                class: 'ui-autocomplete-input'
+                %>
+    <%= button_tag(:name => "search", :class => "bottom-navbar-button save search-icon wow zoomInDown", :id => "btnSubmit", "data-wow-delay": "0.3s") do %><% end %>
+  <!-- < %= f.submit " ", class: "bottom-navbar-button save save-icon wow zoomInDown" %> -->
+<% end %>

@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <strong><%= notification.content.html_safe %></strong>
+        <span class="pull-right"><%= notification.created_at.to_formatted_s(:short) %></span>
+      </div>
+    </div>
+  </div>
+</div>

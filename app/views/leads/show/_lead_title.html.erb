@@ -1,0 +1,35 @@
+<div class="col-md-8 text-left wow fadeIn">
+  <h2><%= @lead.name %></h2>
+</div>
+<% if current_user.role_id == 'admin' || current_user.role_id == 'manager' %>
+  <div class="col-md-4 text-right wow fadeIn" data-wow-delay="0.1s">
+    <% if !@lead.user.blank? %>
+      <p class="editable" id="assign_agent">
+        Assigned to:
+        <% if @lead.user.avatar.attached? %>
+          <%= image_tag @lead.user.show_avatar('100x100'), class: "img-circle avatar-small" %>
+        <% end %>
+        <%= @lead.user.fullname %>
+      </p>
+    <% else %>
+      <p class="editable" id="assign_agent">
+        Assign agent <i class="fas fa-user-tag"></i>
+      </p>
+    <% end %>
+  </div>
+<% end %>
+<% if current_user.id == @lead.user_id || current_user.role_id == 'admin' || current_user.role_id == 'manager' %>
+  <div class="col-md-4 text-right wow fadeIn" data-wow-delay="0.1s" id="drop_lead">
+    <%= render partial: 'leads/show/drop_lead', lead: @lead %>
+  </div>
+<% end %>
+<script>
+  jQuery(document).ready(function( $ ) {
+
+    $("#assign_agent").one("click", this, function(){
+      var leadId = "<%= @lead.id.to_i %>"
+      $(this).removeClass("editable");
+      $(this).load("/leads/edit_field?attribute=user_id&lead_id=" + leadId);
+    });
+  });
+</script>

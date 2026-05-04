@@ -1,0 +1,9 @@
+<%= will_paginate @leads_list, renderer: BootstrapPagination::Rails, previous_label: "«", next_label: "»", inner_window: 1, outer_window: 0 %>
+
+<script>
+  $(function () {
+    $('.pagination a').live("click", function () {
+      $("#spinner").fadeIn('slow');
+    });
+  });
+</script>

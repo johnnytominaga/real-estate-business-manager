@@ -1,0 +1,11 @@
+<% if @notifications > 0 %>
+  <div class="reminder-form">
+    <%= link_to root_path do %>Go to next property »<% end %>
+  </div>
+
+<% else %>
+  <%= form_with model: @notification, url: remind_to_call_path(property_id: @property_ranked.id, owner_id: @property_ranked.owner_id), html: {class: "bottom-navbar-form"}, remote: true, method: :post do |f| %>
+    <%= f.text_field :reminder_date, placeholder: "Call this owner again on", readonly: true, id: "lead_move_in_date" %>
+    <%= button_tag(:name => "save", :class => "bottom-navbar-button save save-icon wow zoomInDown", :id => "btnSubmit", "data-wow-delay": "0.3s") do %><% end %>
+  <% end %>
+<% end %>

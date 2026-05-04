@@ -1,0 +1,3 @@
+var propertyId = <%= @property.id %>;
+var attribute = "<%== j @attribute %>";
+$('#field_' + attribute + '_' + propertyId).html("<%= j (render 'leads/show/step5/form_' + @attribute) %>");

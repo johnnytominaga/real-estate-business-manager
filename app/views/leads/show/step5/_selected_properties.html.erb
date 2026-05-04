@@ -1,0 +1,73 @@
+<% if !@properties.blank? %>
+  <% @properties.each_with_index do |p, index| %>
+    <div class="panel panel-default wow fadeIn" data-wow-delay="0.<%= index %>s" id="agent-property-listing">
+      <div class="panel-body">
+        <div class="row" style="margin-bottom: 30px;">
+          <div class="col-md-2">
+            <%= link_to p, target: "_blank" do %>
+              <div class="row">
+                <div class="col-md-12">
+                  <%= image_tag p.cover_photo("400X400", request.host), style: 'width:100%;' %>
+                  <span class="status"><b><%= p.contract_type %></b></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <p style="margin: 5px 0;">ID: <%= p.id %></p>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12">
+                <%= link_to p, target: "_blank" do %>
+                  <div class="property-title" >
+                    <h4 style="margin: 0 0 0 0;">
+                      <%= p.property_title %>
+                    </h4><br/>
+                  </div>
+                <% end%>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 deposit-input" id="field_contract_amount_<%= p.id %>">
+                <%= render 'leads/show/step5/field_contract_amount', lead_property: p.suggested_property(@lead) %>
+              </div>
+              <div class="col-md-6 deposit-input" id="field_contract_signature_date_<%= p.id %>">
+                <%= render 'leads/show/step5/field_contract_signature_date', lead_property: p.suggested_property(@lead) %>
+              </div>
+            </div>
+            <div class="row" style="margin: 20px 0;">
+              <div class="col-md-4 centralized" id="field_contract_signed_<%= p.id %>">
+                <%= render 'leads/show/step5/field_contract_signed', lead_property: p.suggested_property(@lead) %>
+              </div>
+              <div class="col-md-4 centralized" id="field_commission_paid_<%= p.id %>">
+                <%= render 'leads/show/step5/field_commission_paid', lead_property: p.suggested_property(@lead) %>
+              </div>
+              <div class="col-md-4 centralized" id="field_commission_sorted_<%= p.id %>">
+                <%= render 'leads/show/step5/field_commission_sorted', lead_property: p.suggested_property(@lead) %>
+              </div>
+            </div>
+            <div class="row" style="margin: 0 0 20px 0;">
+              <div class="col-md-6 centralized" id="field_vat_client_<%= p.id %>">
+                <%= render 'leads/show/step5/field_vat_client', lead_property: p.suggested_property(@lead) %>
+              </div>
+              <div class="col-md-6 centralized" id="field_vat_owner_<%= p.id %>">
+                <%= render 'leads/show/step5/field_vat_owner', lead_property: p.suggested_property(@lead) %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" id="payment_sorting_calculator_<%= p.id %>" style="margin-bottom: 20px;">
+          <%= render 'leads/show/step5/payment_sorting_calculator', lead_property: p.suggested_property(@lead) %>
+        </div>
+
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="text-center">
+    <h4>No deposits seem to have been paid by this client. Go to Deposit Payment and update them accordingly.</h4>
+  </div>
+<% end %>

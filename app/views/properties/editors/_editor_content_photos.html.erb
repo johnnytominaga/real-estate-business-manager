@@ -1,0 +1,47 @@
+<div class="row" id="update_photos" data-link="editor_add_photos">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ih-item circle effect6 scale_up">
+          <a href="#">
+            <div class="img wow fadeIn" data-wow-delay="0.1s" id="editor_photos_thumb">
+              <% if @property_ranked.property_photos.length > 0 %>
+                <%= image_tag @property_ranked.property_photos[0].variant(
+                  combine_options: {
+                    gravity: 'center',
+                    resize: '300X300^',
+                    extent: '300X300'
+                  }
+                ) %>
+              <% else %>
+                <%= image_tag "no-photo.png" %>
+              <% end %>
+            </div>
+
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <p>No. of photos: <%= @property_ranked.property_photos.length %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  jQuery(document).ready(function( $ ) {
+
+    $("[data-link='editor_add_photos']").one("click", this, function(){
+
+      var contractType = "<%= @property_ranked.contract_type.to_s.downcase %>";
+      var propertyId = "<%= @property_ranked.id.to_i %>"
+
+      $(this).removeClass("edit");
+      $(this).attr("data-link", "disabled");
+      $(this).load("/properties/editors/editor_add_photos?id=" + propertyId);
+    });
+  });
+
+</script>

@@ -1,0 +1,15 @@
+$('#lead_steps').html("<%= j render partial: 'leads/show/lead_steps' %>");
+$('#done_button_step2').html("<%= j render partial: 'leads/show/step2/lead_done_button' %>");
+$('#steps_bar_step1').removeClass("active");
+$('#steps_bar_step2').addClass("active");
+$('#steps_bar_step3').removeClass("active");
+$('#steps_bar_step4').removeClass("active");
+$('#steps_bar_step5').removeClass("active");
+$('#step1').removeClass("active");
+$('#step2').addClass("active");
+$('#step3').removeClass("active");
+$('#step4').removeClass("active");
+$('#step5').removeClass("active");
+
+$("#spinner").hide();
+<%= render "shared/message_js" %>

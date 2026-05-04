@@ -1,0 +1,114 @@
+<div class="container">
+  <div id="search_form_selector" class="row">
+    <div class="col-md-12" style="padding:0px;">
+      <!-- SEARCH FORM -->
+      <%= render partial: 'properties/agents/agent_search_form_rent' %>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  jQuery(document).ready(function( $ ) {
+
+
+    function date_selector() {
+
+      var dateToday = new Date();
+
+      $('#property_availability_date').datepicker({
+        defaultDate: "+1d",
+        numberOfYears: 3,
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'dd-M-yy',
+        minDate: dateToday
+      });
+
+      $('#property_updated_since').datepicker({
+        defaultDate: "-1d",
+        numberOfYears: 3,
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'dd-M-yy',
+        maxDate: dateToday
+      });
+    }
+
+    $(function(){
+
+    function GetURLParameter(sParam){
+      var sPageURL = window.location.search.substring(1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++)
+      {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam)
+        {
+            return sParameterName[1];
+        };
+      };
+    };
+
+      var ContractType = GetURLParameter('q%5Bcontract_type_eq%5D');
+
+
+      if (ContractType == 1){
+        $("#search_form_selector").replaceWith("<%= j render partial: 'properties/agents/agent_search_form_rent' %>");
+      }
+      if (ContractType == 2){
+        $("#search_form_selector").replaceWith("<%= j render partial: 'properties/agents/agent_search_form_sales' %>");
+      }
+      if (ContractType == 3){
+        $("#search_form_selector").replaceWith("<%= j render partial: 'properties/agents/agent_search_form_commercial' %>");
+      }
+
+      if (ContractType == 4){
+        $("#search_form_selector").replaceWith("<%= j render partial: 'properties/agents/agent_search_form_commercial_sale' %>");
+      }
+
+    });
+
+    $("#search_form_selector").on("click", "#selector_rent", function(){
+        $("#search_form_selector").html("<%= j render partial: 'properties/agents/agent_search_form_rent' %>");
+        date_selector()
+    });
+
+    $("#search_form_selector").on("click", "#clear_rent", function(){
+        $("#search_form_selector").html("<%= j render partial: 'properties/agents/agent_search_form_rent' %>");
+        date_selector()
+    });
+
+    $("#search_form_selector").on("click", "#selector_sales", function(){
+        $("#search_form_selector").html("<%= j render partial: 'properties/agents/agent_search_form_sales' %>");
+        date_selector()
+    });
+
+    $("#search_form_selector").on("click", "#clear_sales", function(){
+        $("#search_form_selector").html("<%= j render partial: 'properties/agents/agent_search_form_sales' %>");
+        date_selector()
+    });
+
+    $("#search_form_selector").on("click", "#selector_commercial_lease", function(){
+        $("#search_form_selector").html("<%= j render partial: 'properties/agents/agent_search_form_commercial' %>");
+        date_selector()
+    });
+
+    $("#search_form_selector").on("click", "#clear_commercial_lease", function(){
+        $("#search_form_selector").html("<%= j render partial: 'properties/agents/agent_search_form_commercial' %>");
+        date_selector()
+    });
+
+    $("#search_form_selector").on("click", "#selector_commercial_sale", function(){
+        $("#search_form_selector").html("<%= j render partial: 'properties/agents/agent_search_form_commercial_sale' %>");
+        date_selector()
+    });
+
+    $("#search_form_selector").on("click", "#clear_commercial_sale", function(){
+        $("#search_form_selector").html("<%= j render partial: 'properties/agents/agent_search_form_commercial_sale' %>");
+        date_selector()
+    });
+
+  });
+
+</script>

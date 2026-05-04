@@ -1,0 +1,180 @@
+<!-- hero -->
+<section id="hero">
+  <div class="hero-container" style="background-image: url('<%= randomized_header_image %>'); background-position: top center; background-repeat: no-repeat; background-size: cover;">
+    <% if @request_url.include?('rocklandmalta.com') || @request_url.include?('jr-dev-07') %>
+      <h1 class="home-header-rockland">Buying, Renting & Selling Properties:</h1>
+      <h2>Done right.</h2>
+      <a href="contact" class="btn-get-started">Get started now</a>
+    <% else %>
+    <h1>Welcome</h1>
+    <h2>Finding a property made easy. Finally.</h2>
+    <a href="contact" class="btn-get-started">Find a property today</a>
+    <% end %>
+  </div>
+</section><!-- #hero -->
+
+
+<main id="main">
+  <%= render partial: 'search/search_properties', locals: {properties: @arrProperties} %>
+
+  <section id="call-to-action" class="wow fadeIn" style=" width: 100%; background: url(<%= asset_path 'call-to-action-bg.jpg' %>) no-repeat top right; background-size: contain;">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-6">
+          <h3>Join our team</h3>
+          <p>The real estate market in Malta continues to grow at a double digit year over year. Get a chance of helping dozens of people find the perfect place to live at beautiful Malta and make profit in one of the fastest growing real estate markets in Europe!</p>
+          <ul>
+            <li><h5>» Flexible working hours «</h5></li>
+            <li><h5>» Highest Commission Rates in Malta: make €1500-5000+ monthly! «</h5></li>
+            <li><h5>» Aggressive Bonus Policy «</h5></li>
+            <li><h5>» Full Training «</h5></li>
+            <li><h5>» Friendly and supporting work environment «</h5></li>
+            <li><h5>» Plenty of opportunities to Grow «</h5></li>
+          </ul>
+          <a class="cta-btn" href="/careers">Submit your application</a>
+        </div>
+      </div>
+    </div>
+  </section><!-- #call-to-action -->
+
+  <section id="testimonials">
+    <div class="container">
+
+      <header class="section-header">
+        <h3>Testimonials</h3>
+      </header>
+
+      <div class="owl-carousel testimonials-carousel wow fadeInUp">
+
+        <div class="testimonial-item">
+          <h3>Sladibor</h3>
+          <!-- <h4>Ceo &amp; Founder</h4> -->
+          <p>
+            <%= image_tag "quote-sign-left.png", class: "quote-sign-left", alt: "" %>
+            Agent Mark Caruana very professional, plesent, nice and effective we called it at 12h at 15h he already found the apartment for us. All recommendations for this gentleman Mark you are the best.
+            <%= image_tag "quote-sign-right.png", class: "quote-sign-right", alt: "" %>
+          </p>
+        </div>
+
+
+        <div class="testimonial-item">
+          <h3>Dennes</h3>
+          <p>
+            <%= image_tag "quote-sign-left.png", class: "quote-sign-left", alt: "" %>
+            Fernando helped me a lot in choosing a good apartment, solved all my questions. Excelent work!
+            <%= image_tag "quote-sign-right.png", class: "quote-sign-right", alt: "" %>
+          </p>
+        </div>
+
+        <div class="testimonial-item">
+          <h3>Darija</h3>
+          <p>
+            <%= image_tag "quote-sign-left.png", class: "quote-sign-left", alt: "" %>
+            My experience with Thais Mattos is great, she and her colleague are great Tim.
+            They been very nice and polite and very helpfull. Thanks to them I am now in very nice flat. Cheers...
+            <%= image_tag "quote-sign-right.png", class: "quote-sign-right", alt: "" %>
+          </p>
+        </div>
+
+        <div class="testimonial-item">
+          <h3>Eveline</h3>
+          <p>
+            <%= image_tag "quote-sign-left.png", class: "quote-sign-left", alt: "" %>
+            Johnny is an amazing agent. The communication before, during and after finding an apartment to rent was clear, fast and respectful. He managed to convince the owners to get the price down to what I wanted and was very helpful when I moved in. He made me feel very welcome in Malta!
+            <%= image_tag "quote-sign-right.png", class: "quote-sign-right", alt: "" %>
+          </p>
+        </div>
+
+        <div class="testimonial-item">
+          <h3>Dusan</h3>
+          <p>
+            <%= image_tag "quote-sign-left.png", class: "quote-sign-left", alt: "" %>
+            The agency is excellent. All recommendations. If you decide to ask for an apartment, contact this agency. Thank Ricardo and Johnny for excellent cooperation.
+            <%= image_tag "quote-sign-right.png", class: "quote-sign-right", alt: "" %>
+          </p>
+        </div>
+
+        <div class="testimonial-item">
+          <h3>Mario</h3>
+          <p>
+            <%= image_tag "quote-sign-left.png", class: "quote-sign-left", alt: "" %>
+            Johnny helped us with everything we needed, we had several mishaps and he solved everything and now we are very happy with the apartment. thank you very much
+            <%= image_tag "quote-sign-right.png", class: "quote-sign-right", alt: "" %>
+          </p>
+        </div>
+
+        <div class="testimonial-item">
+          <h3>Thiago</h3>
+          <p>
+            <%= image_tag "quote-sign-left.png", class: "quote-sign-left", alt: "" %>
+            Thais helped me to find a Penthouse for me and she was very helpful in all process.<br/>
+            I tried with another agents in Malta and no one helps, sometimes I text or send emails and no one answer you. Congratulations Thais. Thank you.”
+            <%= image_tag "quote-sign-right.png", class: "quote-sign-right", alt: "" %>
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- #testimonials -->
+
+  <section id="search-by-area" style="background: url(<%= asset_path 'search-by-area-bg.jpg' %>) center top no-repeat fixed;">
+    <div class="container">
+
+      <header class="section-header">
+        <h3>Search by area</h3>
+      </header>
+
+      <div class="row search-by-area-cols">
+        <div class="col-lg-8 col-md-6 search-by-area-item wow fadeInUp">
+          <a href="properties?utf8=✓&q%5Bcontract_type_eq%5D=1&q%5Barea_area_cont_any%5D%5B%5D=Sliema">
+            <%= image_tag "search-by-area-sliema.jpg", alt: "South area", class: "img-fluid" %>
+
+            <div class="details">
+              <h4>Sliema & St. Julians area</h4>
+              <span>Properties in cities near Sliema including St. Julians, Gzira, Swieqi and Msida.</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-lg-4 col-md-6 search-by-area-item wow fadeInUp" data-wow-delay="0.1s">
+          <a href="properties?utf8=✓&q%5Bcontract_type_eq%5D=1&q%5Barea_area_cont_any%5D%5B%5D=North">
+            <%= image_tag "search-by-area-north.jpg", alt: "North area", class: "img-fluid" %>
+            <div class="details">
+              <h4>North area</h4>
+              <span>Areas close to Bugibba, Qawra, Mellieha and others</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="row search-by-area-cols">
+        <div class="col-lg-4 col-md-6 search-by-area-item wow fadeInUp">
+          <a href="properties?utf8=✓&q%5Bcontract_type_eq%5D=1&q%5Barea_area_cont_any%5D%5B%5D=South">
+            <%= image_tag "search-by-area-south.jpg", alt: "South area", class: "img-fluid" %>
+            <div class="details">
+              <h4>South area</h4>
+              <span>Properties in areas like Marsascala, Paola and others </span>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-lg-8 col-md-6 search-by-area-item wow fadeInUp" data-wow-delay="0.1s">
+          <a href="properties?utf8=✓&q%5Bcontract_type_eq%5D=1&q%5Barea_area_cont_any%5D%5B%5D=Central">
+            <%= image_tag "search-by-area-central.jpg", alt: "Central area", class: "img-fluid" %>
+            <div class="details">
+              <h4>Central area</h4>
+              <span>Properties close to Birkirkara, Attard, Mosta and others </span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- #search-by-area -->
+  <section id="contact">
+    <div class="container">
+      <%= render partial: 'leads/contact' %>
+    </div>
+  </section>
+
+</main>

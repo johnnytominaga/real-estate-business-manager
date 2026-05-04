@@ -1,0 +1,4 @@
+<%= render "shared/message_js" %>
+$('#editor_edit_owner_details').modal('hide');
+$('#owner_details').html("<%= j( render partial: 'properties/editors/editor_content_owner', locals: {owner: @property_owner}) %>");
+$("#spinner").hide();

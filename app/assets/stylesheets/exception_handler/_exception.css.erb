@@ -1,0 +1,59 @@
+/* ---------------------------------------------------- */
+/* ---------------------------------------------------- */
+.exception {
+  width: 100%;
+  height: 100vh;
+  background: top center;
+  background-size: cover;
+  position: relative;
+  background:       url(<%= asset_url("hero-bg.jpg") %>) top center no-repeat;
+}
+
+.exception::before{
+  content:           url(<%= asset_url("favicon/favicon-16.png") %>);
+  display:           block;
+  color:             rgba(255,255,255,1);
+  font-size:         1.25em;
+  font-weight:       bold;
+  padding:           1em;
+  line-height:       10px;
+  border-bottom:     1px solid rgba(0,0,0,0.3);
+  vertical-align:    middle;
+  background-color:  rgba(0,0,0,0.5);
+}
+
+.exception h1 {
+  font-size: 80px;
+  line-height: 56px;
+  font-family: "Playfair";
+  font-weight: 900;
+  font-style: italic;
+  content:          attr(data-response);
+  position:         relative;
+  padding: 30vh 0 5vh 0;
+  color:            rgba(255,255,255,1);
+  box-sizing:       border-box;
+  background-clip:  border-box;
+  text-align:       center;
+  width: 100%;
+
+}
+@media (max-width: 768px) {
+  .exception h1 {
+    padding: 5vh 0 5vh 0;
+    font-size: 3rem;
+  }
+}
+.exception span{
+  position: relative;
+  color:            rgba(255,255,255,1);
+  font-family: "Quicksand", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  padding: 0;
+}
+
+.exception .row {
+  text-align: center;
+  padding: 10px;
+}

@@ -1,0 +1,172 @@
+<% if !@arrProperties.blank? %>
+  <% @arrProperties.each_with_index do |property, index| %>
+    <div class="panel panel-default wow fadeIn" data-wow-delay="0.<%= index %>s" id="agent-property-listing">
+      <div class="panel-body agent">
+        <div class="row">
+          <div class="col-md-2">
+            <%= link_to property, target: "_blank" do %>
+              <div class="row">
+                <div class="col-md-12">
+                  <%= image_tag property.cover_photo("400X400", request.host) %>
+                  <span class="status"><b><%= property.contract_type %></b></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <p style="margin: 5px 0;">ID: <%= property.id %></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <% if !property.old_id.blank? && property.old_id != 0 %>
+                    <p style="font-size: 10px">Old ref: <%= property.old_id %></p>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="col-md-4 agent-property-listing">
+            <%= link_to property, target: "_blank" do %>
+
+              <div class="property-title" >
+                <h4 style="margin: 0 0 0 0;">
+                  <%= property.property_title %><div class="property-area"><% if !property.flat_no.blank? && property.flat_no != "0" %>(<%= property.flat_no %>)<% end %></div>
+                </h4><br/>
+              </div>
+
+              <div class="property-area"><%= property.area.area %><br/></div>
+              <div class="property-price">
+                <span>
+                  <b>
+                    <%= property.property_price  %>
+                  </b>
+                </span>
+              </div>
+            <% end %>
+          </div>
+          <div class="col-md-2 agent-property-listing">
+            <% if !property.availability_date.blank? && property.availability_date != "0" %>
+              <p style="margin:10px 0 10px 0;">Available from: <strong <% if property.availability_date.between?(15.days.ago, 30.days.from_now) %>style="color: #01dc94;"<% end %>><%= property.availability_date.to_time.strftime("%d/%m/%Y") %></strong></p>
+            <% end %>
+            <br/>
+            <% if !property.updated_at.blank? && property.updated_at != "0" %>
+              <p style="margin:0 0 20px 0;">
+                Updated on:
+                <strong <% if property.updated_at.between?(15.days.ago, Date.today) %>style="color: #01dc94;"<% end %>>
+                  <%= property.updated_at.to_time.strftime("%d/%m/%Y") %>
+                </strong>
+                <% if !property.updated_by_user.blank? && !property.updated_by_user.nickname.blank? %>
+                by
+                <%= link_to user_path(property.updated_by_user.nickname) do %>
+                  <%= image_tag property.updated_by_user.show_avatar('100x100'), class: "img-circle avatar-small" %>
+                    <strong>
+                      <%= property.updated_by_user.first_name %> <%= property.updated_by_user.last_name %>
+                    </strong>
+                  <% end %>
+                <% end %>
+              </p>
+
+            <% end %>
+          </div>
+          <div class="col-md-4 agent-property-listing">
+            <ul>
+              <% if browser.platform.ios? || browser.platform.android? %>
+                <div class="row">
+                  <div class="col-md-6">
+                    <%= link_to owner_path(property.property_owner), class: "btn btn-normal" do %>
+                      <i class="fa fa-phone fa-w-16 fa-flip-horizontal"></i> Call owner now
+                    <% end %>
+                  </div>
+                  <div class="col-md-6">
+                    <!-- SHARE WHATSAPP -->
+                    <%= link_to "whatsapp://send?text=#{property.share_with_owner_encoded}", class: "btn btn-normal" do %>
+                      <i class="fab fa-whatsapp"></i> Share with the team
+                    <% end %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <%= link_to "whatsapp://send?text=#{property.share_without_owner_encoded}", class: "btn btn-normal" do %>
+                      <i class="fab fa-whatsapp"></i> Share with a client
+                    <% end %>
+                  </div>
+                  <div class="col-md-6">
+                    <%= link_to "fb-messenger://share/?link=#{property_url(property.id)}", class: "btn btn-normal" do %>
+                      <i class="fab fa-facebook-square"></i> Share link on Messenger
+                    <% end %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6" style="display:flex;">
+                    <textarea id="share_bar_client_<%= index %>" class="share_bar" rows="1" style="position: fixed; left: 10000px;"><%= property.share_without_owner %></textarea>
+                    <button class="btn btn-normal clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#share_bar_client_<%= index %>" style="width:100%;">
+                        <i class="fab fa-facebook-square"></i> Copy to share
+                    </button>
+                  </div>
+                </div>
+              <% else %>
+                <li style="display: flex;">
+                  <textarea id="share_bar_<%= index %>" class="share_bar" rows="1" style="position: fixed; left: 10000px;"><%= property.share_with_owner %></textarea>
+                  <button class="btn btn-normal clipboard-btn" style="width: 100%" data-clipboard-action="copy" data-clipboard-target="#share_bar_<%= index %>">
+                      <i class="fab fa-whatsapp"></i> Share with the team
+                  </button>
+                </li>
+                <li style="display: flex;">
+                  <textarea id="share_bar_client_<%= index %>" class="share_bar" rows="1" style="position: fixed; left: 10000px;"><%= property.share_without_owner %></textarea>
+                  <button class="btn btn-normal clipboard-btn" style="width: 100%;" data-clipboard-action="copy" data-clipboard-target="#share_bar_client_<%= index %>">
+                      <i class="fab fa-facebook-square"></i> Share with a client
+                  </button>
+                </li>
+              <% end %>
+              <li><%= link_to owner_details_property_path(owner_id: property.owner_id, id: property.id), class: "btn btn-normal", "data-toggle": "modal", "data-target": "#owner-modal", id: "owner-details-button", remote: true, method: :post do %><i class="far fa-address-card"></i> Check owner details<% end %></li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="row-flex-center">
+          <div class="col-md-6">
+            <% if !property.assigned_to.blank? %>
+              <p style='margin: 0;'>
+                Listing rights:
+                <% if !User.find(property.assigned_to).nickname.blank? %>
+                  <%= link_to user_path(User.find(property.assigned_to).nickname) do %>
+                    <%= image_tag User.find(property.assigned_to).show_avatar('100x100'), class: "img-circle avatar-small" %>
+                    <strong>
+                      <%= User.find(property.assigned_to).first_name %> <%= User.find(property.assigned_to).last_name %>
+                    </strong>
+                  <% end %>
+
+                <% else %>
+                  <%= link_to user_path(User.find(2).nickname) do %>
+                    <%= image_tag User.find(property.assigned_to).show_avatar('100x100'), class: "img-circle avatar-small" %>
+                    <strong>
+                      <%= User.find(property.assigned_to).first_name %> <%= User.find(property.assigned_to).last_name %>
+                    </strong>
+                  <% end %>
+                <% end %>
+              </p>
+            <% end %>
+          </div>
+          <div class="col-md-4 text-right">
+            <% if (!property.price.blank? && property.price != 0) && property.price < 1000 && property.contract_type == "Rent" %><span class="badge badge-primary">BARGAIN</span><% end %>
+            <% if (!property.created_at.blank? && property.created_at != "0") && property.created_at > 30.days.ago %><span class="badge badge-primary">NEW</span><% end %>
+          </div>
+          <div class="col-md-2 text-right" id="bookmark_<%= property.id %>">
+            <%= link_to add_to_bookmarks_path(property_id: property.id, user_id: current_user.id), remote: true do %>
+              <% if Bookmark.exists?(user_id: current_user.id, property_id: property.id) %>
+                <i class="fas fa-bookmark fa-2x"></i>
+              <% else %>
+                <i class="far fa-bookmark fa-2x"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="text-center">
+    <h4>Sorry, no results match that criteria</h4>
+  </div>
+<% end %>
